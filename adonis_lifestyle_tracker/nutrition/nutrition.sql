@@ -7,6 +7,8 @@ create table food (
 
 create table week (
     id integer primary key
+    calories integer,
+    protein integer
 );
 
 create table food_week (
