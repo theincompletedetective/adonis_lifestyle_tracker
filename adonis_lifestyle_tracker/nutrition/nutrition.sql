@@ -1,14 +1,14 @@
 create table food (
     id integer primary key,
     food_name text,
-    calories integer,
+    kcal integer,
     protein integer
 );
 
 create table week (
     id integer primary key
-    calories integer,
-    protein integer
+    total_kcal integer,
+    total_protein integer
 );
 
 create table food_week (

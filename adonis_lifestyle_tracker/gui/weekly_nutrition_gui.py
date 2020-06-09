@@ -1,1 +1,0 @@
-'''Display the week calories and protein consumed.'''
