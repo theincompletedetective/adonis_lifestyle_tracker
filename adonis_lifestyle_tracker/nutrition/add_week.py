@@ -61,7 +61,8 @@ while True:
         if confirmation:
             add_week(week, total_kcal, total_protein)
             sg.popup(
-                'The total calories and protein have been added to the database!',
+                'The total calories and protein have been added '
+                f'to week {week} of the database!',
                 title='Success Message'
             )
 

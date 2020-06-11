@@ -146,9 +146,9 @@ def get_kcal_left_for_week(week):
     )
 
     # To get the number of calories for each food consumed in a given week
-    for food_id in cursor.fetchall():
+    for food_id_tuple in cursor.fetchall():
         cursor.execute(
-            "SELECT kcal FROM food WHERE id == ?;", (food_id,)
+            "SELECT kcal FROM food WHERE id == ?;", (food_id_tuple[0],)
         )
 
         # To substract the number of calories for all foods consume in a given week
@@ -159,7 +159,10 @@ def get_kcal_left_for_week(week):
     conn.close()
 
     # To return the number of calories left for the week
-    return total_weekly_kcal
+    if total_weekly_kcal >= 0:
+        return total_weekly_kcal
+    else:
+        return 0
 
 
 def get_protein_left_for_week(week):
@@ -174,13 +177,13 @@ def get_protein_left_for_week(week):
 
     # To get all the IDs for the food consumed in a given week
     cursor.execute(
-        "SELECT food_id FROM food_week WHERE week_id == ?;", (week,)
+        "SELECT food_id FROM food_week WHERE week_id = ?;", (week,)
     )
 
     # To get the grams of protein for each food consumed in a given week
-    for food_id in cursor.fetchall():
+    for food_id_tuple in cursor.fetchall():
         cursor.execute(
-            "SELECT protein FROM food WHERE id == ?;", (food_id,)
+            "SELECT protein FROM food WHERE id = ?;", (food_id_tuple[0],)
         )
 
         # To substract the grams of protein for all foods consume in a given week
@@ -191,4 +194,7 @@ def get_protein_left_for_week(week):
     conn.close()
 
     # To return the grams of protein left for the week
-    return total_weekly_protein
+    if total_weekly_protein >= 0:
+        return total_weekly_protein
+    else:
+        return 0
