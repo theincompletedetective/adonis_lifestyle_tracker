@@ -4,15 +4,19 @@ import sqlite3
 
 
 def get_food(food_name):
-    '''Gets a food's ID, name, calories and protein.'''
+    '''Gets a food's ID, calories and protein from the nutrition database.'''
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     cursor.execute(
-        f"select * from food where food_name == '{food_name}'"
+        '''
+        SELECT id, kcal, protein FROM food
+            WHERE food_name == ?;
+        ''',
+        (food_name,)
     )
 
-    food_tuple = cursor.fetchone() # id, name, kcal, protein
+    food_tuple = cursor.fetchone() # id, kcal, protein
 
     conn.commit()
     conn.close()
@@ -20,16 +24,34 @@ def get_food(food_name):
     return food_tuple
 
 
-def add_food(name, brand, kcal, protein):
-    '''Adds a food to the food database.'''
+def add_food(name, kcal, protein):
+    '''Adds a food to the food table in the nutrition database.'''
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     cursor.execute(
-        f'''
-        INSERT INTO food (food_name, brand, kcal, protein)
-            VALUES ('{name}', '{brand}', {kcal}, {protein});
         '''
+        INSERT INTO food (food_name, kcal, protein)
+            VALUES (?, ?, ?);
+        ''',
+        (name, kcal, protein)
+    )
+
+    conn.commit()
+    conn.close()
+
+
+def update_food_name(old_food_name, new_food_name):
+    '''Updates the name of a food in the nutrition database.'''
+    conn = sqlite3.connect('nutrition.db')
+    cursor = conn.cursor()
+
+    cursor.execute(
+        '''
+        UPDATE food SET food_name = ?
+            WHERE food_name = ?;
+        ''',
+        (new_food_name, old_food_name)
     )
 
     conn.commit()
@@ -42,10 +64,11 @@ def add_week(week, total_kcal, total_protein):
     cursor = conn.cursor()
 
     cursor.execute(
-        f'''
-        INSERT INTO week (id, total_kcal, total_protein)
-            VALUES ({week}, {total_kcal}, {total_protein});
         '''
+        INSERT INTO week (id, total_kcal, total_protein)
+            VALUES (?, ?, ?);
+        ''',
+        (week, total_kcal, total_protein)
     )
 
     conn.commit()
@@ -59,15 +82,16 @@ def add_food_to_week(food_name, week):
 
     # To get the ID for the provided food
     cursor.execute(
-        f"select id from food where food_name == '{food_name}'"
+        "SELECT id FROM food WHERE food_name == ?;", (food_name,)
     )
 
     # To add the food's ID to the food_week relation table
     cursor.execute(
-        f'''
-        INSERT INTO food_week (food_id, week_id)
-            VALUES ({cursor.fetchone()[0]}, {week});
         '''
+        INSERT INTO food_week (food_id, week_id)
+            VALUES (?, ?);
+        ''',
+        (cursor.fetchone()[0], week)
     )
 
     conn.commit()
@@ -79,7 +103,7 @@ def get_weekly_kcal(week):
     cursor = conn.cursor()
 
     cursor.execute(
-        "select total_kcal from week where id == ?", (week,)
+        "SELECT total_kcal FROM week WHERE id == ?;", (week,)
     )
 
     total_weekly_kcal = cursor.fetchone()[0]
@@ -95,7 +119,7 @@ def get_weekly_protein(week):
     cursor = conn.cursor()
 
     cursor.execute(
-        "select total_protein from week where id == ?", (week,)
+        "SELECT total_protein FROM week WHERE id == ?", (week,)
     )
 
     total_weekly_protein = cursor.fetchone()[0]
@@ -118,13 +142,13 @@ def get_kcal_left_for_week(week):
 
     # To get all the IDs for the food consumed in a given week
     cursor.execute(
-        f"select food_id from food_week where week_id == {week};"
+        "SELECT food_id FROM food_week WHERE week_id == ?;", (week,)
     )
 
     # To get the number of calories for each food consumed in a given week
     for food_id in cursor.fetchall():
         cursor.execute(
-            "select kcal from food where id == ?", food_id
+            "SELECT kcal FROM food WHERE id == ?;", (food_id,)
         )
 
         # To substract the number of calories for all foods consume in a given week
@@ -150,13 +174,13 @@ def get_protein_left_for_week(week):
 
     # To get all the IDs for the food consumed in a given week
     cursor.execute(
-        f"select food_id from food_week where week_id == {week};"
+        "SELECT food_id FROM food_week WHERE week_id == ?;", (week,)
     )
 
     # To get the grams of protein for each food consumed in a given week
     for food_id in cursor.fetchall():
         cursor.execute(
-            "select protein from food where id == ?", food_id
+            "SELECT protein FROM food WHERE id == ?;", (food_id,)
         )
 
         # To substract the grams of protein for all foods consume in a given week
