@@ -1,7 +1,6 @@
 '''Contains functions needed to CRUD food data in nutrition database.'''
 
 import sqlite3
-from copy import deepcopy
 
 
 def get_food(food_name):
@@ -29,7 +28,7 @@ def add_food(name, brand, kcal, protein):
     cursor.execute(
         f'''
         INSERT INTO food (food_name, brand, kcal, protein)
-            VALUES ('{name}', {brand}, {kcal}, {protein});
+            VALUES ('{name}', '{brand}', {kcal}, {protein});
         '''
     )
 

@@ -12,7 +12,8 @@ INPUT_SIZE = (10, 1)
 sg.theme('Reddit')
 
 layout = [
-    [sg.Text('Food Name', size=TEXT_SIZE), sg.Input( key='-FOOD-', size=(25, 1) )],
+    [sg.Text('Food', size=TEXT_SIZE), sg.Input( key='-FOOD-', size=(25, 1) )],
+    [sg.Text('Brand', size=TEXT_SIZE), sg.Input( key='-BRAND-', size=(25, 1) )],
     [sg.Text('Calories (kcal)', size=TEXT_SIZE), sg.Input(key='-CALORIES-', size=INPUT_SIZE)],
     [sg.Text('Protein (g)', size=TEXT_SIZE), sg.Input(key='-PROTEIN-', size=INPUT_SIZE)],
     [sg.Submit(button_color=('white', '#008000')), sg.Cancel( button_color=('black', '#ff0000') )]
@@ -33,6 +34,12 @@ while True:
             sg.popup_error('You must select a food.', title='Error')
             continue
         
+        if values['-BRAND-'].strip():
+            brand = values['-BRAND-']
+        else:
+            sg.popup_error('You must select a brand for the food.', title='Error')
+            continue
+        
         try:
             kcal = int(values['-CALORIES-'])
         except ValueError:
@@ -46,17 +53,17 @@ while True:
             protein = int(values['-PROTEIN-'])
         except ValueError:
             sg.popup_error(
-                'You must select a number for the protein.',
+                'You must select a number for the grams of protein.',
                 title='Error'
             )
             continue
         
         confirmation = get_confirmation(
-            f'Add the following food to the nutrition database: "{food}".'
+            f'Add "{food}" from "{brand}" to the nutrition database'
         )
 
         if confirmation:
-            add_food(food, kcal, protein)
+            add_food(food, brand, kcal, protein)
             sg.popup(
                 f'The following food has been successfully added to the database: "{food}".',
                 title='Success Message'
