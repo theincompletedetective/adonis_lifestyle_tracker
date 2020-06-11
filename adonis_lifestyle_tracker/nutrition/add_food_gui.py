@@ -51,7 +51,16 @@ while True:
             )
             continue
         
-        # add_food(food, kcal, protein)
+        confirmation = get_confirmation(
+            f'Add the following food to the nutrition database: "{food}".'
+        )
+
+        if confirmation:
+            add_food(food, kcal, protein)
+            sg.popup(
+                f'The following food has been successfully added to the database: "{food}".',
+                title='Success Message'
+            )
 
     else:
         continue
