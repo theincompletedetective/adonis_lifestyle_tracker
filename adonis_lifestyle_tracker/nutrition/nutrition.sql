@@ -1,6 +1,7 @@
 create table food (
     id integer primary key,
     food_name text,
+    brand text,
     kcal integer,
     protein integer
 );

@@ -21,15 +21,15 @@ def get_food(food_name):
     return food_tuple
 
 
-def add_food(name, kcal, protein):
+def add_food(name, brand, kcal, protein):
     '''Adds a food to the food database.'''
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     cursor.execute(
         f'''
-        INSERT INTO food (food_name, kcal, protein)
-            VALUES ('{name}', {kcal}, {protein});
+        INSERT INTO food (food_name, brand, kcal, protein)
+            VALUES ('{name}', {brand}, {kcal}, {protein});
         '''
     )
 
@@ -58,16 +58,16 @@ def add_food_to_week(food_name, week):
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
+    # To get the ID for the provided food
     cursor.execute(
         f"select id from food where food_name == '{food_name}'"
     )
 
-    food_id = cursor.fetchone()[0]
-
+    # To add the food's ID to the food_week relation table
     cursor.execute(
         f'''
         INSERT INTO food_week (food_id, week_id)
-            VALUES ({food_id}, {week});
+            VALUES ({cursor.fetchone()[0]}, {week});
         '''
     )
 
