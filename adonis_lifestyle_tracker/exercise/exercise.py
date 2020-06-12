@@ -72,7 +72,7 @@ def add_week(week_num):
 
 def add_exercise_to_week(exercise, week):
     '''Adds an exercise to a given week.'''
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     # To get the ID for the provided exercise

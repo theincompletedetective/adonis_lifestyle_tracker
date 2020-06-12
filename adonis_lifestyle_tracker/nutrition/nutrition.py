@@ -1,4 +1,4 @@
-'''Contains functions needed to CRUD food data in nutrition database.'''
+'''Contains the functions needed to CRUD food data in the nutrition database.'''
 
 import sqlite3
 
