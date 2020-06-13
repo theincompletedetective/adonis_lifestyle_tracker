@@ -29,11 +29,11 @@ while True:
             sg.popup_error('You must select a food.', title='Error')
             continue
 
-        food_id, kcal, protein = get_food(food)
+        kcal, protein = get_food(food)
 
         sg.popup(
             f"Calories: {kcal}kcal\nProtein: {protein}g",
-            title='Food Info'
+            title=food
         )
     else:
         continue

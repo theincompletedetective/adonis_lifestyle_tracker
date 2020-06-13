@@ -1,16 +1,17 @@
 '''Contains the functions needed to CRUD food data in the nutrition database.'''
 
 import sqlite3
+from adonis_lifestyle_tracker.exceptions import DuplicateFoodError
 
 
 def get_food(food_name):
-    '''Gets a food's ID, calories and protein from the nutrition database.'''
+    '''Gets a food's calories and protein from the nutrition database.'''
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     cursor.execute(
         '''
-        SELECT id, kcal, protein FROM food
+        SELECT kcal, protein FROM food
             WHERE food_name == ?;
         ''',
         (food_name,)
@@ -24,8 +25,8 @@ def get_food(food_name):
     return food_tuple
 
 
-def add_food(name, kcal, protein):
-    '''Adds a food to the food table in the nutrition database.'''
+def add_food(food_name, kcal, protein):
+    '''Adds a food's name, calories and protein to the nutrition database.'''
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
@@ -34,7 +35,7 @@ def add_food(name, kcal, protein):
         INSERT INTO food (food_name, kcal, protein)
             VALUES (?, ?, ?);
         ''',
-        (name, kcal, protein)
+        (food_name, kcal, protein)
     )
 
     conn.commit()
@@ -80,15 +81,15 @@ def add_food_to_week(food_name, week):
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
-    # To get the ID for the provided food
+    # To get the name for the provided food
     cursor.execute(
-        "SELECT id FROM food WHERE food_name == ?;", (food_name,)
+        "SELECT food_name FROM food WHERE food_name == ?;", (food_name,)
     )
 
-    # To add the food's ID to the food_week relation table
+    # To add the food's name to the food_week relation table
     cursor.execute(
         '''
-        INSERT INTO food_week (food_id, week_id)
+        INSERT INTO food_week (food_name, week_id)
             VALUES (?, ?);
         ''',
         (cursor.fetchone()[0], week)
@@ -140,15 +141,15 @@ def get_kcal_left_for_week(week):
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
-    # To get all the IDs for the food consumed in a given week
+    # To get all the names for the food consumed in a given week
     cursor.execute(
-        "SELECT food_id FROM food_week WHERE week_id == ?;", (week,)
+        "SELECT food_name FROM food_week WHERE week_id == ?;", (week,)
     )
 
     # To get the number of calories for each food consumed in a given week
-    for food_id_tuple in cursor.fetchall():
+    for food_name_tuple in cursor.fetchall():
         cursor.execute(
-            "SELECT kcal FROM food WHERE id == ?;", (food_id_tuple[0],)
+            "SELECT kcal FROM food WHERE food_name == ?;", (food_name_tuple[0],)
         )
 
         # To substract the number of calories for all foods consume in a given week
@@ -175,15 +176,15 @@ def get_protein_left_for_week(week):
     conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
-    # To get all the IDs for the food consumed in a given week
+    # To get all the names for the food consumed in a given week
     cursor.execute(
-        "SELECT food_id FROM food_week WHERE week_id = ?;", (week,)
+        "SELECT food_name FROM food_week WHERE week_id = ?;", (week,)
     )
 
     # To get the grams of protein for each food consumed in a given week
-    for food_id_tuple in cursor.fetchall():
+    for food_name_tuple in cursor.fetchall():
         cursor.execute(
-            "SELECT protein FROM food WHERE id = ?;", (food_id_tuple[0],)
+            "SELECT protein FROM food WHERE food_name = ?;", (food_name_tuple[0],)
         )
 
         # To substract the grams of protein for all foods consume in a given week
