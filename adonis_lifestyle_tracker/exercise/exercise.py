@@ -41,20 +41,32 @@ def add_exercise(name, equipment):
     conn.close()
 
 
-def add_5_reps_resistance(exercise, resistance):
-    '''Adds the resistance used for five reps of the given exercise.'''
+def add_5_reps_resistance(week, exercise, resistance):
+    '''
+    Adds the resistance used for five reps of the given exercise
+    to the specified week.
+    '''
 
 
-def add_8_reps_resistance(exercise, resistance):
-    '''Adds the resistance used for eight reps of the given exercise.'''
+def add_8_reps_resistance(week, exercise, resistance):
+    '''
+    Adds the resistance used for eight reps of the given exercise
+    to the specified week.
+    '''
 
 
-def add_13_reps_resistance(exercise, resistance):
-    '''Adds the resistance used for 13 reps of the given exercise.'''
+def add_13_reps_resistance(week, exercise, resistance):
+   '''
+    Adds the resistance used for 13 reps of the given exercise
+    to the specified week.
+    '''
 
 
-def add_21_reps_resistance(exercise, resistance):
-    '''Adds the resistance used for 21 reps of the given exercise.'''
+def add_21_reps_resistance(week, exercise, resistance):
+    '''
+    Adds the resistance used for 13 reps of the given exercise
+    to the specified week.
+    '''
 
 
 def add_week(week_num):
