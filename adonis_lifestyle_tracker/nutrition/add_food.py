@@ -4,7 +4,6 @@ from sqlite3 import IntegrityError
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.gui.confirmation_gui import get_confirmation
 from adonis_lifestyle_tracker.nutrition.nutrition import add_food
-from adonis_lifestyle_tracker.exceptions import DuplicateFoodError
 
 
 TEXT_SIZE = (12, 1)

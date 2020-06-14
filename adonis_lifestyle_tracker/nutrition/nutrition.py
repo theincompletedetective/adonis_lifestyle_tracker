@@ -1,7 +1,6 @@
 '''Contains the functions needed to CRUD food data in the nutrition database.'''
 
 import sqlite3
-from adonis_lifestyle_tracker.exceptions import DuplicateFoodError
 
 
 def get_food(food_name):
