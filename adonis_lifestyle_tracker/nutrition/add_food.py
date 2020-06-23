@@ -1,4 +1,4 @@
-''''Adds a food, as well as its calories and protein to the database.'''
+''''Adds a food's name, as well as its calories and protein to the database.'''
 from sqlite3 import IntegrityError
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import Config
