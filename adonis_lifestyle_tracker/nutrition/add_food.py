@@ -1,22 +1,34 @@
 ''''Adds a food, as well as its calories and protein to the database.'''
-
 from sqlite3 import IntegrityError
 import PySimpleGUI as sg
+from adonis_lifestyle_tracker.config import Config
 from adonis_lifestyle_tracker.gui.confirmation_gui import get_confirmation
 from adonis_lifestyle_tracker.nutrition.nutrition import add_food
-
-
-TEXT_SIZE = (12, 1)
-INPUT_SIZE = (10, 1)
 
 
 sg.theme('Reddit')
 
 layout = [
-    [sg.Text('Food', size=TEXT_SIZE), sg.Input( key='-FOOD-', size=(30, 1) )],
-    [sg.Text('Calories (kcal)', size=TEXT_SIZE), sg.Input(key='-CALORIES-', size=INPUT_SIZE)],
-    [sg.Text('Protein (g)', size=TEXT_SIZE), sg.Input(key='-PROTEIN-', size=INPUT_SIZE)],
-    [sg.Submit(button_color=('white', '#008000')), sg.Cancel( button_color=('black', '#ff0000') )]
+    [
+        sg.Text(
+            'Food',
+            tooltip='The name of the food to add to the database',
+            size=Config.LABEL_SIZE
+        ),
+        sg.Input( key='-FOOD-', size=Config.FOOD_SIZE)
+    ],
+    [
+        sg.Text('Calories (kcal)', size=Config.LABEL_SIZE),
+        sg.Input(key='-CALORIES-', size=Config.NUMBER_SIZE)
+    ],
+    [
+        sg.Text('Protein (g)', size=Config.LABEL_SIZE),
+        sg.Input(key='-PROTEIN-', size=Config.NUMBER_SIZE)
+    ],
+    [
+        sg.Submit(button_color=Config.SUBMIT_BUTTON_COLOR),
+        sg.Cancel(button_color=Config.CANCEL_BUTTON_COLOR)
+    ]
 ]
 
 window = sg.Window('Add Food GUI', layout)
@@ -53,7 +65,7 @@ while True:
             continue
         
         confirmation = get_confirmation(
-            f'add the food "{food}" to the nutrition database, '
+            f'add the food "{food}" to the nutrition database,\n'
             f'with {kcal} calories and {protein} grams of protein'
         )
 
@@ -61,7 +73,7 @@ while True:
             try:
                 add_food(food, kcal, protein)
                 sg.popup(
-                    f'The food "{food}" has been successfully added to the database.',
+                    f'The food "{food}" has been successfully added\nto the nutrition database.',
                     title='Success Message'
                 )
                 # To clear the values from each field, after successfully adding a food
