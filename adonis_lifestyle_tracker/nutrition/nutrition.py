@@ -121,8 +121,8 @@ def add_food_to_week(food_name, week):
     conn.close()
 
 
-def get_weekly_kcal(week):
-    conn = sqlite3.connect( get_nutrition_database() )
+def get_weekly_kcal(week, db):
+    conn = sqlite3.connect(db)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -137,8 +137,8 @@ def get_weekly_kcal(week):
     return total_weekly_kcal
 
 
-def get_weekly_protein(week):
-    conn = sqlite3.connect( get_nutrition_database() )
+def get_weekly_protein(week, db):
+    conn = sqlite3.connect(db)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -158,9 +158,10 @@ def get_kcal_left_for_week(week):
     Calculates the total number of calories left to consume
     for the week.
     '''
-    total_weekly_kcal = get_weekly_kcal(week)
+    db = get_nutrition_database()
+    total_weekly_kcal = get_weekly_kcal(week, db)
 
-    conn = sqlite3.connect( get_nutrition_database() )
+    conn = sqlite3.connect(db)
     cursor = conn.cursor()
 
     # To get all the names for the food consumed in a given week
@@ -193,9 +194,10 @@ def get_protein_left_for_week(week):
     Calculates the total grams of protein left to consume
     for the week.
     '''
-    total_weekly_protein = get_weekly_protein(week)
+    db = get_nutrition_database()
+    total_weekly_protein = get_weekly_protein(week, db)
 
-    conn = sqlite3.connect( get_nutrition_database() )
+    conn = sqlite3.connect(db)
     cursor = conn.cursor()
 
     # To get all the names for the food consumed in a given week
