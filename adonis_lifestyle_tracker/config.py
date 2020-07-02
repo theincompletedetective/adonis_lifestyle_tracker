@@ -14,7 +14,7 @@ class Config:
     WEEK_SIZE = (5, 1)
 
     # Label Text
-    FOOD_LABEL = 'Food'
+    FOOD_LABEL = 'Food Name'
     WEEK_LABEL = 'Week Number'
     KCAL_LABEL = 'Calories (kcal)'
     PROTEIN_LABEL = 'Protein (g)'

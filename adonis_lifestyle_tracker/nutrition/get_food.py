@@ -10,11 +10,11 @@ sg.theme('Reddit')
 
 layout = [
     [
-        sg.Text('Food', size=Config.LABEL_SIZE ),
-        sg.Input(key='-FOOD-', size=Config.FOOD_SIZE)
+        sg.Text(Config.FOOD_LABEL, size=Config.LABEL_SIZE ),
+        sg.Input(key=Config.FOOD_KEY, size=Config.FOOD_SIZE)
     ],
     [
-        sg.Submit(button_color=Config.SUBMIT_BUTTON_COLOR),
+        sg.Button('Get Food Info', button_color=Config.SUBMIT_BUTTON_COLOR),
         sg.Cancel(button_color=Config.CANCEL_BUTTON_COLOR)
     ]
 ]
@@ -26,12 +26,10 @@ while True:
 
     if event in (None, 'Cancel'):
         break
-    elif event == 'Submit':
-        stripped_food = values['-FOOD-'].strip()
+    elif event == 'Get Food Info':
+        food = values[Config.FOOD_KEY].strip()
 
-        if stripped_food:
-            food = values['-FOOD-']
-        else:
+        if not food:
             sg.popup_error('You must select a food.', title='Error')
             continue
 
