@@ -28,7 +28,7 @@ def get_nutrition_database():
 
 def get_food(food_name):
     '''Gets a food's calories and protein from the nutrition database.'''
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(
@@ -66,7 +66,7 @@ def add_food(food_name, kcal, protein):
 
 def update_food_name(old_food_name, new_food_name):
     '''Updates the name of a food in the nutrition database.'''
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(
@@ -82,8 +82,8 @@ def update_food_name(old_food_name, new_food_name):
 
 
 def add_week(week, total_kcal, total_protein):
-    '''Adds a week to the week database.'''
-    conn = sqlite3.connect('nutrition.db')
+    '''Adds a week to the week table in the nutrition database.'''
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(
@@ -99,7 +99,7 @@ def add_week(week, total_kcal, total_protein):
 
 
 def add_food_to_week(food_name, week):
-    '''Adds a food to a given week.'''
+    '''Adds a food and week to the food_week table in the nutrition database.'''
     conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
@@ -122,7 +122,7 @@ def add_food_to_week(food_name, week):
 
 
 def get_weekly_kcal(week):
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(
@@ -138,7 +138,7 @@ def get_weekly_kcal(week):
 
 
 def get_weekly_protein(week):
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(
@@ -160,7 +160,7 @@ def get_kcal_left_for_week(week):
     '''
     total_weekly_kcal = get_weekly_kcal(week)
 
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     # To get all the names for the food consumed in a given week
@@ -195,7 +195,7 @@ def get_protein_left_for_week(week):
     '''
     total_weekly_protein = get_weekly_protein(week)
 
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     # To get all the names for the food consumed in a given week
