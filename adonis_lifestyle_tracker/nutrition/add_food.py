@@ -40,27 +40,27 @@ while True:
         break
     elif event == 'Add Food':
 
-        if values['-FOOD-'].strip():
-            food = values['-FOOD-']
+        if values[Config.FOOD_KEY].strip():
+            food = values[Config.FOOD_KEY]
         else:
-            sg.popup_error('You must select a food.', title='Error')
+            sg.popup_error('You must select a food.', title='Error Message')
             continue
 
         try:
-            kcal = int(values['-CALORIES-'])
+            kcal = int(values[Config.KCAL_KEY])
         except ValueError:
             sg.popup_error(
                 'You must select a number for the calories.',
-                title='Error'
+                title='Error Message'
             )
             continue
 
         try:
-            protein = int(values['-PROTEIN-'])
+            protein = int(values[Config.PROTEIN_KEY])
         except ValueError:
             sg.popup_error(
                 'You must select a number for the grams of protein.',
-                title='Error'
+                title='Error Message'
             )
             continue
 
@@ -78,9 +78,9 @@ while True:
                     title='Success Message'
                 )
                 # To clear the values from each field, after successfully adding a food
-                window['-FOOD-'].update('')
-                window['-CALORIES-'].update('')
-                window['-PROTEIN-'].update('')
+                window[Config.FOOD_KEY].update('')
+                window[Config.KCAL_KEY].update('')
+                window[Config.PROTEIN_KEY].update('')
             except IntegrityError:
                 sg.popup_error(
                     'You cannot add two foods with the same name '

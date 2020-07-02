@@ -100,7 +100,7 @@ def add_week(week, total_kcal, total_protein):
 
 def add_food_to_week(food_name, week):
     '''Adds a food to a given week.'''
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     # To get the name for the provided food

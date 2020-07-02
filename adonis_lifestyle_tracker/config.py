@@ -8,7 +8,7 @@ class Config:
     Contains all the configurations for each field in each GUI module.
     '''
     # Text Labels and Input Field Sizes
-    LABEL_SIZE = (16, 1)
+    LABEL_SIZE = (12, 1)
     FOOD_SIZE = (30, 1)
     NUMBER_SIZE = (10, 1)
     WEEK_SIZE = (5, 1)
@@ -23,6 +23,7 @@ class Config:
     FOOD_KEY = '-FOOD-'
     KCAL_KEY = '-CALORIES-'
     PROTEIN_KEY = '-PROTEIN-'
+    WEEK_KEY = '-WEEK-'
 
     # Tooltips
     FOOD_TOOLTIP = (
