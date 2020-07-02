@@ -11,22 +11,22 @@ sg.theme('Reddit')
 layout = [
     [
         sg.Text(
-            'Food',
+            Config.FOOD_LABEL,
             tooltip='The name of the food to add to the database',
             size=Config.LABEL_SIZE
         ),
         sg.Input( key='-FOOD-', size=Config.FOOD_SIZE)
     ],
     [
-        sg.Text('Calories (kcal)', size=Config.LABEL_SIZE),
+        sg.Text(Config.KCAL_LABEL, size=Config.LABEL_SIZE),
         sg.Input(key='-CALORIES-', size=Config.NUMBER_SIZE)
     ],
     [
-        sg.Text('Protein (g)', size=Config.LABEL_SIZE),
+        sg.Text(Config.PROTEIN_LABEL, size=Config.LABEL_SIZE),
         sg.Input(key='-PROTEIN-', size=Config.NUMBER_SIZE)
     ],
     [
-        sg.Submit(button_color=Config.SUBMIT_BUTTON_COLOR),
+        sg.Button('Add Food', button_color=Config.SUBMIT_BUTTON_COLOR),
         sg.Cancel(button_color=Config.CANCEL_BUTTON_COLOR)
     ]
 ]
@@ -38,14 +38,14 @@ while True:
 
     if event in (None, 'Cancel'):
         break
-    elif event == 'Submit':
+    elif event == 'Add Food':
 
         if values['-FOOD-'].strip():
             food = values['-FOOD-']
         else:
             sg.popup_error('You must select a food.', title='Error')
             continue
-        
+
         try:
             kcal = int(values['-CALORIES-'])
         except ValueError:
@@ -63,7 +63,7 @@ while True:
                 title='Error'
             )
             continue
-        
+
         confirmation = get_confirmation(
             f'add the food "{food}" to the nutrition database,\n'
             f'with {kcal} calories and {protein} grams of protein'

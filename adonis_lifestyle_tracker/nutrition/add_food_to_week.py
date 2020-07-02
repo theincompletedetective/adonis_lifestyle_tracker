@@ -1,20 +1,23 @@
 ''''Adds a food to a specific week, in the nutrition database.'''
-
 import PySimpleGUI as sg
+from adonis_lifestyle_tracker.config import Config
 from adonis_lifestyle_tracker.gui.confirmation_gui import get_confirmation
 from adonis_lifestyle_tracker.nutrition.nutrition import add_food_to_week
-
-
-TEXT_SIZE = (13, 1)
 
 sg.theme('Reddit')
 
 layout = [
-    [sg.Text('Food Name', size=TEXT_SIZE), sg.Input( key='-FOOD-', size=(30, 1) )],
-    [sg.Text('Week Number', size=TEXT_SIZE), sg.Input(key='-WEEK-', size=(5, 1))],
     [
-        sg.Button( 'Add Food', button_color=('white', '#008000') ),
-        sg.Cancel( button_color=('black', '#ff0000') )
+        sg.Text('Food Name', size=Config.LABEL_SIZE),
+        sg.Input(key='-FOOD-', size=Config.FOOD_SIZE)
+    ],
+    [
+        sg.Text('Week Number', size=Config.LABEL_SIZE),
+        sg.Input(key='-WEEK-', size=Config.WEEK_SIZE)
+    ],
+    [
+        sg.Button('Add Food', button_color=Config.SUBMIT_BUTTON_COLOR),
+        sg.Cancel(button_color=Config.CANCEL_BUTTON_COLOR)
     ]
 ]
 
@@ -31,22 +34,16 @@ while True:
         if stripped_food:
             food = stripped_food.title()
         else:
-            sg.popup_error(
-                'You must select a food.', title='Error'
-            )
+            sg.popup_error('You must select a food.', title='Error')
             continue
 
         try:
             week_num = int(values['-WEEK-'])
         except ValueError:
-            sg.popup_error(
-                'You must select a week number.', title='Error'
-            )
+            sg.popup_error('You must select a week number.', title='Error')
             continue
-        
-        confirmation = get_confirmation(
-            f'add food "{food}" to week {week_num}'
-        )
+
+        confirmation = get_confirmation(f'add food "{food}" to week {week_num}')
 
         if confirmation:
             try:

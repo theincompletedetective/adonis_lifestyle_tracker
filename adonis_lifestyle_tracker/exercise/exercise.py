@@ -1,10 +1,11 @@
 '''Contains the functions needed to CRUD exercise data in the database.'''
-
 import sqlite3
 
 
 def get_exercise(name):
-    '''Get an exercise's information from the database.'''
+    '''
+    Get an exercise's information from the specified week in the database.
+    '''
     conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
@@ -24,15 +25,21 @@ def get_exercise(name):
     return exercise_tuple
 
 
-def add_exercise(name, equipment):
-    '''Adds an exercise to the database.'''
+def add_exercise(
+        name, equipment, week, reps_5=None,
+        reps_8=None, reps_13=None, reps_21=None):
+    '''
+    Adds an exercise's information to the specified week in the database.
+    '''
     conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     cursor.execute(
         '''
-        INSERT INTO exercise (exercise_name, equipment)
-            VALUES (?, ?);
+        INSERT INTO week (
+            id, exercise_name, equipment, reps_5, reps_8, reps_13, reps_21
+        )
+            VALUES (?, ?, ?, ?, ?, ?);
         ''',
         (name, equipment)
     )
