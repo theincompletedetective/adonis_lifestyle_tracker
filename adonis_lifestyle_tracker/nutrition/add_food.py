@@ -1,4 +1,4 @@
-''''Adds a food's name, as well as its calories and protein to the database.'''
+''''Adds a food's name, calories and protein to the nutrition database.'''
 from sqlite3 import IntegrityError
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import Config
@@ -12,18 +12,18 @@ layout = [
     [
         sg.Text(
             Config.FOOD_LABEL,
-            tooltip='The name of the food to add to the database',
+            tooltip=Config.FOOD_TOOLTIP,
             size=Config.LABEL_SIZE
         ),
-        sg.Input( key='-FOOD-', size=Config.FOOD_SIZE)
+        sg.Input( key=Config.FOOD_KEY, size=Config.FOOD_SIZE)
     ],
     [
         sg.Text(Config.KCAL_LABEL, size=Config.LABEL_SIZE),
-        sg.Input(key='-CALORIES-', size=Config.NUMBER_SIZE)
+        sg.Input(key=Config.KCAL_KEY, size=Config.NUMBER_SIZE)
     ],
     [
         sg.Text(Config.PROTEIN_LABEL, size=Config.LABEL_SIZE),
-        sg.Input(key='-PROTEIN-', size=Config.NUMBER_SIZE)
+        sg.Input(key=Config.PROTEIN_KEY, size=Config.NUMBER_SIZE)
     ],
     [
         sg.Button('Add Food', button_color=Config.SUBMIT_BUTTON_COLOR),
@@ -73,7 +73,8 @@ while True:
             try:
                 add_food(food, kcal, protein)
                 sg.popup(
-                    f'The food "{food}" has been successfully added\nto the nutrition database.',
+                    f'The food "{food}" has been successfully added\n'
+                    'to the nutrition database.',
                     title='Success Message'
                 )
                 # To clear the values from each field, after successfully adding a food
@@ -82,7 +83,8 @@ while True:
                 window['-PROTEIN-'].update('')
             except IntegrityError:
                 sg.popup_error(
-                    'You cannot add two foods with the same name to the database!',
+                    'You cannot add two foods with the same name '
+                    'to the database!',
                     title='Error Message'
                 )
     else:

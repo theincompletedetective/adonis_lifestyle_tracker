@@ -1,5 +1,29 @@
 '''Contains the functions needed to CRUD food data in the nutrition database.'''
 import sqlite3
+import PySimpleGUI as sg
+from adonis_lifestyle_tracker.config import Config
+
+
+def get_nutrition_database():
+    '''
+    Allows the user to select the nutrition database to use for
+    all CRUD operations.
+    '''
+    sg.theme('Reddit')
+
+    layout = [
+        [sg.Text('Please select the nutrition database:')],
+        [sg.Input(key='-NUTRITION-'), sg.FileBrowse()],
+        [
+            sg.Submit(button_color=Config.SUBMIT_BUTTON_COLOR),
+            sg.Cancel(button_color=Config.CANCEL_BUTTON_COLOR)
+        ]
+    ]
+
+    window = sg.Window('Nutrition Database Selector', layout)
+    event, values = window.read()
+    window.close()
+    return values['-NUTRITION-']
 
 
 def get_food(food_name):
@@ -25,7 +49,7 @@ def get_food(food_name):
 
 def add_food(food_name, kcal, protein):
     '''Adds a food's name, calories and protein to the nutrition database.'''
-    conn = sqlite3.connect('nutrition.db')
+    conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(

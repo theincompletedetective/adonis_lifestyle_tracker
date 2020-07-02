@@ -8,15 +8,18 @@ sg.theme('Reddit')
 
 layout = [
     [
-        sg.Text('Food Name', size=Config.LABEL_SIZE),
+        sg.Text(Config.FOOD_LABEL, size=Config.LABEL_SIZE),
         sg.Input(key='-FOOD-', size=Config.FOOD_SIZE)
     ],
     [
-        sg.Text('Week Number', size=Config.LABEL_SIZE),
+        sg.Text(Config.WEEK_LABEL, size=Config.LABEL_SIZE),
         sg.Input(key='-WEEK-', size=Config.WEEK_SIZE)
     ],
     [
-        sg.Button('Add Food', button_color=Config.SUBMIT_BUTTON_COLOR),
+        sg.Button(
+            Config.SUBMIT_BUTTON_TEXT,
+            button_color=Config.SUBMIT_BUTTON_COLOR
+        ),
         sg.Cancel(button_color=Config.CANCEL_BUTTON_COLOR)
     ]
 ]
