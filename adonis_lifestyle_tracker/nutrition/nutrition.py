@@ -26,17 +26,13 @@ def get_nutrition_database():
     return values['-NUTRITION-']
 
 
-def get_food(food_name):
+def get_food(food):
     '''Gets a food's calories and protein from the nutrition database.'''
     conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(
-        '''
-        SELECT kcal, protein FROM food
-            WHERE food_name == ?;
-        ''',
-        (food_name,)
+        'SELECT kcal, protein FROM food WHERE food == ?;', (food,)
     )
 
     food_tuple = cursor.fetchone() # id, kcal, protein
@@ -47,17 +43,17 @@ def get_food(food_name):
     return food_tuple
 
 
-def add_food(food_name, kcal, protein):
+def add_food(food, kcal, protein):
     '''Adds a food's name, calories and protein to the nutrition database.'''
     conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     cursor.execute(
         '''
-        INSERT INTO food (food_name, kcal, protein)
+        INSERT INTO food (food, kcal, protein)
             VALUES (?, ?, ?);
         ''',
-        (food_name, kcal, protein)
+        (food, kcal, protein)
     )
 
     conn.commit()
@@ -81,22 +77,19 @@ def add_week(week, total_kcal, total_protein):
     conn.close()
 
 
-def add_food_to_week(food_name, week):
+def add_food_to_week(food, week):
     '''Adds a food and week to the food_week table in the nutrition database.'''
     conn = sqlite3.connect( get_nutrition_database() )
     cursor = conn.cursor()
 
     # To get the name for the provided food
     cursor.execute(
-        "SELECT food_name FROM food WHERE food_name == ?;", (food_name,)
+        "SELECT food FROM food WHERE food == ?;", (food,)
     )
 
     # To add the food's name to the food_week relation table
     cursor.execute(
-        '''
-        INSERT INTO food_week (food_name, week_id)
-            VALUES (?, ?);
-        ''',
+        'INSERT INTO food_week (food, week) VALUES (?, ?);',
         (cursor.fetchone()[0], week)
     )
 
@@ -149,13 +142,13 @@ def get_kcal_left_for_week(week):
 
     # To get all the names for the food consumed in a given week
     cursor.execute(
-        "SELECT food_name FROM food_week WHERE week_id == ?;", (week,)
+        "SELECT food FROM food_week WHERE week == ?;", (week,)
     )
 
     # To get the number of calories for each food consumed in a given week
     for food_name_tuple in cursor.fetchall():
         cursor.execute(
-            "SELECT kcal FROM food WHERE food_name == ?;", (food_name_tuple[0],)
+            "SELECT kcal FROM food WHERE food == ?;", (food_name_tuple[0],)
         )
 
         # To substract the number of calories for all foods consume in a given week
@@ -185,13 +178,13 @@ def get_protein_left_for_week(week):
 
     # To get all the names for the food consumed in a given week
     cursor.execute(
-        "SELECT food_name FROM food_week WHERE week_id = ?;", (week,)
+        "SELECT food FROM food_week WHERE week = ?;", (week,)
     )
 
     # To get the grams of protein for each food consumed in a given week
     for food_name_tuple in cursor.fetchall():
         cursor.execute(
-            "SELECT protein FROM food WHERE food_name = ?;", (food_name_tuple[0],)
+            "SELECT protein FROM food WHERE food = ?;", (food_name_tuple[0],)
         )
 
         # To substract the grams of protein for all foods consume in a given week

@@ -63,7 +63,7 @@ while True:
 
         confirmation = get_confirmation(
             f'add the following total calories and total grams of protein '
-            f'to week {week}?\nCalories: {total_kcal}\nProtein: {total_protein}'
+            f'to week {week}?\nTotal Calories: {total_kcal}\nTotal Protein: {total_protein}'
         )
 
         if confirmation:

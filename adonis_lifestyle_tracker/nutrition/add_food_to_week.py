@@ -41,7 +41,7 @@ while True:
             continue
 
         try:
-            week_num = int(values[Config.WEEK_KEY])
+            week = int(values[Config.WEEK_KEY])
         except ValueError:
             sg.popup_error(
                 'You must select a number for the week.',
@@ -49,13 +49,13 @@ while True:
             )
             continue
 
-        confirmation = get_confirmation(f'add food "{food}" to week {week_num}')
+        confirmation = get_confirmation(f'add food "{food}" to week {week}')
 
         if confirmation:
             try:
-                add_food_to_week(food, week_num)
+                add_food_to_week(food, week)
                 sg.popup(
-                    f'"{food}" has been successfully added to week {week_num}!',
+                    f'"{food}" has been successfully added to week {week}!',
                     title='Success Message'
                 )
             except TypeError:
