@@ -2,12 +2,7 @@
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import Config
 from adonis_lifestyle_tracker.gui.confirmation_gui import get_confirmation
-from adonis_lifestyle_tracker.exercise.exercise import (
-    add_5_reps_resistance,
-    add_8_reps_resistance,
-    add_13_reps_resistance,
-    add_21_reps_resistance
-)
+from adonis_lifestyle_tracker.exercise.exercise import add_resistance
 
 sg.theme('Reddit')
 
@@ -77,13 +72,13 @@ while True:
 
         if confirmation:
             if choice == '5 Reps':
-                add_5_reps_resistance(resistance, week, exercise)
+                add_resistance('reps_5', resistance, week, exercise)
             elif choice == '8 Reps':
-                add_8_reps_resistance(resistance, week, exercise)
+                add_resistance('reps_8', resistance, week, exercise)
             elif choice == '13 Reps':
-                add_13_reps_resistance(resistance, week, exercise)
+                add_resistance('reps_13', resistance, week, exercise)
             elif choice == '21 Reps':
-                add_21_reps_resistance(resistance, week, exercise)
+                add_resistance('reps_21', resistance, week, exercise)
             else:
                 sg.popup('You must choose a rep range.', title='Error Message')
                 continue

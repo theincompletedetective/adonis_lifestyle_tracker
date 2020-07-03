@@ -73,80 +73,20 @@ def add_exercise_to_week(
     conn.close()
 
 
-def add_5_reps_resistance(resistance, week, exercise):
+def add_resistance(rep_range, resistance, week, exercise):
     '''
-    Adds the resistance used for five reps of the given exercise
-    to the specified week.
-    '''
-    conn = sqlite3.connect( get_exercise_database() )
-    cursor = conn.cursor()
-
-    cursor.execute(
-        '''
-        UPDATE exercise SET reps_5 = ?
-            WHERE week = ? AND exercise = ?;
-        ''',
-        (resistance, week, exercise)
-    )
-
-    conn.commit()
-    conn.close()
-
-
-def add_8_reps_resistance(week, exercise, resistance):
-    '''
-    Adds the resistance used for eight reps of the given exercise
-    to the specified week.
+    Adds the resistance used for the specified reps of the given exercise
+    to the provided week.
     '''
     conn = sqlite3.connect( get_exercise_database() )
     cursor = conn.cursor()
 
     cursor.execute(
         '''
-        UPDATE exercise SET reps_8 = ?
+        UPDATE exercise SET ? = ?
             WHERE week = ? AND exercise = ?;
         ''',
-        (resistance, week, exercise)
-    )
-
-    conn.commit()
-    conn.close()
-
-
-def add_13_reps_resistance(week, exercise, resistance):
-   '''
-    Adds the resistance used for 13 reps of the given exercise
-    to the specified week.
-    '''
-    conn = sqlite3.connect( get_exercise_database() )
-    cursor = conn.cursor()
-
-    cursor.execute(
-        '''
-        UPDATE exercise SET reps_13 = ?
-            WHERE week = ? AND exercise = ?;
-        ''',
-        (resistance, week, exercise)
-    )
-
-    conn.commit()
-    conn.close()
-
-
-def add_21_reps_resistance(week, exercise, resistance):
-    '''
-    Adds the resistance used for 21 reps of the given exercise
-    to the specified week.
-    '''
-    conn = sqlite3.connect( get_exercise_database() )
-    cursor = conn.cursor()
-
-    cursor.execute(
-        '''
-        UPDATE exercise SET reps_21 = ?
-            WHERE week = ? AND exercise = ?;
-        ''',
-        (resistance, week, exercise)
+        (rep_range, resistance, week, exercise)
     )
 
     conn.commit()
