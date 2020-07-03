@@ -50,7 +50,9 @@ def get_exercise_from_week(exercise, week):
     return exercise_tuple
 
 
-def add_exercise_to_week(week, exercise, equipment):
+def add_exercise_to_week(
+        week, exercise, equipment, reps_5=None,
+        reps_8=None, reps_13=None, reps_21=None):
     '''
     Adds an exercise's name and equipment to the specified week in the database.
     '''
@@ -60,11 +62,11 @@ def add_exercise_to_week(week, exercise, equipment):
     cursor.execute(
         '''
         INSERT INTO week (
-            id, exercise_name, equipment
+            id, exercise_name, equipment, reps_5, reps_8, reps_13, reps_21
         )
-            VALUES (?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?, ?);
         ''',
-        (week, exercise, equipment)
+        (week, exercise, equipment, reps_5, reps_8, reps_13, reps_21)
     )
 
     conn.commit()

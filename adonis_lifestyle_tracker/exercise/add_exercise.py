@@ -6,10 +6,11 @@ from adonis_lifestyle_tracker.exercise.exercise import add_exercise_to_week
 
 sg.theme('Reddit')
 
-layout = [
+required_layout = [
     [
-        sg.Text(Config.WEEK_LABEL, size=Config.LABEL_SIZE),
-        sg.Input(key=Config.WEEK_KEY, size=Config.WEEK_SIZE)
+        sg.Frame('Week', layout=[
+            [sg.Input(key=Config.WEEK_KEY, size=Config.WEEK_SIZE)],
+        ]),
     ],
     [
         sg.Text(Config.EXERCISE_LABEL, size=Config.LABEL_SIZE),
@@ -18,6 +19,38 @@ layout = [
     [
         sg.Text(Config.EQUIPMENT_LABEL, size=Config.LABEL_SIZE),
         sg.Input(key=Config.EQUIPMENT_KEY, size=Config.EXERCISE_SIZE)
+    ],
+]
+
+optional_layout = [
+    [
+        sg.Text(Config.REPS_5_LABEL, size=Config.LABEL_SIZE),
+        sg.Input(key=Config.REPS_5_KEY, size=Config.NUMBER_SIZE)
+    ],
+    [
+        sg.Text(Config.REPS_8_LABEL, size=Config.LABEL_SIZE),
+        sg.Input(key=Config.REPS_8_KEY, size=Config.NUMBER_SIZE)
+    ],
+    [
+        sg.Text(Config.REPS_13_LABEL, size=Config.LABEL_SIZE),
+        sg.Input(key=Config.REPS_13_KEY, size=Config.NUMBER_SIZE)
+    ],
+    [
+        sg.Text(Config.REPS_21_LABEL, size=Config.LABEL_SIZE),
+        sg.Input(key=Config.REPS_21_KEY, size=Config.NUMBER_SIZE)
+    ]
+]
+
+layout = [
+    [
+        sg.TabGroup(
+            [
+                [
+                    sg.Tab('Required', required_layout),
+                    sg.Tab('Optional', optional_layout)
+                ]
+            ]
+        )
     ],
     [
         sg.Button(
