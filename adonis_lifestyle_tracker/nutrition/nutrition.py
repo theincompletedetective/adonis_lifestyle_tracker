@@ -64,23 +64,6 @@ def add_food(food_name, kcal, protein):
     conn.close()
 
 
-def update_food_name(old_food_name, new_food_name):
-    '''Updates the name of a food in the nutrition database.'''
-    conn = sqlite3.connect( get_nutrition_database() )
-    cursor = conn.cursor()
-
-    cursor.execute(
-        '''
-        UPDATE food SET food_name = ?
-            WHERE food_name = ?;
-        ''',
-        (new_food_name, old_food_name)
-    )
-
-    conn.commit()
-    conn.close()
-
-
 def add_week(week, total_kcal, total_protein):
     '''Adds a week to the week table in the nutrition database.'''
     conn = sqlite3.connect( get_nutrition_database() )

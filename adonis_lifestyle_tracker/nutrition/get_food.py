@@ -2,7 +2,7 @@
 import pprint
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import Config
-from adonis_lifestyle_tracker.gui.confirmation_gui import get_confirmation
+from adonis_lifestyle_tracker.confirmation.confirmation import get_confirmation
 from adonis_lifestyle_tracker.nutrition.nutrition import get_food
 
 
