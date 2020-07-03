@@ -80,8 +80,8 @@ while True:
             continue
 
         confirmation = get_confirmation(
-            f'add {resistance} resistance to the "{choice}" rep range, '
-            f'for {exercise} exercise, for week {week}'
+            f'update the "{choice}" rep range of the {exercise} exercise '
+            f'for week {week}, with {resistance} of resistance'
         )
 
         if confirmation:

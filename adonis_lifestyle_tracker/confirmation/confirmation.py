@@ -1,10 +1,10 @@
 '''Contains the functions to confirm some action(s).'''
 import PySimpleGUI as sg
 
+sg.theme('Reddit')
+
 
 def get_confirmation(act_to_confirm):
-    sg.theme('Reddit')
-
     layout = [
         [sg.Text(f'Are you sure you want to {act_to_confirm}?')],
         [
