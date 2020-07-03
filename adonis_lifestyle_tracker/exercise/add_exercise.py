@@ -99,8 +99,7 @@ while True:
         reps_13 = values[Config.REPS_13_KEY].strip()
         reps_21 = values[Config.REPS_21_KEY].strip()
 
-        if not validate_resistance(
-                reps_5=reps_5, reps_8=reps_8, reps_13=reps_13, reps_21=reps_21):
+        if not validate_resistance(reps_5, reps_8, reps_13, reps_21):
             sg.popup(
                 'You have entered an invalid value for one of the rep ranges.',
                 title='Error Message'

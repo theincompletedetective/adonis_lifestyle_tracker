@@ -1,7 +1,10 @@
 '''Updates the resistance for an exercise in a given week and rep range.'''
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import Config
-from adonis_lifestyle_tracker.gui.confirmation_gui import get_confirmation
+from adonis_lifestyle_tracker.validation.validate_exercise import (
+    validate_resistance
+)
+from adonis_lifestyle_tracker.confirmation.confirmation import get_confirmation
 from adonis_lifestyle_tracker.exercise.exercise import add_resistance
 
 sg.theme('Reddit')
@@ -53,21 +56,32 @@ while True:
 
         exercise = values[Config.EXERCISE_KEY].strip()
         resistance = values['-RESISTANCE-'].strip()
-        choice = values['-CHOICE-'][0].strip()
+
+        try:
+            choice = values['-CHOICE-'][0]
+        except IndexError:
+            choice = None
 
         if not exercise:
             sg.popup_error('You must enter an exercise.', title='Error Message')
             continue
 
-        if not resistance:
+        if not resistance or not validate_resistance(resistance):
             sg.popup_error(
-                'You must enter some resistance.', title='Error Message'
+                'You must enter some resistance in the correct format.',
+                title='Error Message'
+            )
+            continue
+
+        if not choice:
+            sg.popup_error(
+                'You must choose a rep range.', title='Error Message'
             )
             continue
 
         confirmation = get_confirmation(
-            f'add {resistance} resistance to {exercise} exercise, '
-            f'for week {week}'
+            f'add {resistance} resistance to the "{choice}" rep range, '
+            f'for {exercise} exercise, for week {week}'
         )
 
         if confirmation:
@@ -79,9 +93,6 @@ while True:
                 add_resistance('reps_13', resistance, week, exercise)
             elif choice == '21 Reps':
                 add_resistance('reps_21', resistance, week, exercise)
-            else:
-                sg.popup('You must choose a rep range.', title='Error Message')
-                continue
 
             sg.popup(
                 f'{resistance} resistance has been successfully added '
