@@ -1,5 +1,4 @@
 '''Contains the functions to confirm some action(s).'''
-
 import PySimpleGUI as sg
 
 
@@ -26,6 +25,6 @@ def get_confirmation(act_to_confirm):
             return True
         else:
             continue
-    
+
     window.close()
     return False

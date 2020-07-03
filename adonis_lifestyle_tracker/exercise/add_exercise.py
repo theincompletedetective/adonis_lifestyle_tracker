@@ -1,7 +1,10 @@
 '''Adds an exercise and its equipment to the specified week in the database.'''
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import Config
-from adonis_lifestyle_tracker.gui.confirmation_gui import get_confirmation
+from adonis_lifestyle_tracker.confirmation.confirmation import get_confirmation
+from adonis_lifestyle_tracker.validation.validate_exercise import (
+    validate_resistance
+)
 from adonis_lifestyle_tracker.exercise.exercise import add_exercise_to_week
 
 sg.theme('Reddit')
@@ -80,12 +83,6 @@ while True:
         exercise = values[Config.EXERCISE_KEY].strip()
         equipment = values[Config.EQUIPMENT_KEY].strip()
 
-        # Optional Fields
-        reps_5 = values[Config.REPS_5_KEY].strip()
-        reps_8 = values[Config.REPS_8_KEY].strip()
-        reps_13 = values[Config.REPS_13_KEY].strip()
-        reps_21 = values[Config.REPS_21_KEY].strip()
-
         if not exercise:
             sg.popup_error('You must enter an exercise.', title='Error Message')
             continue
@@ -96,9 +93,23 @@ while True:
             )
             continue
 
+        # Optional Fields
+        reps_5 = values[Config.REPS_5_KEY].strip()
+        reps_8 = values[Config.REPS_8_KEY].strip()
+        reps_13 = values[Config.REPS_13_KEY].strip()
+        reps_21 = values[Config.REPS_21_KEY].strip()
+
+        if not validate_resistance(
+                reps_5=reps_5, reps_8=reps_8, reps_13=reps_13, reps_21=reps_21):
+            sg.popup(
+                'You have entered an invalid value for one of the rep ranges.',
+                title='Error Message'
+            )
+            continue
+
         confirmation = get_confirmation(
             f'add the "{exercise}" exercise\n'
-            f'and "{equipment}" equipment to week {week}.'
+            f'and "{equipment}" equipment to week {week}'
         )
 
         if confirmation:
