@@ -26,7 +26,7 @@ def get_exercise_database():
     return values['-EXERCISE-']
 
 
-def get_exercise_from_week(exercise, week):
+def get_exercise_from_week(week, exercise):
     '''
     Get an exercise's information from the specified week in the database.
     '''
@@ -35,11 +35,11 @@ def get_exercise_from_week(exercise, week):
 
     cursor.execute(
         '''
-        SELECT exercise_name, equipment, reps_5, reps_8, reps_13, reps_21
-            FROM week
-            WHERE exercise_name == ? and id == ?
+        SELECT week, exercise, equipment, reps_5, reps_8, reps_13, reps_21
+            FROM exercise
+            WHERE week == ? and exercise == ?
         ''',
-        (exercise, week,)
+        (week, exercise,)
     )
 
     exercise_tuple = cursor.fetchone()
@@ -61,8 +61,8 @@ def add_exercise_to_week(
 
     cursor.execute(
         '''
-        INSERT INTO week (
-            id, exercise_name, equipment, reps_5, reps_8, reps_13, reps_21
+        INSERT INTO exercise (
+            week, exercise, equipment, reps_5, reps_8, reps_13, reps_21
         )
             VALUES (?, ?, ?, ?, ?, ?, ?);
         ''',
@@ -99,39 +99,3 @@ def add_21_reps_resistance(week, exercise, resistance):
     Adds the resistance used for 13 reps of the given exercise
     to the specified week.
     '''
-
-
-def add_week(week_num):
-    '''Adds a week to the week database table.'''
-    conn = sqlite3.connect('exercise.db')
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "INSERT INTO week (id) VALUES (?);", (week_num,)
-    )
-
-    conn.commit()
-    conn.close()
-
-
-def add_exercise_to_week(exercise, week):
-    '''Adds an exercise to a given week.'''
-    conn = sqlite3.connect('exercise.db')
-    cursor = conn.cursor()
-
-    # To get the ID for the provided exercise
-    cursor.execute(
-        "SELECT id FROM exercise WHERE exercise_name == ?;", (exercise,)
-    )
-
-    # To add the exercise's ID to the exercise_week relation table
-    cursor.execute(
-        '''
-        INSERT INTO exercise_week (exercise_id, week_id)
-            VALUES (?, ?);
-        ''',
-        (cursor.fetchone()[0], week)
-    )
-
-    conn.commit()
-    conn.close()

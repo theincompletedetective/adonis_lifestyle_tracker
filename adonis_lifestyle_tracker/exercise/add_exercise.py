@@ -76,8 +76,15 @@ while True:
             )
             continue
 
+        # Required Fields
         exercise = values[Config.EXERCISE_KEY].strip()
         equipment = values[Config.EQUIPMENT_KEY].strip()
+
+        # Optional Fields
+        reps_5 = values[Config.REPS_5_KEY].strip()
+        reps_8 = values[Config.REPS_8_KEY].strip()
+        reps_13 = values[Config.REPS_13_KEY].strip()
+        reps_21 = values[Config.REPS_21_KEY].strip()
 
         if not exercise:
             sg.popup_error('You must enter an exercise.', title='Error Message')
@@ -90,15 +97,18 @@ while True:
             continue
 
         confirmation = get_confirmation(
-            f'add the "{exercise}" exercise and "{equipment}" equipment '
-            f'to week {week} in the database'
+            f'add the "{exercise}" exercise\n'
+            f'and "{equipment}" equipment to week {week}.'
         )
 
         if confirmation:
-            add_exercise(week, exercise, equipment)
+            add_exercise_to_week(
+                week, exercise, equipment, reps_5=reps_5,
+                reps_8=reps_8, reps_13=reps_13, reps_21=reps_21
+            )
             sg.popup(
-                f'The "{exercise}" exercise and "{equipment}" equipment have '
-                f'been successfully added to week {week} in the database.',
+                f'The "{exercise}" exercise and "{equipment}" equipment have\n'
+                f'been successfully added to week {week}.',
                 title='Success Message'
             )
 
