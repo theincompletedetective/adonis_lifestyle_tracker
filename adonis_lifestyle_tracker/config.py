@@ -12,18 +12,23 @@ class Config:
     FOOD_SIZE = (30, 1)
     NUMBER_SIZE = (10, 1)
     WEEK_SIZE = (5, 1)
+    EXERCISE_SIZE = (35, 1)
 
     # Label Text
     FOOD_LABEL = 'Food Name'
     WEEK_LABEL = 'Week Number'
     KCAL_LABEL = 'Calories (kcal)'
     PROTEIN_LABEL = 'Protein (g)'
+    EXERCISE_LABEL = 'Exercise'
+    EQUIPMENT_LABEL = 'Equipment'
 
     # PySimpleGUI Keys
     FOOD_KEY = '-FOOD-'
     KCAL_KEY = '-CALORIES-'
     PROTEIN_KEY = '-PROTEIN-'
     WEEK_KEY = '-WEEK-'
+    EXERCISE_KEY = '-EXERCISE-'
+    EQUIPMENT_KEY = '-EQUIPMENT-'
 
     # Tooltips
     FOOD_TOOLTIP = (
