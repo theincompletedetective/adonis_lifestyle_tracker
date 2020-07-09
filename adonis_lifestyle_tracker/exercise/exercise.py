@@ -26,6 +26,34 @@ def get_exercise_database():
     return values['-EXERCISE-']
 
 
+def add_exercise(exercise, equipment):
+    '''
+    Adds the specified exercise and equipment to the exercise and equipment
+    tables in the database.
+    '''
+    conn = sqlite3.connect( get_exercise_database() )
+    cursor = conn.cursor()
+
+    # To make sure equipment isn't already in database
+    try:
+        equipment_id = cursor.execute(
+            'SELECT id from equipment where id = ?', (equipment,)
+        ).fetchone()[0]
+    except TypeError:
+        cursor.execute( 'INSERT INTO equipment (id) VALUES (?)', (equipment,) )
+        equipment_id = equipment
+
+    cursor.execute(
+        '''
+        INSERT INTO exercise (id, equipment_id) VALUES (?, ?);
+        ''',
+        (exercise, equipment_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+
 def get_exercise_from_week(week, exercise):
     '''
     Get an exercise's information from the specified week in the database.
@@ -34,46 +62,46 @@ def get_exercise_from_week(week, exercise):
     cursor = conn.cursor()
 
     cursor.execute(
-        '''
-        SELECT week, exercise, equipment, reps_5, reps_8, reps_13, reps_21
-            FROM exercise
-            WHERE week == ? and exercise == ?
-        ''',
+        'SELECT * FROM week WHERE id == ? AND exercise_id == ?',
         (week, exercise,)
     )
 
-    exercise_tuple = cursor.fetchone()
+    week_tuple = cursor.fetchone()
+
+    cursor.execute( 'SELECT equipment FROM exercise WHERE id = ?', (exercise,) )
+
+    equipment_tuple = cursor.fetchone()
 
     conn.commit()
     conn.close()
 
-    return exercise_tuple
+    return (*week_tuple, *equipment_tuple,)
 
 
 def add_exercise_to_week(
-        week, exercise, equipment, reps_5=None,
+        week, exercise, reps_5=None,
         reps_8=None, reps_13=None, reps_21=None):
     '''
-    Adds an exercise's name and equipment to the specified week in the database.
+    Adds an exercise's id to the specified week in the database.
     '''
     conn = sqlite3.connect( get_exercise_database() )
     cursor = conn.cursor()
 
     cursor.execute(
         '''
-        INSERT INTO exercise (
-            week, exercise, equipment, reps_5, reps_8, reps_13, reps_21
+        INSERT INTO week (
+            id, exercise_id, reps_5, reps_8, reps_13, reps_21
         )
-            VALUES (?, ?, ?, ?, ?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?);
         ''',
-        (week, exercise, equipment, reps_5, reps_8, reps_13, reps_21)
+        (week, exercise, reps_5, reps_8, reps_13, reps_21,)
     )
 
     conn.commit()
     conn.close()
 
 
-def add_resistance(rep_range, resistance, week, exercise):
+def add_resistance_to_week(rep_range, resistance, week, exercise):
     '''
     Adds the resistance used for the specified reps of the given exercise
     to the provided week.
@@ -83,10 +111,9 @@ def add_resistance(rep_range, resistance, week, exercise):
 
     cursor.execute(
         '''
-        UPDATE exercise SET ? = ?
-            WHERE week = ? AND exercise = ?;
+        UPDATE week SET ? = ? WHERE id = ? AND exercise_id = ?;
         ''',
-        (rep_range, resistance, week, exercise)
+        (rep_range, resistance, week, exercise,)
     )
 
     conn.commit()
