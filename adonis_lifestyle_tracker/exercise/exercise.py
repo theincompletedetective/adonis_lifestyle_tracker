@@ -26,12 +26,22 @@ def get_exercise_database():
     return values['-EXERCISE-']
 
 
-def add_exercise(exercise, equipment):
+def get_cursor(db):
+    '''Gets the cursor which allows changes to be made to the database.'''
+    conn = sqlite3.connect(db)
+    return conn.cursor()
+
+
+def add_exercise(exercise, equipment, database_path=None):
     '''
     Adds the specified exercise and equipment to the exercise and equipment
     tables in the database.
     '''
-    conn = sqlite3.connect( get_exercise_database() )
+    if database_path:
+        conn = sqlite3.connect(database_path)
+    else:
+        conn = sqlite3.connect( get_exercise_database() )
+
     cursor = conn.cursor()
 
     # To make sure equipment isn't already in database

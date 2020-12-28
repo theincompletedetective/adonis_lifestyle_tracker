@@ -21,7 +21,7 @@ def get_nutrition_database():
     ]
 
     window = sg.Window('Nutrition Database Selector', layout)
-    event, values = window.read()
+    values = window.read()[1]
     window.close()
     return values['-NUTRITION-']
 
