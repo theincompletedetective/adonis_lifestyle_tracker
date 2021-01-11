@@ -7,6 +7,9 @@ class Config:
     '''
     Contains all the configurations for each field in each GUI module.
     '''
+    # Absolute paths to databases
+    NUTRITION_DB_PATH = '/home/elijah/Programming/Python/projects/adonis_lifestyle_tracker/adonis_lifestyle_tracker/nutrition/nutrition.db'
+
     # Text Labels and Input Field Sizes
     LABEL_SIZE = (17, 1)
     FOOD_SIZE = (30, 1)

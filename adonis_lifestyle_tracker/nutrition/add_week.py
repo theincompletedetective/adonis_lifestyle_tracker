@@ -67,7 +67,7 @@ while True:
         )
 
         if confirmation:
-            add_week(week, total_kcal, total_protein)
+            add_week(Config.NUTRITION_DB_PATH, week, total_kcal, total_protein)
             sg.popup(
                 f'Week {week} has been added to the database, with '
                 f'{total_kcal} total calories and {total_protein} total grams '

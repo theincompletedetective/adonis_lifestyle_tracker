@@ -49,13 +49,13 @@ while True:
 
             if choice == 'Calories':
                 sg.popup(
-                    f'You have {get_kcal_left_for_week(week)}kcal left for '
+                    f'You have {get_kcal_left_for_week(Config.NUTRITION_DB_PATH, week)}kcal left for '
                     f'week {week}.',
                     title='Info Message'
                 )
             elif choice == 'Protein':
                 sg.popup(
-                    f'You have {get_protein_left_for_week(week)} grams '
+                    f'You have {get_protein_left_for_week(Config.NUTRITION_DB_PATH, week)} grams '
                     f'of protein left for week {week}.',
                     title='Info Message'
                 )

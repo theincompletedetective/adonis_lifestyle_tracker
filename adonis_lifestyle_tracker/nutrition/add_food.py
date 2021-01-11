@@ -71,7 +71,7 @@ while True:
 
         if confirmation:
             try:
-                add_food(food, kcal, protein)
+                add_food(Config.NUTRITION_DB_PATH, food, kcal, protein)
                 sg.popup(
                     f'The food "{food}" has been successfully added\n'
                     'to the nutrition database.',

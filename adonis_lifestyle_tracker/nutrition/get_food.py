@@ -1,8 +1,6 @@
 ''''Gets a food's name, calories and/or protein from the database.'''
-import pprint
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import Config
-from adonis_lifestyle_tracker.confirmation.confirmation import get_confirmation
 from adonis_lifestyle_tracker.nutrition.nutrition import get_food
 
 
@@ -34,7 +32,7 @@ while True:
             continue
 
         try:
-            kcal, protein = get_food(food)
+            kcal, protein = get_food(Config.NUTRITION_DB_PATH, food)
             sg.popup(
                 f"Calories: {kcal}kcal\nProtein: {protein}g",
                 title=food

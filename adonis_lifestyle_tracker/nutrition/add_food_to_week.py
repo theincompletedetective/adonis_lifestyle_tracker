@@ -53,7 +53,7 @@ while True:
 
         if confirmation:
             try:
-                add_food_to_week(food, week)
+                add_food_to_week(Config.NUTRITION_DB_PATH, food, week)
                 sg.popup(
                     f'"{food}" has been successfully added to week {week}!',
                     title='Success Message'
