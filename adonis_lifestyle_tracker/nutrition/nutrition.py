@@ -176,9 +176,9 @@ def get_weekly_kcal_left(week):
     conn.close()
 
     if total_weekly_kcal >= 0:
-        return total_weekly_kcal
-
-    return 0
+        print(f'You have {total_weekly_kcal} calories left for the week.')
+    else:
+        print('You have zero calories left for the week!')
 
 
 @click.command()
@@ -211,6 +211,6 @@ def get_weekly_protein_left(week):
     conn.close()
 
     if total_weekly_protein >= 0:
-        return total_weekly_protein
-
-    return 0
+        print(f'You have {total_weekly_protein} grams of protein left for the week.')
+    else:
+        print(f'You have zero grams of protein left for the week!')
