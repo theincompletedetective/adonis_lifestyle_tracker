@@ -21,8 +21,8 @@ setup(
         get_food=adonis_lifestyle_tracker.nutrition.nutrition:get_food
         add_week=adonis_lifestyle_tracker.nutrition.nutrition:add_week
         add_food_to_week=adonis_lifestyle_tracker.nutrition.nutrition:add_food_to_week
-        get_weekly_calories=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_kcal
-        get_weekly_protein=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_protein
+        get_weekly_calories_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_kcal_left
+        get_weekly_protein_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_protein_left
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",
