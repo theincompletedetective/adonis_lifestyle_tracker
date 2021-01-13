@@ -9,6 +9,7 @@ class Config:
     '''
     # Absolute paths to databases
     NUTRITION_DB_PATH = '/home/elijah/Programming/Python/projects/adonis_lifestyle_tracker/adonis_lifestyle_tracker/nutrition/nutrition.db'
+    EXERCISE_DB_PATH = '/home/elijah/Programming/Python/projects/adonis_lifestyle_tracker/adonis_lifestyle_tracker/exercise/exercise.db'
 
     # Text Labels and Input Field Sizes
     LABEL_SIZE = (17, 1)

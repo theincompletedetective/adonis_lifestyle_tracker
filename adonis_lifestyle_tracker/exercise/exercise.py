@@ -6,120 +6,160 @@ from adonis_lifestyle_tracker.config import Config
 
 
 @click.command()
-@click.option('-e', '--equipment', required=True, help='Name of the equipment used for the exercise.')
-def add_equipment(equipment):
-    '''Adds the specified equipment to the table in the exercise database.'''
+@click.argument('week')
+def add_week(week):
+    '''Adds a week number to the week table of the exercise database.'''
     conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     try:
-        cursor.execute( 'INSERT INTO equipment (id) VALUES (?)', (equipment,) )
+        cursor.execute( 'INSERT INTO week (id) VALUES (?)', (week,) )
     except IntegrityError:
-        print(f'The equipment "{equipment}" is already in the database.')
+        print(f'Week number {week} is already in the database.')
     else:
         conn.commit()
-        print(f'The equipment "{equipment}" has been successfully added to the database!')
+        print(f'Week number {week} has been successfully added to the database!')
     finally:
         conn.close()
 
 
 @click.command()
-@click.option('--exercise', required=True, help='Name of the exercise.')
-@click.option('--equipment', required=True, help='Name of the equipment used for the exercise.')
-def add_exercise(exercise, equipment):
+@click.argument('exercise')
+def add_exercise(exercise):
+    '''Adds the specified exercise to the exercise table in the exercise database.'''
+    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute( 'INSERT INTO exercise (id) VALUES (?)', (exercise,) )
+    except IntegrityError:
+        print(f'The exercise "{exercise}" is already in the database.')
+    else:
+        conn.commit()
+        print(f'The exercise "{exercise}" has been successfully added to the database!')
+    finally:
+        conn.close()
+
+
+@click.command()
+@click.argument('tool')
+def add_equipment(tool):
+    '''Adds the specified tool to the equipment table in the exercise database.'''
+    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute( 'INSERT INTO equipment (id) VALUES (?)', (tool,) )
+    except IntegrityError:
+        print(f'The equipment "{tool}" is already in the database.')
+    else:
+        conn.commit()
+        print(f'The equipment "{tool}" has been successfully added to the database!')
+    finally:
+        conn.close()
+
+
+@click.command()
+@click.argument('resistance')
+def add_resistance(resistance):
+    '''Adds the specified resistance to the resistance table in the exercise database.'''
+    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute( 'INSERT INTO resistance (id) VALUES (?)', (resistance,) )
+    except IntegrityError:
+        print(f'The resistance "{resistance}" is already in the database.')
+    else:
+        conn.commit()
+        print(f'The resistance "{resistance}" has been successfully added to the database!')
+    finally:
+        conn.close()
+
+
+@click.command()
+@click.argument('reps')
+def add_reps(reps):
+    '''Adds the specified reps to the reps table in the exercise database.'''
+    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute( 'INSERT INTO reps (id) VALUES (?)', (reps,) )
+    except IntegrityError:
+        print(f'{reps} reps is already in the database.')
+    else:
+        conn.commit()
+        print(f'{reps} reps has been successfully added to the database!')
+    finally:
+        conn.close()
+
+
+@click.command()
+@click.option('-w', '--week', required=True, help='Week number.')
+@click.option('-e', '--exercise', required=True, help='Name of the exercise.')
+@click.option('-t', '--tool', required=True, help='Name of the equipment used for the exercise.')
+@click.option('-r', '--resistance', help='Amount of resistance used for the exercise.')
+@click.option('--reps', help='Number of repititions used for the exercise.')
+def add_exercise_to_week(week, exercise, tool, resistance, reps):
     '''
-    Adds the specified exercise and equipment to the exercise and equipment
-    tables in the database.
+    Adds the specified week, equipment, resistance, and reps to the exercise_relation
+    table in the exercise database.
     '''
     conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
-    # TODO: Make sure that the equipment already exists in the equipment table
-    cursor.execute('SELECT id from equipment WHERE id == ?', (equipment,) )
+    # TODO: Make sure that the week is already in the database
+    cursor.execute('SELECT id from week WHERE id == ?', (week,) )
+    week_in_db = cursor.fetchone()
 
-    equipment_in_db = cursor.fetchone()
+    # TODO: Make sure that the exercise is already in the database
+    cursor.execute('SELECT id from exercise WHERE id == ?', (exercise,) )
+    exercise_in_db = cursor.fetchone()
 
-    if equipment_in_db:
+    # TODO: Make sure that the equipment is already in the database
+    cursor.execute('SELECT id from equipment WHERE id == ?', (tool,) )
+    tool_in_db = cursor.fetchone()
+
+    # TODO: Make sure that the resistance is already in the database
+    cursor.execute('SELECT id from resistance WHERE id == ?', (resistance,) )
+    resistance_in_db = cursor.fetchone()
+
+    # TODO: Make sure that the number of reps is already in the database
+    cursor.execute('SELECT id from reps WHERE id == ?', (reps,) )
+    reps_in_db = cursor.fetchone()
+
+    if not week_in_db:
+        print(f"The week {week} is not in the database.")
+    elif not exercise_in_db:
+        print(f"The exercise '{exercise}' is not in the database.")
+    elif not tool_in_db:
+        print(f"The equipment '{tool}' is not in the database.")
+    elif not resistance_in_db:
+        print(f"The resistance '{resistance}' is not in the database.")
+    elif not reps_in_db:
+        print(f"{reps} reps is not in the database.")
+    else:
         try:
             cursor.execute(
-                'INSERT INTO exercise (id, equipment_id) VALUES (?, ?);',
-                (exercise, equipment)
+                '''
+                INSERT INTO exercise_relation (week_id, exercise_id, equipment_id, resistance_id, reps_id)
+                    VALUES (?, ?, ?, ?, ?);
+                ''',
+                (week, exercise, tool, resistance, reps)
             )
         except IntegrityError:
-            print(f"The exercise '{exercise}' is already in the database.")
+            print(
+                f'Week {week} with exercise "{exercise}," '
+                f'equipment "{tool}," resistance "{resistance}," '
+                f'and {reps} reps is already in the database.'
+            )
         else:
             conn.commit()
             print(
-                f'The exercise "{exercise}" has been successfully added to the database, '
-                f'with the equipment "{equipment}"!'
+                f'Week {week} with exercise "{exercise}," '
+                f'equipment "{tool}," resistance "{resistance}," '
+                f'and {reps} reps has been successfully added to the database!'
             )
-    else:
-        print(f"The equipment '{equipment}' is not in the database.")
-
-    conn.close()
-
-
-def get_exercise_from_week(week, exercise):
-    '''
-    Get an exercise's information from the specified week in the database.
-    '''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
-    cursor = conn.cursor()
-
-    cursor.execute(
-        'SELECT * FROM week WHERE id == ? AND exercise_id == ?',
-        (week, exercise,)
-    )
-
-    week_tuple = cursor.fetchone()
-
-    cursor.execute( 'SELECT equipment FROM exercise WHERE id = ?', (exercise,) )
-
-    equipment_tuple = cursor.fetchone()
-
-    conn.commit()
-    conn.close()
-
-    return (*week_tuple, *equipment_tuple,)
-
-
-def add_exercise_to_week(
-        week, exercise, reps_5=None,
-        reps_8=None, reps_13=None, reps_21=None):
-    '''
-    Adds an exercise's id to the specified week in the database.
-    '''
-    conn = sqlite3.connect( get_exercise_database() )
-    cursor = conn.cursor()
-
-    cursor.execute(
-        '''
-        INSERT INTO week (
-            id, exercise_id, reps_5, reps_8, reps_13, reps_21
-        )
-            VALUES (?, ?, ?, ?, ?, ?);
-        ''',
-        (week, exercise, reps_5, reps_8, reps_13, reps_21,)
-    )
-
-    conn.commit()
-    conn.close()
-
-
-def add_resistance_to_week(rep_range, resistance, week, exercise):
-    '''
-    Adds the resistance used for the specified reps of the given exercise
-    to the provided week.
-    '''
-    conn = sqlite3.connect( get_exercise_database() )
-    cursor = conn.cursor()
-
-    cursor.execute(
-        '''
-        UPDATE week SET ? = ? WHERE id = ? AND exercise_id = ?;
-        ''',
-        (rep_range, resistance, week, exercise,)
-    )
-
-    conn.commit()
-    conn.close()
+        finally:
+            conn.close()

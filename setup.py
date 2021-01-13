@@ -19,10 +19,17 @@ setup(
         [console_scripts]
         add_food=adonis_lifestyle_tracker.nutrition.nutrition:add_food
         get_food=adonis_lifestyle_tracker.nutrition.nutrition:get_food
-        add_week=adonis_lifestyle_tracker.nutrition.nutrition:add_week
+        add_weekly_nutrition=adonis_lifestyle_tracker.nutrition.nutrition:add_week
         add_food_to_week=adonis_lifestyle_tracker.nutrition.nutrition:add_food_to_week
         get_weekly_calories_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_kcal_left
         get_weekly_protein_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_protein_left
+
+        add_weekly_exercise=adonis_lifestyle_tracker.exercise.exercise:add_week
+        add_exercise=adonis_lifestyle_tracker.exercise.exercise:add_exercise
+        add_equipment=adonis_lifestyle_tracker.exercise.exercise:add_equipment
+        add_resistance=adonis_lifestyle_tracker.exercise.exercise:add_resistance
+        add_reps=adonis_lifestyle_tracker.exercise.exercise:add_reps
+        add_exercise_to_week=adonis_lifestyle_tracker.exercise.exercise:add_exercise_to_week
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",
