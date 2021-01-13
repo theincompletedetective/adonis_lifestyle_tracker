@@ -1,66 +1,61 @@
 '''Contains the functions needed to CRUD exercise data in the database.'''
 import sqlite3
-import PySimpleGUI as sg
+from sqlite3 import IntegrityError
+import click
 from adonis_lifestyle_tracker.config import Config
 
 
-def get_exercise_database():
-    '''
-    Allows the user to select the exercise database to use for
-    all CRUD operations.
-    '''
-    sg.theme('Reddit')
+@click.command()
+@click.option('-e', '--equipment', required=True, help='Name of the equipment used for the exercise.')
+def add_equipment(equipment):
+    '''Adds the specified equipment to the table in the exercise database.'''
+    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    cursor = conn.cursor()
 
-    layout = [
-        [sg.Text('Please select the exercise database:')],
-        [sg.Input(key='-EXERCISE-'), sg.FileBrowse()],
-        [
-            sg.Submit(button_color=Config.SUBMIT_BUTTON_COLOR),
-            sg.Cancel(button_color=Config.CANCEL_BUTTON_COLOR)
-        ]
-    ]
-
-    window = sg.Window('Exercise Database Selector', layout)
-    event, values = window.read()
-    window.close()
-    return values['-EXERCISE-']
+    try:
+        cursor.execute( 'INSERT INTO equipment (id) VALUES (?)', (equipment,) )
+    except IntegrityError:
+        print(f'The equipment "{equipment}" is already in the database.')
+    else:
+        conn.commit()
+        print(f'The equipment "{equipment}" has been successfully added to the database!')
+    finally:
+        conn.close()
 
 
-def get_cursor(db):
-    '''Gets the cursor which allows changes to be made to the database.'''
-    conn = sqlite3.connect(db)
-    return conn.cursor()
-
-
-def add_exercise(exercise, equipment, database_path=None):
+@click.command()
+@click.option('--exercise', required=True, help='Name of the exercise.')
+@click.option('--equipment', required=True, help='Name of the equipment used for the exercise.')
+def add_exercise(exercise, equipment):
     '''
     Adds the specified exercise and equipment to the exercise and equipment
     tables in the database.
     '''
-    if database_path:
-        conn = sqlite3.connect(database_path)
-    else:
-        conn = sqlite3.connect( get_exercise_database() )
-
+    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
-    # To make sure equipment isn't already in database
-    try:
-        equipment_id = cursor.execute(
-            'SELECT id from equipment where id = ?', (equipment,)
-        ).fetchone()[0]
-    except TypeError:
-        cursor.execute( 'INSERT INTO equipment (id) VALUES (?)', (equipment,) )
-        equipment_id = equipment
+    # TODO: Make sure that the equipment already exists in the equipment table
+    cursor.execute('SELECT id from equipment WHERE id == ?', (equipment,) )
 
-    cursor.execute(
-        '''
-        INSERT INTO exercise (id, equipment_id) VALUES (?, ?);
-        ''',
-        (exercise, equipment_id,)
-    )
+    equipment_in_db = cursor.fetchone()
 
-    conn.commit()
+    if equipment_in_db:
+        try:
+            cursor.execute(
+                'INSERT INTO exercise (id, equipment_id) VALUES (?, ?);',
+                (exercise, equipment)
+            )
+        except IntegrityError:
+            print(f"The exercise '{exercise}' is already in the database.")
+        else:
+            conn.commit()
+            print(
+                f'The exercise "{exercise}" has been successfully added to the database, '
+                f'with the equipment "{equipment}"!'
+            )
+    else:
+        print(f"The equipment '{equipment}' is not in the database.")
+
     conn.close()
 
 
@@ -68,7 +63,7 @@ def get_exercise_from_week(week, exercise):
     '''
     Get an exercise's information from the specified week in the database.
     '''
-    conn = sqlite3.connect( get_exercise_database() )
+    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
