@@ -38,7 +38,7 @@ def add_equipment(equipment):
     cursor = conn.cursor()
 
     try:
-        cursor.execute( 'INSERT INTO equipment (id) VALUES (?, ?)', (equipment,) )
+        cursor.execute( 'INSERT INTO equipment (id) VALUES (?)', (equipment,) )
     except IntegrityError:
         print(f"The '{equipment}' equipment is already in the database!")
     else:
@@ -124,7 +124,7 @@ def add_resistance(resistance):
 @click.option('-e', '--exercise', required=True, help='Name of the exercise.')
 @click.option('--reps', required=True, type=int, help='Number of repetitions of a given exercise.')
 @click.option('-r', '--resistance', required=True, help='Amount of resistance for a given exercise.')
-def add_exercise(week, exercise, reps, resistance):
+def add_exercise_info_to_week(week, exercise, reps, resistance):
     '''Adds the specified exercise, reps, and resistance to the provided week.'''
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -138,7 +138,7 @@ def add_exercise(week, exercise, reps, resistance):
     # To make sure a duplicate row doesn't exist in the database
     duplicate_row_in_db = cursor.execute(
         '''
-        SELECT * from week
+        SELECT * from week_exercise_reps_resistance
         WHERE week_id = ?
         AND exercise_id = ?
         AND reps_id = ?
@@ -163,7 +163,8 @@ def add_exercise(week, exercise, reps, resistance):
     else:
         cursor.execute(
             '''
-            INSERT INTO week (week_id, exercise_id, reps_id, resistance_id)
+            INSERT INTO week_exercise_reps_resistance
+                (week_id, exercise_id, reps_id, resistance_id)
             VALUES(?, ?, ?, ?)
             ''',
             (week, exercise, reps, resistance)
@@ -205,7 +206,8 @@ def get_resistance(week, exercise, reps):
 
     cursor.execute(
         '''
-        SELECT resistance_id FROM week
+        SELECT resistance_id
+        FROM week_exercise_reps_resistance
         WHERE week_id = ?
         AND exercise_id = ?
         AND reps_id = ?
@@ -237,10 +239,11 @@ def update_resistance(week, exercise, reps, new_resistance):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # To make sure the row exists in the database
-    row_in_db = cursor.execute(
+    # To make sure the old row exists in the database
+    old_row_in_db = cursor.execute(
         '''
-        SELECT * FROM week
+        SELECT *
+        FROM week_exercise_reps_resistance
         WHERE week_id = ?
         AND exercise_id = ?
         AND reps_id = ?
@@ -248,15 +251,34 @@ def update_resistance(week, exercise, reps, new_resistance):
         (week, exercise, reps)
     ).fetchone()
 
-    if not row_in_db:
+    # To make sure that new values aren't in the database
+    new_row_in_db = cursor.execute(
+        '''
+        SELECT *
+        FROM week_exercise_reps_resistance
+        WHERE resistance_id = ?
+        AND week_id = ?
+        AND exercise_id = ?
+        AND reps_id = ?
+        ''',
+        (new_resistance, week, exercise, reps)
+    ).fetchone()
+
+    if not old_row_in_db:
         print(
-            f"Week number {week} with '{exercise}' exercise, "
+            f"Week number {week} with the '{exercise}' exercise, "
             f"and {reps} reps isn't in the database."
+        )
+    elif new_row_in_db:
+        print(
+            f"Week number {week} with the '{exercise}' exercise, "
+            f"{reps} reps, and '{new_resistance}' resistance is already in the database."
         )
     else:
         cursor.execute(
             '''
-            UPDATE week SET resistance_id = ?
+            UPDATE week_exercise_reps_resistance
+            SET resistance_id = ?
             WHERE week_id = ?
             AND exercise_id = ?
             AND reps_id = ?
@@ -265,8 +287,8 @@ def update_resistance(week, exercise, reps, new_resistance):
         )
         conn.commit()
         print(
-            f"Week number {week} with '{exercise}' exercise, and {reps} reps had its "
-            f"resistance successfully updated to '{new_resistance}' resistance."
+            f"Week number {week} with the '{exercise}' exercise, and {reps} reps had its "
+            f"resistance successfully updated to '{new_resistance}'."
         )
 
     conn.close()

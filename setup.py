@@ -30,7 +30,7 @@ setup(
         add_reps=adonis_lifestyle_tracker.exercise.exercise:add_reps
         add_resistance=adonis_lifestyle_tracker.exercise.exercise:add_resistance
 
-        add_exercise_reps_and_resistance_to_week=adonis_lifestyle_tracker.exercise.exercise:add_exercise_reps_and_resistance_to_week
+        add_exercise_info_to_week=adonis_lifestyle_tracker.exercise.exercise:add_exercise_info_to_week
 
         get_equipment=adonis_lifestyle_tracker.exercise.exercise:get_equipment
         get_resistance=adonis_lifestyle_tracker.exercise.exercise:get_resistance
