@@ -2,11 +2,10 @@
 import sqlite3
 from sqlite3 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import Config
 
 
 def get_weekly_kcal(week):
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     cursor.execute(
@@ -25,7 +24,7 @@ def get_weekly_kcal(week):
 
 
 def get_weekly_protein(week):
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     cursor.execute(
@@ -47,7 +46,7 @@ def get_weekly_protein(week):
 @click.option('-f', '--food', required=True, help='Name of the food.')
 def get_food(food):
     '''Gets a food's calories and protein from the nutrition database.'''
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     try:
@@ -68,7 +67,7 @@ def get_food(food):
 @click.option('-p', '--protein', required=True, type=int, help='Number of grams of protein in the food.')
 def add_food(food, kcal, protein):
     '''Adds the food with the specified calories and protein to the database.'''
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     try:
@@ -94,7 +93,7 @@ def add_food(food, kcal, protein):
 @click.option('-p', '--total-protein', required=True, type=int, help='Total number of grams of protein for the week.')
 def add_week(week, total_kcal, total_protein):
     '''Adds a week to the week table in the nutrition database.'''
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     try:
@@ -122,7 +121,7 @@ def add_week(week, total_kcal, total_protein):
 @click.option('-w', '--week', required=True, type=int, help='Week number to which to add a food.')
 def add_food_to_week(food, week):
     '''Adds a food and week to the food_week table in the nutrition database.'''
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     # To make sure food and week are already in the database
@@ -155,7 +154,7 @@ def get_weekly_kcal_left(week):
     '''
     total_weekly_kcal = get_weekly_kcal(week)
 
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     # To get all the names for the food consumed in a given week
@@ -190,7 +189,7 @@ def get_weekly_protein_left(week):
     '''
     total_weekly_protein = get_weekly_protein(week)
 
-    conn = sqlite3.connect(Config.NUTRITION_DB_PATH)
+    conn = sqlite3.connect('nutrition.db')
     cursor = conn.cursor()
 
     # To get all the names for the food consumed in a given week

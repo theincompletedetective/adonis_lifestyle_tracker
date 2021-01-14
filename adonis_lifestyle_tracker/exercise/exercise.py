@@ -1,16 +1,19 @@
-'''Contains the functions needed to CRUD exercise data in the database.'''
+'''
+Contains the functions needed to add exercises and their equipment to the exercise database,
+as well as their number of repetitions and resistance they require. It also allows new weeks
+to be added, to track the exercise information for each week of the program.
+'''
 import sqlite3
 from sqlite3 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import Config
 
 
 @click.command()
 @click.option('-e', '--exercise', required=True, help='Name of the exercise.')
 @click.option('-t', '--tool', required=True, help='Equipment used to perform the exercise.')
 def add_exercise(exercise, tool):
-    '''Adds the specified exercise and equipment to the exercise table in the exercise database.'''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    '''Adds the specified exercise and equipment to the exercise database.'''
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     try:
@@ -19,11 +22,11 @@ def add_exercise(exercise, tool):
             (exercise, tool)
         )
     except IntegrityError:
-        print(f"'{exercise}' exercise is already in the database!")
+        print(f"The '{exercise}' exercise is already in the database!")
     else:
         conn.commit()
         print(
-            f"'{exercise}' exercise with '{tool}' equipment has "
+            f"The '{exercise}' exercise with '{tool}' equipment has "
             "been successfully added to the database!"
         )
     finally:
@@ -34,7 +37,7 @@ def add_exercise(exercise, tool):
 @click.argument('reps')
 def add_reps(reps):
     '''Adds the specified number of reps to the exercise database.'''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     try:
@@ -52,7 +55,7 @@ def add_reps(reps):
 @click.argument('resistance')
 def add_resistance(resistance):
     '''Adds the specified amount of resistance to the exercise database.'''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     try:
@@ -73,7 +76,7 @@ def add_resistance(resistance):
 @click.option('-r', '--resistance', required=True, help='Amount of resistance for a given exercise.')
 def add_week(week, exercise, reps, resistance):
     '''Adds the specified exercise, reps, and resistance to the provided week.'''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     # To make sure the exercise, reps, and resistance are in the database
@@ -125,7 +128,7 @@ def add_week(week, exercise, reps, resistance):
 @click.argument('exercise')
 def get_equipment(exercise):
     '''Gets the equipment for the specified exercise in the exercise database.'''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     cursor.execute( 'SELECT tool FROM exercise WHERE id = ?', (exercise,) )
@@ -133,7 +136,7 @@ def get_equipment(exercise):
     try:
         print(cursor.fetchone()[0])
     except TypeError:
-        print(f"'{exercise}' exercise is not in the database!")
+        print(f"The '{exercise}' exercise is not in the database!")
     else:
         conn.close()
 
@@ -144,7 +147,7 @@ def get_equipment(exercise):
 @click.option('-r', '--reps', required=True, type=int, help='Number of repetitions of a given exercise.')
 def get_resistance(week, exercise, reps):
     '''Gets the equipment for the specified exercise in the exercise database.'''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     cursor.execute(
@@ -178,13 +181,13 @@ def update_resistance(week, exercise, reps, new_resistance):
     Updates the resistance for the specified exercise and rep range,
     for the given week.
     '''
-    conn = sqlite3.connect(Config.EXERCISE_DB_PATH)
+    conn = sqlite3.connect('exercise.db')
     cursor = conn.cursor()
 
     # To make sure the row exists in the database
     row_in_db = cursor.execute(
         '''
-        SELECT * from week
+        SELECT * FROM week
         WHERE week_id = ?
         AND exercise_id = ?
         AND reps_id = ?
@@ -210,7 +213,7 @@ def update_resistance(week, exercise, reps, new_resistance):
         conn.commit()
         print(
             f"Week number {week} with '{exercise}' exercise, and {reps} reps had its "
-            f"resistance successfully updated to '{new_resistance}' resistance in the database."
+            f"resistance successfully updated to '{new_resistance}' resistance."
         )
 
     conn.close()
