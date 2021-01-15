@@ -13,44 +13,6 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'exercise.db')
 
 
 @click.command()
-@click.argument('week', type=int)
-def add_week(week):
-    '''Adds the specified week number to its table in the exercise database.'''
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
-    try:
-        cursor.execute( 'INSERT INTO week (id) VALUES (?)', (week,) )
-    except IntegrityError:
-        print(f'Week number {week} is already in the database.')
-    else:
-        conn.commit()
-        print(f'Week number {week} has been successfully added to the database.')
-    finally:
-        conn.close()
-
-
-@click.command()
-@click.argument('equipment')
-def add_equipment(equipment):
-    '''Adds the specified equipment to its table in the exercise database.'''
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
-    try:
-        cursor.execute( 'INSERT INTO equipment (id) VALUES (?)', (equipment,) )
-    except IntegrityError:
-        print(f"The '{equipment}' equipment is already in the database.")
-    else:
-        conn.commit()
-        print(
-            f"The '{equipment}' equipment has been successfully added to the database."
-        )
-    finally:
-        conn.close()
-
-
-@click.command()
 @click.option('-ex', '--exercise', required=True, help='Name of the exercise.')
 @click.option('-eq', '--equipment', required=True, help='Equipment used to perform the exercise.')
 def add_exercise(exercise, equipment):
@@ -61,63 +23,19 @@ def add_exercise(exercise, equipment):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # To make sure that the equipment already exists in the database
-    equipment_in_db = cursor.execute(
-        'SELECT * FROM equipment WHERE id = ?', (equipment,)
-    ).fetchone()
-
-    if not equipment_in_db:
-        print(f"The '{equipment}' equipment isn't in the database.")
-    else:
-        try:
-            cursor.execute(
-                'INSERT INTO exercise (id, equipment_id) VALUES (?, ?)',
-                (exercise, equipment)
-            )
-        except IntegrityError:
-            print(f"The '{exercise}' exercise is already in the database.")
-        else:
-            conn.commit()
-            print(
-                f"The '{exercise}' exercise and its '{equipment}' equipment have "
-                "been successfully added to the database."
-            )
-
-    conn.close()
-
-
-@click.command()
-@click.argument('reps', type=int)
-def add_reps(reps):
-    '''Adds the specified number of reps to its table in the exercise database.'''
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
     try:
-        cursor.execute( 'INSERT INTO reps (id) VALUES (?)', (reps,) )
+        cursor.execute(
+            'INSERT INTO exercise (id, equipment) VALUES (?, ?)',
+            (exercise, equipment)
+        )
     except IntegrityError:
-        print(f'{reps} reps is already in the database.')
+        print(f"The '{exercise}' exercise is already in the database.")
     else:
         conn.commit()
-        print(f'{reps} reps has been successfully added to the database.')
-    finally:
-        conn.close()
-
-
-@click.command()
-@click.argument('resistance')
-def add_resistance(resistance):
-    '''Adds the specified amount of resistance to its table in the exercise database.'''
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
-    try:
-        cursor.execute( 'INSERT INTO resistance (id) VALUES (?)', (resistance,) )
-    except IntegrityError:
-        print(f'"{resistance}" resistance is already in the database.')
-    else:
-        conn.commit()
-        print(f'"{resistance}" resistance has been successfully added to the database.')
+        print(
+            f"The '{exercise}' exercise and '{equipment}' equipment have "
+            "been successfully added to the database."
+        )
     finally:
         conn.close()
 
@@ -127,7 +45,7 @@ def add_resistance(resistance):
 @click.option('-e', '--exercise', required=True, help='Name of the exercise.')
 @click.option('--reps', required=True, type=int, help='Number of repetitions of a given exercise.')
 @click.option('-r', '--resistance', required=True, help='Amount of resistance for a given exercise.')
-def add_exercise_to_week(week, exercise, reps, resistance):
+def add_week(week, exercise, reps, resistance):
     '''
     Adds the specified exercise, reps, and resistance to the provided week
     in the exercise database.
@@ -135,49 +53,35 @@ def add_exercise_to_week(week, exercise, reps, resistance):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # To make sure the week, exercise, reps, and resistance are in the database
-    week_in_db = cursor.execute( 'SELECT * from week where id = ?', (week,) ).fetchone()
-    exercise_in_db = cursor.execute( 'SELECT * from exercise where id = ?', (exercise,) ).fetchone()
-    reps_in_db = cursor.execute( 'SELECT * from reps where id = ?', (reps,) ).fetchone()
-    resistance_in_db = cursor.execute( 'SELECT * from resistance where id = ?', (resistance,) ).fetchone()
-
     # To make sure a duplicate row doesn't exist in the database
-    duplicate_row_in_db = cursor.execute(
+    row_in_db = cursor.execute(
         '''
         SELECT * from week_exercise_reps_resistance
         WHERE week_id = ?
         AND exercise_id = ?
-        AND reps_id = ?
-        AND resistance_id = ?
+        AND reps = ?
+        AND resistance = ?
         ''',
         (week, exercise, reps, resistance)
     ).fetchone()
 
-    if not week_in_db:
-        print(f"Week number {week} is not in the database.")
-    elif not exercise_in_db:
-        print(f"'{exercise}' exercise is not in the database.")
-    elif not reps_in_db:
-        print(f"{reps} reps is not in the database.")
-    elif not resistance_in_db:
-        print(f"'{resistance}' resistance is not in the database.")
-    if duplicate_row_in_db:
+    if row_in_db:
         print(
-            f"Week number {week} with '{exercise}' exercise, '{reps}' reps, "
+            f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
             f"and '{resistance}' resistance has already been added to the database."
         )
     else:
         cursor.execute(
             '''
             INSERT INTO week_exercise_reps_resistance
-                (week_id, exercise_id, reps_id, resistance_id)
+                (id, exercise_id, reps, resistance)
             VALUES(?, ?, ?, ?)
             ''',
             (week, exercise, reps, resistance)
         )
         conn.commit()
         print(
-            f"Week number {week} with '{exercise}' exercise, '{reps}' reps, "
+            f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
             f"and '{resistance}' resistance has been successfully added to the database."
         )
 
@@ -191,7 +95,7 @@ def get_equipment(exercise):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    cursor.execute( 'SELECT equipment_id FROM exercise WHERE id = ?', (exercise,) )
+    cursor.execute( 'SELECT equipment FROM exercise WHERE id = ?', (exercise,) )
 
     try:
         print(cursor.fetchone()[0])
@@ -212,11 +116,11 @@ def get_resistance(week, exercise, reps):
 
     cursor.execute(
         '''
-        SELECT resistance_id
-        FROM week_exercise_reps_resistance
-        WHERE week_id = ?
+        SELECT resistance
+        FROM week
+        WHERE id = ?
         AND exercise_id = ?
-        AND reps_id = ?
+        AND reps = ?
         ''',
         (week, exercise, reps,)
     )
@@ -225,8 +129,7 @@ def get_resistance(week, exercise, reps):
         print(cursor.fetchone()[0])
     except TypeError:
         print(
-            f"Week number {week} with the '{exercise}' exercise "
-            f"and {reps} reps is not in the database!"
+            f"Week {week} with the '{exercise}' exercise and {reps} reps is not in the database!"
         )
     else:
         conn.close()
@@ -239,62 +142,54 @@ def get_resistance(week, exercise, reps):
 @click.option('-n', '--new-resistance', required=True, help='Updated amount of resistance for a given exercise.')
 def update_resistance(week, exercise, reps, new_resistance):
     '''
-    Updates the resistance for the specified exercise and rep range,
-    for the given week.
+    Updates the resistance used for the specified exercise,
+    at the given rep range, for the provided week.
     '''
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # To make sure the old row exists in the database
-    old_row_in_db = cursor.execute(
+    # To make sure the week, exercise, and reps are already in the database
+    week_in_db = cursor.execute(
         '''
-        SELECT *
-        FROM week_exercise_reps_resistance
-        WHERE week_id = ?
+        SELECT * FROM week
+        WHERE id = ?
         AND exercise_id = ?
-        AND reps_id = ?
+        AND reps = ?
         ''',
-        (week, exercise, reps)
+        (week, exercise, reps,)
     ).fetchone()
 
-    # To make sure that new values aren't in the database
-    new_row_in_db = cursor.execute(
+    # To make sure an identical row is not already in the database
+    row_in_db = cursor.execute(
         '''
-        SELECT *
-        FROM week_exercise_reps_resistance
-        WHERE resistance_id = ?
-        AND week_id = ?
+        SELECT * FROM week
+        WHERE id = ?
         AND exercise_id = ?
-        AND reps_id = ?
+        AND reps = ?
+        AND resistance = ?
         ''',
-        (new_resistance, week, exercise, reps)
+        (week, exercise, reps, new_resistance)
     ).fetchone()
 
-    if not old_row_in_db:
+    if not week_in_db:
         print(
-            f"Week number {week} with the '{exercise}' exercise, "
-            f"and {reps} reps isn't in the database."
+            f"Week {week} with the '{exercise}' exercise and {reps} reps isn't in the database."
         )
-    elif new_row_in_db:
+    elif row_in_db:
         print(
-            f"Week number {week} with the '{exercise}' exercise, "
-            f"{reps} reps, and '{new_resistance}' resistance is already in the database."
+            f"Week {week} with the '{exercise}' exercise, {reps} reps, "
+            f"and '{new_resistance}' resistance is already in the database."
         )
     else:
         cursor.execute(
             '''
-            UPDATE week_exercise_reps_resistance
-            SET resistance_id = ?
-            WHERE week_id = ?
+            UPDATE week
+            SET resistance = ?
+            WHERE id = ?
             AND exercise_id = ?
-            AND reps_id = ?
+            AND reps = ?
             ''',
-            (new_resistance, week, exercise, reps)
+            (new_resistance, week, exercise, reps,)
         )
         conn.commit()
-        print(
-            f"Week number {week} with the '{exercise}' exercise, and {reps} reps had its "
-            f"resistance successfully updated to '{new_resistance}'."
-        )
-
-    conn.close()
+        conn.close()

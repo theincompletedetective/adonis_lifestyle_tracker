@@ -1,27 +1,11 @@
-create table week (
-  id integer primary key
-);
-
-create table equipment (
-  id text primary key
-);
-
 create table exercise (
   id text primary key,
-  equipment_id text
+  equipment text
 );
 
-create table reps (
-  id integer primary key
-);
-
-create table resistance (
-  id text primary key
-);
-
-create table week_exercise_reps_resistance (
-  week_id integer,
+create table week (
+  id integer,
   exercise_id text,
-  reps_id integer,
-  resistance_id text
+  reps integer,
+  resistance text
 );
