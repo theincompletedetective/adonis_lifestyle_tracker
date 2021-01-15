@@ -68,6 +68,15 @@ def update_exercise(old_exercise, new_exercise):
         except IntegrityError:
             print(f"The '{old_exercise}' exercise is not in the database.")
         else:
+            # To update each occurrence of the exercise in the week_exercise_reps_resistance table
+            cursor.execute(
+                '''
+                UPDATE week_exercise_reps_resistance
+                SET exercise_id = ?
+                WHERE exercise_id = ?
+                ''',
+                (new_exercise, old_exercise)
+            )
             conn.commit()
             print(f"The '{old_exercise}' exercise has been updated to '{new_exercise}'.")
 
