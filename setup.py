@@ -34,6 +34,11 @@ setup(
         update_equipment=adonis_lifestyle_tracker.exercise.update:update_equipment
         update_exercise=adonis_lifestyle_tracker.exercise.update:update_exercise
         update_resistance=adonis_lifestyle_tracker.exercise.update:update_resistance
+        delete_week=adonis_lifestyle_tracker.exercise.delete:delete_week
+        delete_equipment=adonis_lifestyle_tracker.exercise.delete:delete_equipment
+        delete_exercise=adonis_lifestyle_tracker.exercise.delete:delete_exercise
+        delete_reps=adonis_lifestyle_tracker.exercise.delete:delete_reps
+        delete_resistance=adonis_lifestyle_tracker.exercise.delete:delete_resistance
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",
