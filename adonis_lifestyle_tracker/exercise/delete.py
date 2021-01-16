@@ -4,7 +4,7 @@ Contains the functions needed to delete exercise information from the database.
 import sqlite3
 from sqlite3.dbapi2 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH
+from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_in_db
 
 
 @click.command()
@@ -15,9 +15,7 @@ def delete_week(week):
     cursor = conn.cursor()
 
     # To make sure the week is in the database
-    week_in_db = cursor.execute(
-      'SELECT * FROM week WHERE id = ?', (week,)
-    ).fetchone()
+    week_in_db = check_in_db(cursor, week)
 
     if week_in_db:
         try:
@@ -27,7 +25,7 @@ def delete_week(week):
         else:
             # To delete every row in the relation table where the week appears
             cursor.execute(
-                'DELETE FROM week_exercise_reps_resistance WHERE week_id = ?',
+                'DELETE FROM week_exercise WHERE week_id = ?',
                 (week,)
             )
             conn.commit()
@@ -48,9 +46,7 @@ def delete_equipment(equipment):
     cursor = conn.cursor()
 
     # To make sure the equipment is in the database
-    equipment_in_db = cursor.execute(
-        'SELECT * FROM equipment WHERE id = ?', (equipment,)
-    ).fetchone()
+    equipment_in_db = check_in_db(cursor, equipment)
 
     if equipment_in_db:
         try:
@@ -81,9 +77,7 @@ def delete_exercise(exercise):
     cursor = conn.cursor()
 
     # To make sure the exercise is in the database
-    exercise_in_db = cursor.execute(
-        'SELECT * FROM exercise WHERE id = ?', (exercise,)
-    ).fetchone()
+    exercise_in_db = check_in_db(cursor, exercise)
 
     if exercise_in_db:
         try:
@@ -93,7 +87,7 @@ def delete_exercise(exercise):
         else:
             # To delete every week with the exercise
             cursor.execute(
-                'DELETE FROM week_exercise_reps_resistance WHERE exercise_id = ?',
+                'DELETE FROM week_exercise WHERE exercise_id = ?',
                 (exercise,)
             )
             conn.commit()
@@ -114,9 +108,7 @@ def delete_reps(reps):
     cursor = conn.cursor()
 
     # To make sure the reps are in the database
-    reps_in_db = cursor.execute(
-        'SELECT * FROM reps WHERE id = ?', (reps,)
-    ).fetchone()
+    reps_in_db = check_in_db(cursor, reps)
 
     if reps_in_db:
         try:
@@ -126,7 +118,7 @@ def delete_reps(reps):
         else:
             # To delete every week with the reps
             cursor.execute(
-                'DELETE FROM week_exercise_reps_resistance WHERE reps_id = ?',
+                'DELETE FROM week_exercise WHERE reps_id = ?',
                 (reps,)
             )
             conn.commit()
@@ -145,9 +137,7 @@ def delete_resistance(resistance):
     cursor = conn.cursor()
 
     # To make sure the resistance is in the database
-    resistance_in_db = cursor.execute(
-        'SELECT * FROM resistance WHERE id = ?', (resistance,)
-    ).fetchone()
+    resistance_in_db = check_in_db(cursor, resistance)
 
     if resistance_in_db:
         try:
@@ -157,7 +147,7 @@ def delete_resistance(resistance):
         else:
             # To delete every week with the resistance
             cursor.execute(
-                'DELETE FROM week_exercise_reps_resistance WHERE resistance_id = ?',
+                'DELETE FROM week_exercise WHERE resistance_id = ?',
                 (resistance,)
             )
             conn.commit()

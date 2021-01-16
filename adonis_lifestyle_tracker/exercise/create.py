@@ -4,13 +4,13 @@ Contains the functions needed to add exercise information to the database.
 import sqlite3
 from sqlite3 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH
+from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_in_db
 
 
 @click.command()
-@click.argument('week')
+@click.argument('week', type=int)
 def add_week(week):
-    '''Adds the specified week to its table in the exercise database.'''
+    '''Adds the specified week to exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
@@ -30,7 +30,7 @@ def add_week(week):
 @click.command()
 @click.argument('equipment')
 def add_equipment(equipment):
-    '''Adds the specified equipment to its table in the exercise database.'''
+    '''Adds the specified equipment to the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
@@ -54,15 +54,13 @@ def add_equipment(equipment):
 @click.argument('equipment')
 def add_exercise(exercise, equipment):
     '''
-    Adds the specified exercise and its equipment to its table in the exercise database.
+    Adds the specified exercise and its equipment to the exercise database.
     '''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure that the equipment is already in the database
-    equipment_in_db = cursor.execute(
-      'SELECT * FROM equipment WHERE id =?', (equipment,)
-    ).fetchone()
+    equipment_in_db = check_in_db(cursor, equipment)
 
     if equipment_in_db:
         try:
@@ -85,7 +83,7 @@ def add_exercise(exercise, equipment):
 @click.command()
 @click.argument('reps', type=int)
 def add_reps(reps):
-    '''Adds the specified reps to its table in the exercise database.'''
+    '''Adds the specified reps to the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
@@ -107,7 +105,7 @@ def add_reps(reps):
 @click.command()
 @click.argument('resistance')
 def add_resistance(resistance):
-    '''Adds the specified resistance to its table in the exercise database.'''
+    '''Adds the specified resistance to the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
@@ -131,39 +129,30 @@ def add_resistance(resistance):
 @click.option('-e', '--exercise', required=True, help='Name of the exercise.')
 @click.option('--reps', required=True, type=int, help='Number of repetitions of a given exercise.')
 @click.option('-r', '--resistance', required=True, help='Amount of resistance for a given exercise.')
-def add_exercise_reps_resistance_to_week(week, exercise, reps, resistance):
+def add_weekly_exercise(week, exercise, reps, resistance):
     '''
-    Adds the specified exercise, reps, and resistance to the provided week
-    in the exercise database.
+    Adds the specified exercise, reps, and resistance to the provided week in the exercise database.
     '''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure the week is in the database
-    week_in_db = cursor.execute(
-      'SELECT * FROM week WHERE id = ?', (week,)
-    ).fetchone()
+    week_in_db = check_in_db(cursor, week)
 
     # To make sure the exercise is in the database
-    exercise_in_db = cursor.execute(
-      'SELECT * FROM exercise WHERE id = ?', (exercise,)
-    ).fetchone()
+    exercise_in_db = check_in_db(cursor, exercise)
 
     # To make sure the reps are in the database
-    reps_in_db = cursor.execute(
-      'SELECT * from reps WHERE id = ?', (reps,)
-    ).fetchone()
+    reps_in_db = check_in_db(cursor, reps)
 
     # To make sure the resistance is in the database
-    resistance_in_db = cursor.execute(
-      'SELECT * FROM resistance WHERE id = ?', (resistance,)
-    ).fetchone()
+    resistance_in_db = check_in_db(cursor, resistance)
 
     # To make sure a duplicate row doesn't exist in the database
     row_in_db = cursor.execute(
         '''
         SELECT *
-        FROM week_exercise_reps_resistance
+        FROM week_exercise
         WHERE week_id = ?
         AND exercise_id = ?
         AND reps_id = ?
@@ -188,7 +177,7 @@ def add_exercise_reps_resistance_to_week(week, exercise, reps, resistance):
     else:
         cursor.execute(
             '''
-            INSERT INTO week_exercise_reps_resistance
+            INSERT INTO week_exercise
                 (week_id, exercise_id, reps_id, resistance_id)
             VALUES(?, ?, ?, ?)
             ''',

@@ -1,12 +1,7 @@
-'''Contains the absolute path to the nutrition and exercise databases.'''
-import os
+'''Contains the functions used by all modules in the exercise package.'''
 
 
-NUTRITION_DB_PATH = os.path.join(os.path.dirname(__file__), 'nutrition', 'nutrition.db')
-EXERCISE_DB_PATH = os.path.join(os.path.dirname(__file__), 'exercise', 'exercise.db')
-
-
-def check_in_db(cursor, table, value=None):
+def check_value(cursor, table, value=None):
     '''
     Checks to see whether or not the provided value is in the specified database table.
     '''

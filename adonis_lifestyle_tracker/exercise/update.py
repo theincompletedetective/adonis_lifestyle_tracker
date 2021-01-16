@@ -4,7 +4,7 @@ Contains the functions needed to update exercise information in the database.
 import sqlite3
 from sqlite3.dbapi2 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH
+from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_in_db
 
 
 @click.command()
@@ -16,9 +16,7 @@ def update_equipment(old_equipment, new_equipment):
     cursor = conn.cursor()
 
     # To make sure that new equipment isn't already in the database
-    new_equipment_in_db = cursor.execute(
-        'SELECT * FROM equipment WHERE id = ?', (new_equipment,)
-    ).fetchone()
+    new_equipment_in_db = check_in_db(cursor, new_equipment)
 
     if new_equipment_in_db:
         print(f"The '{new_equipment}' equipment is already in the database.")
@@ -53,9 +51,7 @@ def update_exercise(old_exercise, new_exercise):
     cursor = conn.cursor()
 
     # To make sure that new exercise isn't already in the database
-    new_exercise_in_db = cursor.execute(
-        'SELECT * FROM exercise WHERE id = ?', (new_exercise,)
-    ).fetchone()
+    new_exercise_in_db = check_in_db(cursor, new_exercise)
 
     if new_exercise_in_db:
         print(f"The '{new_exercise}' exercise is already in the database.")
@@ -68,10 +64,10 @@ def update_exercise(old_exercise, new_exercise):
         except IntegrityError:
             print(f"The '{old_exercise}' exercise is not in the database.")
         else:
-            # To update each occurrence of the exercise in the week_exercise_reps_resistance table
+            # To update each occurrence of the exercise in the week_exercise table
             cursor.execute(
                 '''
-                UPDATE week_exercise_reps_resistance
+                UPDATE week_exercise
                 SET exercise_id = ?
                 WHERE exercise_id = ?
                 ''',
@@ -99,7 +95,7 @@ def update_resistance(week, exercise, reps, new_resistance):
     # To make sure the week, exercise, and reps are already in the database
     week_in_db = cursor.execute(
         '''
-        SELECT * FROM week_exercise_reps_resistance
+        SELECT * FROM week_exercise
         WHERE week_id = ?
         AND exercise_id = ?
         AND reps_id = ?
@@ -110,7 +106,7 @@ def update_resistance(week, exercise, reps, new_resistance):
     # To make sure an identical row is not already in the database
     row_in_db = cursor.execute(
         '''
-        SELECT * FROM week_exercise_reps_resistance
+        SELECT * FROM week_exercise
         WHERE week_id = ?
         AND exercise_id = ?
         AND reps_id = ?
@@ -131,7 +127,7 @@ def update_resistance(week, exercise, reps, new_resistance):
     else:
         cursor.execute(
             '''
-            UPDATE week_exercise_reps_resistance
+            UPDATE week_exercise
             SET resistance_id = ?
             WHERE week_id = ?
             AND exercise_id = ?

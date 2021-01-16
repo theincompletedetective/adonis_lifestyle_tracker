@@ -19,7 +19,7 @@ create table resistance (
   id text primary key
 );
 
-create table week_exercise_reps_resistance (
+create table week_exercise (
   week_id integer,
   exercise_id text,
   reps_id integer,
