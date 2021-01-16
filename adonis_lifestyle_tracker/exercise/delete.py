@@ -18,20 +18,17 @@ def delete_week(week):
     week_in_db = check_db(cursor, week)
 
     if week_in_db:
-        try:
-            cursor.execute( 'DELETE FROM week WHERE id = ?', (week,) )
-        except IntegrityError:
-          print(f"Week {week} is not in the database.")
-        else:
-            # To delete every row in the week_exercise table where the week appears
-            cursor.execute(
-                'DELETE FROM week_exercise WHERE week_id = ?',
-                (week,)
-            )
-            conn.commit()
-            print(
-                f"Week {week} has been successfully removed from the database."
-            )
+        cursor.execute( 'DELETE FROM week WHERE id = ?', (week,) )
+
+        # To delete every row in the week_exercise table where the week appears
+        cursor.execute(
+            'DELETE FROM week_exercise WHERE week_id = ?',
+            (week,)
+        )
+        conn.commit()
+        print(
+            f"Week {week} has been successfully removed from the database."
+        )
     else:
         print(f"Week {week} is not in the database.")
 
@@ -79,7 +76,7 @@ def delete_exercise(exercise):
     if exercise_in_db:
         cursor.execute( 'DELETE FROM exercise WHERE id = ?', (exercise,) )
 
-        # To delete every week with the exercise
+        # To delete every row in the week_exercise table where the exercise appears
         cursor.execute(
             'DELETE FROM week_exercise WHERE exercise_id = ?',
             (exercise,)
@@ -105,7 +102,7 @@ def delete_reps(reps):
     if reps_in_db:
         cursor.execute( 'DELETE FROM reps WHERE id = ?', (reps,) )
 
-         # To delete every week with the reps
+         # To delete every row in the week_exercise table where the reps appears
         cursor.execute(
             'DELETE FROM week_exercise WHERE reps_id = ?',
             (reps,)
@@ -129,7 +126,7 @@ def delete_resistance(resistance):
     if resistance_in_db:
         cursor.execute( 'DELETE FROM resistance WHERE id = ?', (resistance,) )
 
-        # To delete every week with the resistance
+        # To delete every row in the week_exercise table where the resistance appears
         cursor.execute(
             'DELETE FROM week_exercise WHERE resistance_id = ?',
             (resistance,)
