@@ -19,7 +19,7 @@ def get_equipment(exercise):
         print(cursor.fetchone()[0])
     except TypeError:
         print(f"The '{exercise}' exercise is not in the database!")
-    else:
+    finally:
         conn.close()
 
 
@@ -49,5 +49,5 @@ def get_resistance(week, exercise, reps):
         print(
             f"Week {week} with the '{exercise}' exercise and {reps} reps is not in the database."
         )
-    else:
+    finally:
         conn.close()

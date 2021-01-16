@@ -23,7 +23,7 @@ def delete_week(week):
         except IntegrityError:
           print(f"Week {week} is not in the database.")
         else:
-            # To delete every row in the relation table where the week appears
+            # To delete every row in the week_exercise table where the week appears
             cursor.execute(
                 'DELETE FROM week_exercise WHERE week_id = ?',
                 (week,)
@@ -49,20 +49,17 @@ def delete_equipment(equipment):
     equipment_in_db = check_db(cursor, equipment)
 
     if equipment_in_db:
-        try:
-            cursor.execute( 'DELETE FROM equipment WHERE id = ?', (equipment,) )
-        except IntegrityError:
-            print(f"The '{equipment}' equipment is not in the database.")
-        else:
-            # To delete the equipment from every exercise that uses it
-            cursor.execute(
-                'UPDATE exercise SET equipment_id = null WHERE equipment_id = ?',
-                (equipment,)
-            )
-            conn.commit()
-            print(
-                f"The '{equipment}' equipment has been successfully removed from the database."
-            )
+        cursor.execute( 'DELETE FROM equipment WHERE id = ?', (equipment,) )
+
+        # To delete the equipment from every exercise that uses it
+        cursor.execute(
+            'UPDATE exercise SET equipment_id = null WHERE equipment_id = ?',
+            (equipment,)
+        )
+        conn.commit()
+        print(
+            f"The '{equipment}' equipment has been successfully removed from the database."
+        )
     else:
         print(f"The '{equipment}' equipment is not in the database.")
 
@@ -80,20 +77,17 @@ def delete_exercise(exercise):
     exercise_in_db = check_db(cursor, exercise)
 
     if exercise_in_db:
-        try:
-            cursor.execute( 'DELETE FROM exercise WHERE id = ?', (exercise,) )
-        except IntegrityError:
-            print(f"The '{exercise}' exercise is not in the database.")
-        else:
-            # To delete every week with the exercise
-            cursor.execute(
-                'DELETE FROM week_exercise WHERE exercise_id = ?',
-                (exercise,)
-            )
-            conn.commit()
-            print(
-                f"The '{exercise}' exercise has been successfully removed from the database."
-            )
+        cursor.execute( 'DELETE FROM exercise WHERE id = ?', (exercise,) )
+
+        # To delete every week with the exercise
+        cursor.execute(
+            'DELETE FROM week_exercise WHERE exercise_id = ?',
+            (exercise,)
+        )
+        conn.commit()
+        print(
+            f"The '{exercise}' exercise has been successfully removed from the database."
+        )
     else:
         print(f"The '{exercise}' exercise is not in the database.")
 
@@ -109,18 +103,15 @@ def delete_reps(reps):
     reps_in_db = check_db(cursor, reps)
 
     if reps_in_db:
-        try:
-            cursor.execute( 'DELETE FROM reps WHERE id = ?', (reps,) )
-        except IntegrityError:
-            print(f"{reps} reps is not in the database.")
-        else:
-            # To delete every week with the reps
-            cursor.execute(
-                'DELETE FROM week_exercise WHERE reps_id = ?',
-                (reps,)
-            )
-            conn.commit()
-            print(f"{reps} reps has been successfully deleted from the database.")
+        cursor.execute( 'DELETE FROM reps WHERE id = ?', (reps,) )
+
+         # To delete every week with the reps
+        cursor.execute(
+            'DELETE FROM week_exercise WHERE reps_id = ?',
+            (reps,)
+        )
+        conn.commit()
+        print(f"{reps} reps has been successfully deleted from the database.")
     else:
         print(f"{reps} reps is not in the database.")
 
@@ -136,18 +127,15 @@ def delete_resistance(resistance):
     resistance_in_db = check_db(cursor, resistance)
 
     if resistance_in_db:
-        try:
-            cursor.execute( 'DELETE FROM resistance WHERE id = ?', (resistance,) )
-        except IntegrityError:
-            print(f"'{resistance}' resistance is not in the database.")
-        else:
-            # To delete every week with the resistance
-            cursor.execute(
-                'DELETE FROM week_exercise WHERE resistance_id = ?',
-                (resistance,)
-            )
-            conn.commit()
-            print(f"'{resistance}' reps has been successfully deleted from the database.")
+        cursor.execute( 'DELETE FROM resistance WHERE id = ?', (resistance,) )
+
+        # To delete every week with the resistance
+        cursor.execute(
+            'DELETE FROM week_exercise WHERE resistance_id = ?',
+            (resistance,)
+        )
+        conn.commit()
+        print(f"'{resistance}' reps has been successfully deleted from the database.")
     else:
         print(f"'{resistance}' resistance is not in the database.")
 

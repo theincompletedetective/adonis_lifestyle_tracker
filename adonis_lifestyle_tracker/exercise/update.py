@@ -139,4 +139,5 @@ def update_resistance(week, exercise, reps, new_resistance):
             f"The resistance for week {week}, the '{exercise}' exercise, "
             f"and {reps} reps has been successfully updated to {new_resistance}."
         )
-        conn.close()
+
+    conn.close()
