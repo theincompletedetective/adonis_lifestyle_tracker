@@ -30,7 +30,7 @@ def add_week(week):
     else:
         conn.commit()
         print(
-            f"Week {week} has been successfully added to the database."
+            f"Week {week} has been successfully added to the exercise database."
         )
     finally:
         conn.close()
