@@ -138,7 +138,7 @@ def add_resistance(resistance):
 @click.option('-e', '--exercise', required=True, help='Name of the exercise.')
 @click.option('--reps', required=True, type=int, help='Number of repetitions of a given exercise.')
 @click.option('-r', '--resistance', required=True, help='Amount of resistance for a given exercise.')
-def add_weekly_exercise(week, exercise, reps, resistance):
+def add_exercse_to_week(week, exercise, reps, resistance):
     '''
     Adds the specified exercise, reps, and resistance to the provided week in the exercise database.
     '''
@@ -241,7 +241,7 @@ def get_resistance(week, exercise, reps):
 @click.option('-o', '--old-equipment', required=True, help='Equipment currently in the database')
 @click.option('-n', '--new-equipment', required=True, help='New name for equipment in the database')
 def update_equipment(old_equipment, new_equipment):
-    '''Changes the id/name of the specified equipment in the exercise database.'''
+    '''Changes the name of the specified equipment in the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
@@ -276,7 +276,7 @@ def update_equipment(old_equipment, new_equipment):
 @click.option('-o', '--old-exercise', required=True, help='Exercise currently in the database')
 @click.option('-n', '--new-exercise', required=True, help='New name for exercise in the database')
 def update_exercise(old_exercise, new_exercise):
-    '''Changes the id/name of the specified exercise in the database.'''
+    '''Changes the name of the specified exercise in the database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 

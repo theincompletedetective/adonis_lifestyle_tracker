@@ -18,17 +18,17 @@ setup(
     entry_points='''
         [console_scripts]
         add_food=adonis_lifestyle_tracker.nutrition.nutrition:add_food
-        add_weekly_totals=adonis_lifestyle_tracker.nutrition.nutrition:add_weekly_totals
-        add_weekly_food=adonis_lifestyle_tracker.nutrition.nutrition:add_weekly_food
-        get_food=adonis_lifestyle_tracker.nutrition.nutrition:get_food
-        get_weekly_kcal_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_kcal_left
-        get_weekly_protein_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_protein_left
+        add_totals_to_week=adonis_lifestyle_tracker.nutrition.nutrition:add_totals_to_week
+        add_food_to_week=adonis_lifestyle_tracker.nutrition.nutrition:add_food_to_week
         add_week=adonis_lifestyle_tracker.exercise.exercise:add_week
         add_exercise=adonis_lifestyle_tracker.exercise.exercise:add_exercise
         add_equipment=adonis_lifestyle_tracker.exercise.exercise:add_equipment
         add_reps=adonis_lifestyle_tracker.exercise.exercise:add_reps
         add_resistance=adonis_lifestyle_tracker.exercise.exercise:add_resistance
-        add_weekly_exercise=adonis_lifestyle_tracker.exercise.exercise:add_weekly_exercise
+        add_exercse_to_week=adonis_lifestyle_tracker.exercise.exercise:add_exercse_to_week
+        get_food=adonis_lifestyle_tracker.nutrition.nutrition:get_food
+        get_calories_left=adonis_lifestyle_tracker.nutrition.nutrition:get_calories_left
+        get_protein_left=adonis_lifestyle_tracker.nutrition.nutrition:get_protein_left
         get_equipment=adonis_lifestyle_tracker.exercise.exercise:get_equipment
         get_resistance=adonis_lifestyle_tracker.exercise.exercise:get_resistance
         update_equipment=adonis_lifestyle_tracker.exercise.exercise:update_equipment
