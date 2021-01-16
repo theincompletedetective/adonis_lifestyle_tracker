@@ -23,5 +23,6 @@ create table week_exercise (
   week_id integer,
   exercise_id text,
   reps_id integer,
-  resistance_id text
+  resistance_id text,
+  UNIQUE(week_id, exercise_id, reps_id, resistance_id)
 );

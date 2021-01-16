@@ -7,18 +7,13 @@ import click
 from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH
 
 
-def check_db(cursor, table, value=None):
+def check_db(cursor, table, value):
     '''
     Checks to see whether or not the provided value is in the specified database table.
     '''
-    if value:
-        return cursor.execute(
-            'SELECT * FROM ? WHERE id = ?', (table, value)
-        ).fetchone()
-    else:
-        return cursor.execute(
-            'SELECT * FROM ? WHERE id = ?', (table, table)
-        ).fetchone()
+    return cursor.execute(
+        f'SELECT * FROM {table} WHERE id = ?', (value,)
+    ).fetchone()
 
 
 @click.command()
@@ -74,7 +69,7 @@ def add_exercise(exercise, equipment):
     cursor = conn.cursor()
 
     # To make sure that the equipment is already in the database
-    equipment_in_db = check_db(cursor, equipment)
+    equipment_in_db = check_db(cursor, 'equipment', equipment)
 
     if equipment_in_db:
         try:
@@ -151,29 +146,16 @@ def add_weekly_exercise(week, exercise, reps, resistance):
     cursor = conn.cursor()
 
     # To make sure the week is in the database
-    week_in_db = check_db(cursor, week)
+    week_in_db = check_db(cursor, 'week', week)
 
     # To make sure the exercise is in the database
-    exercise_in_db = check_db(cursor, exercise)
+    exercise_in_db = check_db(cursor, 'exercise', exercise)
 
     # To make sure the reps are in the database
-    reps_in_db = check_db(cursor, reps)
+    reps_in_db = check_db(cursor, 'reps', reps)
 
     # To make sure the resistance is in the database
-    resistance_in_db = check_db(cursor, resistance)
-
-    # To make sure a duplicate row doesn't exist in the database
-    row_in_db = cursor.execute(
-        '''
-        SELECT *
-        FROM week_exercise
-        WHERE week_id = ?
-        AND exercise_id = ?
-        AND reps_id = ?
-        AND resistance_id = ?
-        ''',
-        (week, exercise, reps, resistance)
-    ).fetchone()
+    resistance_in_db = check_db(cursor, 'resistance', resistance)
 
     if not week_in_db:
       print(f"Week {week} needs to be added to the database.")
@@ -183,25 +165,27 @@ def add_weekly_exercise(week, exercise, reps, resistance):
       print(f"{reps} reps needs to be added to the database.")
     elif not resistance_in_db:
       print(f"'{resistance}' resistance needs to be added to the database.")
-    elif row_in_db:
-        print(
-            f"Week {week} with the '{exercise}' exercise, {reps} reps, "
-            f"and '{resistance}' resistance has already been added to the database."
-        )
     else:
-        cursor.execute(
-            '''
-            INSERT INTO week_exercise
-                (week_id, exercise_id, reps_id, resistance_id)
-            VALUES(?, ?, ?, ?)
-            ''',
-            (week, exercise, reps, resistance)
-        )
-        conn.commit()
-        print(
-            f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
-            f"and '{resistance}' resistance has been successfully added to the database."
-        )
+        try:
+            cursor.execute(
+                '''
+                INSERT INTO week_exercise
+                    (week_id, exercise_id, reps_id, resistance_id)
+                VALUES(?, ?, ?, ?)
+                ''',
+                (week, exercise, reps, resistance)
+            )
+        except IntegrityError:
+            print(
+                f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
+                f"and '{resistance}' resistance is already in the the database."
+            )
+        else:
+            conn.commit()
+            print(
+                f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
+                f"and '{resistance}' resistance has been successfully added to the database."
+            )
 
     conn.close()
 
@@ -262,7 +246,7 @@ def update_equipment(old_equipment, new_equipment):
     cursor = conn.cursor()
 
     # To make sure that new equipment isn't already in the database
-    new_equipment_in_db = check_db(cursor, new_equipment)
+    new_equipment_in_db = check_db(cursor, 'equipment', new_equipment)
 
     if new_equipment_in_db:
         print(f"The '{new_equipment}' equipment is already in the database.")
@@ -297,7 +281,7 @@ def update_exercise(old_exercise, new_exercise):
     cursor = conn.cursor()
 
     # To make sure that new exercise isn't already in the database
-    new_exercise_in_db = check_db(cursor, new_exercise)
+    new_exercise_in_db = check_db(cursor, 'exercise', new_exercise)
 
     if new_exercise_in_db:
         print(f"The '{new_exercise}' exercise is already in the database.")
@@ -348,26 +332,9 @@ def update_resistance(week, exercise, reps, new_resistance):
         (week, exercise, reps,)
     ).fetchone()
 
-    # To make sure an identical row is not already in the database
-    row_in_db = cursor.execute(
-        '''
-        SELECT * FROM week_exercise
-        WHERE week_id = ?
-        AND exercise_id = ?
-        AND reps_id = ?
-        AND resistance_id = ?
-        ''',
-        (week, exercise, reps, new_resistance)
-    ).fetchone()
-
     if not week_in_db:
         print(
             f"Week {week} with the '{exercise}' exercise and {reps} reps isn't in the database."
-        )
-    elif row_in_db:
-        print(
-            f"Week {week} with the '{exercise}' exercise, {reps} reps, "
-            f"and '{new_resistance}' resistance is already in the database."
         )
     else:
         cursor.execute(
@@ -397,7 +364,7 @@ def delete_week(week):
     cursor = conn.cursor()
 
     # To make sure the week is in the database
-    week_in_db = check_db(cursor, week)
+    week_in_db = check_db(cursor, 'week', week)
 
     if week_in_db:
         cursor.execute( 'DELETE FROM week WHERE id = ?', (week,) )
@@ -427,7 +394,7 @@ def delete_equipment(equipment):
     cursor = conn.cursor()
 
     # To make sure the equipment is in the database
-    equipment_in_db = check_db(cursor, equipment)
+    equipment_in_db = check_db(cursor, 'equipment', equipment)
 
     if equipment_in_db:
         cursor.execute( 'DELETE FROM equipment WHERE id = ?', (equipment,) )
@@ -457,7 +424,7 @@ def delete_exercise(exercise):
     cursor = conn.cursor()
 
     # To make sure the exercise is in the database
-    exercise_in_db = check_db(cursor, exercise)
+    exercise_in_db = check_db(cursor, 'exercise', exercise)
 
     if exercise_in_db:
         cursor.execute( 'DELETE FROM exercise WHERE id = ?', (exercise,) )
@@ -485,7 +452,7 @@ def delete_reps(reps):
     cursor = conn.cursor()
 
     # To make sure the reps are in the database
-    reps_in_db = check_db(cursor, reps)
+    reps_in_db = check_db(cursor, 'reps', reps)
 
     if reps_in_db:
         cursor.execute( 'DELETE FROM reps WHERE id = ?', (reps,) )
@@ -511,7 +478,7 @@ def delete_resistance(resistance):
     cursor = conn.cursor()
 
     # To make sure the resistance is in the database
-    resistance_in_db = check_db(cursor, resistance)
+    resistance_in_db = check_db(cursor, 'resistance', resistance)
 
     if resistance_in_db:
         cursor.execute( 'DELETE FROM resistance WHERE id = ?', (resistance,) )
