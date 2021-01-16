@@ -4,18 +4,18 @@ Contains the functions needed to delete exercise information from the database.
 import sqlite3
 from sqlite3.dbapi2 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_in_db
+from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_db
 
 
 @click.command()
 @click.argument('week')
 def delete_week(week):
-    '''Deletes the specified week from its table in the exercise database.'''
+    '''Deletes the specified week from the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure the week is in the database
-    week_in_db = check_in_db(cursor, week)
+    week_in_db = check_db(cursor, week)
 
     if week_in_db:
         try:
@@ -40,13 +40,13 @@ def delete_week(week):
 
 def delete_equipment(equipment):
     '''
-    Deletes the specified equipment from its table in the database.
+    Deletes the specified equipment from the exercise database.
     '''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure the equipment is in the database
-    equipment_in_db = check_in_db(cursor, equipment)
+    equipment_in_db = check_db(cursor, equipment)
 
     if equipment_in_db:
         try:
@@ -71,13 +71,13 @@ def delete_equipment(equipment):
 
 def delete_exercise(exercise):
     '''
-    Deletes the specified exercise and its equipment from its table in the database.
+    Deletes the specified exercise and its equipment from the exercise database.
     '''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure the exercise is in the database
-    exercise_in_db = check_in_db(cursor, exercise)
+    exercise_in_db = check_db(cursor, exercise)
 
     if exercise_in_db:
         try:
@@ -101,14 +101,12 @@ def delete_exercise(exercise):
 
 
 def delete_reps(reps):
-    '''
-    Deletes the specified reps from its table in the database.
-    '''
+    '''Deletes the specified reps from the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure the reps are in the database
-    reps_in_db = check_in_db(cursor, reps)
+    reps_in_db = check_db(cursor, reps)
 
     if reps_in_db:
         try:
@@ -130,14 +128,12 @@ def delete_reps(reps):
 
 
 def delete_resistance(resistance):
-    '''
-    Deletes the specified resistance from its table in the database.
-    '''
+    '''Deletes the specified resistance from the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure the resistance is in the database
-    resistance_in_db = check_in_db(cursor, resistance)
+    resistance_in_db = check_db(cursor, resistance)
 
     if resistance_in_db:
         try:

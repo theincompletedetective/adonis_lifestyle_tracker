@@ -4,19 +4,19 @@ Contains the functions needed to update exercise information in the database.
 import sqlite3
 from sqlite3.dbapi2 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_in_db
+from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_db
 
 
 @click.command()
 @click.option('-o', '--old-equipment', required=True, help='Equipment currently in the database')
 @click.option('-n', '--new-equipment', required=True, help='New name for equipment in the database')
 def update_equipment(old_equipment, new_equipment):
-    '''Updates the name of some equipment in the exercise database.'''
+    '''Changes the id/name of the specified equipment in the exercise database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure that new equipment isn't already in the database
-    new_equipment_in_db = check_in_db(cursor, new_equipment)
+    new_equipment_in_db = check_db(cursor, new_equipment)
 
     if new_equipment_in_db:
         print(f"The '{new_equipment}' equipment is already in the database.")
@@ -46,12 +46,12 @@ def update_equipment(old_equipment, new_equipment):
 @click.option('-o', '--old-exercise', required=True, help='Exercise currently in the database')
 @click.option('-n', '--new-exercise', required=True, help='New name for exercise in the database')
 def update_exercise(old_exercise, new_exercise):
-    '''Changes the name of an exercise in the database.'''
+    '''Changes the id/name of the specified exercise in the database.'''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure that new exercise isn't already in the database
-    new_exercise_in_db = check_in_db(cursor, new_exercise)
+    new_exercise_in_db = check_db(cursor, new_exercise)
 
     if new_exercise_in_db:
         print(f"The '{new_exercise}' exercise is already in the database.")
@@ -86,8 +86,7 @@ def update_exercise(old_exercise, new_exercise):
 @click.option('-n', '--new-resistance', required=True, help='Updated amount of resistance for a given exercise.')
 def update_resistance(week, exercise, reps, new_resistance):
     '''
-    Updates the resistance used for the specified exercise,
-    at the given rep range, for the provided week.
+    Changes the resistance used for the specified exercise, at the given rep range, for the provided week.
     '''
     conn = sqlite3.connect(EXERCISE_DB_PATH)
     cursor = conn.cursor()

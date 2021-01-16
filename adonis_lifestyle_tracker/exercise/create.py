@@ -4,7 +4,7 @@ Contains the functions needed to add exercise information to the database.
 import sqlite3
 from sqlite3 import IntegrityError
 import click
-from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_in_db
+from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH, check_db
 
 
 @click.command()
@@ -60,7 +60,7 @@ def add_exercise(exercise, equipment):
     cursor = conn.cursor()
 
     # To make sure that the equipment is already in the database
-    equipment_in_db = check_in_db(cursor, equipment)
+    equipment_in_db = check_db(cursor, equipment)
 
     if equipment_in_db:
         try:
@@ -137,16 +137,16 @@ def add_weekly_exercise(week, exercise, reps, resistance):
     cursor = conn.cursor()
 
     # To make sure the week is in the database
-    week_in_db = check_in_db(cursor, week)
+    week_in_db = check_db(cursor, week)
 
     # To make sure the exercise is in the database
-    exercise_in_db = check_in_db(cursor, exercise)
+    exercise_in_db = check_db(cursor, exercise)
 
     # To make sure the reps are in the database
-    reps_in_db = check_in_db(cursor, reps)
+    reps_in_db = check_db(cursor, reps)
 
     # To make sure the resistance is in the database
-    resistance_in_db = check_in_db(cursor, resistance)
+    resistance_in_db = check_db(cursor, resistance)
 
     # To make sure a duplicate row doesn't exist in the database
     row_in_db = cursor.execute(

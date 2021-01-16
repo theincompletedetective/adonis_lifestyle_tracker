@@ -6,7 +6,7 @@ NUTRITION_DB_PATH = os.path.join(os.path.dirname(__file__), 'nutrition', 'nutrit
 EXERCISE_DB_PATH = os.path.join(os.path.dirname(__file__), 'exercise', 'exercise.db')
 
 
-def check_in_db(cursor, table, value=None):
+def check_db(cursor, table, value=None):
     '''
     Checks to see whether or not the provided value is in the specified database table.
     '''
