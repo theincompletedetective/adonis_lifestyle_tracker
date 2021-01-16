@@ -5,68 +5,11 @@ import click
 from adonis_lifestyle_tracker.config import NUTRITION_DB_PATH
 
 
-def get_weekly_kcal(week):
-    conn = sqlite3.connect(NUTRITION_DB_PATH)
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "SELECT total_kcal FROM week WHERE id == ?;", (week,)
-    )
-
-    try:
-        total_weekly_kcal = cursor.fetchone()[0]
-    except TypeError:
-        print(f'Week {week} is not in the nutrition database!')
-    else:
-        conn.commit()
-        return total_weekly_kcal
-    finally:
-        conn.close()
-
-
-def get_weekly_protein(week):
-    conn = sqlite3.connect(NUTRITION_DB_PATH)
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "SELECT total_protein FROM week WHERE id == ?", (week,)
-    )
-
-    try:
-        total_weekly_protein = cursor.fetchone()[0]
-    except TypeError:
-        print(f'Week {week} is not in the nutrition database!')
-    else:
-        conn.commit()
-        return total_weekly_protein
-    finally:
-        conn.close()
-
-
 @click.command()
 @click.option('-f', '--food', required=True, help='Name of the food.')
-def get_food(food):
-    '''Gets a food's calories and protein from the nutrition database.'''
-    conn = sqlite3.connect(NUTRITION_DB_PATH)
-    cursor = conn.cursor()
-
-    try:
-        cursor.execute(
-            'SELECT kcal, protein FROM food WHERE food == ?;', (food,)
-        )
-        kcal, protein = cursor.fetchone()[1:] # id, kcal, protein
-        print(f'{food} has {kcal} calories, and {protein} grams of protein.')
-    except TypeError:
-        print(f"The food '{food}' is not currently in the nutrition database!")
-    finally:
-        conn.close()
-
-
-@click.command()
-@click.option('-f', '--food', required=True, help='Name of the food.')
-@click.option('-k', '--kcal', required=True, type=int, help='Number of calories in the food.')
-@click.option('-p', '--protein', required=True, type=int, help='Number of grams of protein in the food.')
-def add_food(food, kcal, protein):
+@click.option('-k', '--calories', required=True, type=int, help='Calories in the food.')
+@click.option('-p', '--protein', required=True, type=int, help='Grams of protein in the food.')
+def add_food(food, calories, protein):
     '''Adds the food with the specified calories and protein to the database.'''
     conn = sqlite3.connect(NUTRITION_DB_PATH)
     cursor = conn.cursor()
@@ -74,143 +17,177 @@ def add_food(food, kcal, protein):
     try:
         cursor.execute(
             '''
-            INSERT INTO food (food, kcal, protein)
+            INSERT INTO food (id, calories, protein)
                 VALUES (?, ?, ?);
             ''',
-            (food, kcal, protein)
+            (food, calories, protein)
         )
     except IntegrityError:
-        print('You cannot add two foods with the same name to the database!')
+        print(f'The food "{food}" is already in the database.')
     else:
-        print(f'The food "{food}" has been successfully added to the nutrition database!')
         conn.commit()
+        print(
+            f'The food "{food}", with {calories} calories and {protein} grams of protein '
+            'has been successfully added to the nutrition database.'
+        )
     finally:
         conn.close()
 
 
 @click.command()
-@click.option('-w', '--week', required=True, type=int, help='Week number to add.')
-@click.option('-k', '--total-kcal', required=True, type=int, help='Total number of calories for the week.')
-@click.option('-p', '--total-protein', required=True, type=int, help='Total number of grams of protein for the week.')
-def add_weekly_totals(week, total_kcal, total_protein):
-    '''Adds a week to the week table in the nutrition database.'''
+@click.option('-w', '--week', required=True, type=int, help='Week number.')
+@click.option('-k', '--total-calories', required=True, type=int, help='Nmber of calories for the week.')
+@click.option('-p', '--total-protein', required=True, type=int, help='Number of grams of protein for the week.')
+def add_totals_to_week(week, total_calories, total_protein):
+    '''
+    Adds a week, total calories, and total protein to the week table in the nutrition database.
+    '''
     conn = sqlite3.connect(NUTRITION_DB_PATH)
     cursor = conn.cursor()
 
     try:
         cursor.execute(
             '''
-            INSERT INTO week (id, total_kcal, total_protein)
+            INSERT INTO week (id, total_calories, total_protein)
                 VALUES (?, ?, ?);
             ''',
-            (week, total_kcal, total_protein)
+            (week, total_calories, total_protein)
         )
     except IntegrityError:
-        print(f'Week {week} is already in the nurition database!')
+        print(f'Week {week} is already in the nurition database.')
     else:
-        print(
-            f'Week {week} has been added to the database, '
-            f'with {total_kcal} total calories, and {total_protein} total grams of protein.'
-        )
         conn.commit()
+        print(
+            f'Week {week} has been successfully added to the nutrition database, '
+            f'with {total_calories} total calories, and {total_protein} total grams of protein.'
+        )
     finally:
         conn.close()
 
 
 @click.command()
 @click.option('-f', '--food', required=True, help='Name of the food.')
-@click.option('-w', '--week', required=True, type=int, help='Week number to which to add a food.')
-def add_weekly_food(food, week):
-    '''Adds a food and week to the food_week table in the nutrition database.'''
+@click.option('-w', '--week', required=True, type=int, help='Week number.')
+def add_food_to_week(food, week):
+    '''Adds a week and food to the week_food table in the nutrition database.'''
     conn = sqlite3.connect(NUTRITION_DB_PATH)
     cursor = conn.cursor()
 
     # To make sure food and week are already in the database
-    cursor.execute( 'SELECT * FROM food WHERE food == ?;', (food,) )
-    found_food = cursor.fetchone()
-
-    cursor.execute( 'SELECT * FROM week WHERE id == ?;', (week,) )
-    found_week = cursor.fetchone()
+    found_food = cursor.execute( 'SELECT * FROM food WHERE id == ?;', (food,) ).fetchone()
+    found_week = cursor.execute( 'SELECT * FROM week WHERE id == ?;', (week,) ).fetchone()
 
     if found_food and not found_week:
-        print(f'Week {week} is not in the nutrition database!')
+        print(f'Week {week} is not in the nutrition database.')
     elif found_week and not found_food:
-        print(f'The food "{food}" is not in the nutrition database!')
+        print(f'The food "{food}" is not in the nutrition database.')
     else:
         cursor.execute(
-            'INSERT INTO food_week (food, week) VALUES (?, ?);',
-            (food, week)
+            'INSERT INTO week_food (week_id, food_id) VALUES (?, ?);',
+            (week, food)
         )
         conn.commit()
-        conn.close()
         print(f'The food "{food}" has been added to week {week}.')
+
+    conn.close()
 
 
 @click.command()
-@click.option('-w', '--week', required=True, type=int, help='Week number for which to get calories.')
-def get_weekly_kcal_left(week):
+@click.argument('food')
+def get_food(food):
+    '''Gets a food's calories and protein from the nutrition database.'''
+    conn = sqlite3.connect(NUTRITION_DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        'SELECT calories, protein FROM food WHERE id == ?;', (food,)
+    )
+
+    try:
+        calories, protein = cursor.fetchone()
+    except TypeError:
+        print(f"The food '{food}' isn't in the nutrition database.")
+    else:
+        print(f'The food "{food}" has {calories} calories, and {protein} grams of protein.')
+    finally:
+        conn.close()
+
+
+@click.command()
+@click.argument('week', type=int)
+def get_calories_left(week):
     '''
     Calculates the total number of calories left to consume
     for the week.
     '''
-    total_weekly_kcal = get_weekly_kcal(week)
-
     conn = sqlite3.connect(NUTRITION_DB_PATH)
     cursor = conn.cursor()
 
-    # To get all the names for the food consumed in a given week
-    cursor.execute(
-        "SELECT food FROM food_week WHERE week == ?;", (week,)
-    )
-
-    # To get the number of calories for each food consumed in a given week
-    for food_name_tuple in cursor.fetchall():
+    try:
+        total_weekly_calories = cursor.execute(
+            "SELECT total_calories FROM week WHERE id == ?;", (week,)
+        ).fetchone()[0]
+    except TypeError:
+        print(f'Week {week} is not in the nutrition database.')
+    else:
+        # To get all the names for the food consumed in a given week
         cursor.execute(
-            "SELECT kcal FROM food WHERE food == ?;", (food_name_tuple[0],)
+            "SELECT food_id FROM week_food WHERE week_id == ?;", (week,)
         )
 
-        # To substract the grams of protein for each food consumed in the week
-        total_weekly_kcal -= cursor.fetchone()[0]
+        # To get the number of calories for each food consumed in a given week
+        for food_name_tuple in cursor.fetchall():
+            cursor.execute(
+                "SELECT calories FROM food WHERE id == ?;", (food_name_tuple[0],)
+            )
 
-    conn.commit()
-    conn.close()
+            # To substract the grams of protein for each food consumed in the week
+            total_weekly_calories -= cursor.fetchone()[0]
 
-    if total_weekly_kcal >= 0:
-        print(f'You have {total_weekly_kcal} calories left for the week.')
-    else:
-        print('You have zero calories left for the week!')
+        conn.commit()
+        conn.close()
+
+        if total_weekly_calories >= 0:
+            print(f'You have {total_weekly_calories} calories left for the week.')
+        else:
+            print('You have zero calories left for the week!')
 
 
 @click.command()
-@click.option('-w', '--week', required=True, type=int, help='Week number for which to get protein.')
-def get_weekly_protein_left(week):
+@click.argument('week', type=int)
+def get_protein_left(week):
     '''
     Calculates the total grams of protein left to consume
     for the week.
     '''
-    total_weekly_protein = get_weekly_protein(week)
-
     conn = sqlite3.connect(NUTRITION_DB_PATH)
     cursor = conn.cursor()
 
-    # To get all the names for the food consumed in a given week
-    cursor.execute(
-        "SELECT food FROM food_week WHERE week = ?;", (week,)
-    )
-
-    # To get the grams of protein for each food consumed in a given week
-    for food_name_tuple in cursor.fetchall():
+    try:
+        total_weekly_protein = cursor.execute(
+            "SELECT total_protein FROM week WHERE id == ?", (week,)
+        ).fetchone()[0]
+    except TypeError:
+        print(f"Week {week} is not in the nutrition database.")
+    else:
+        # To get all the names for the food consumed in a given week
         cursor.execute(
-            "SELECT protein FROM food WHERE food = ?;", (food_name_tuple[0],)
+            "SELECT food_id FROM week_food WHERE week_id = ?;", (week,)
         )
 
-        # To substract the grams of protein for each food consumed in the week
-        total_weekly_protein -= cursor.fetchone()[0]
+        # To get the grams of protein for each food consumed in a given week
+        for food_name_tuple in cursor.fetchall():
+            cursor.execute(
+                "SELECT protein FROM food WHERE id = ?;", (food_name_tuple[0],)
+            )
 
-    conn.commit()
-    conn.close()
+            # To substract the grams of protein for each food consumed in the week
+            total_weekly_protein -= cursor.fetchone()[0]
 
-    if total_weekly_protein >= 0:
-        print(f'You have {total_weekly_protein} grams of protein left for the week.')
-    else:
-        print(f'You have zero grams of protein left for the week!')
+        conn.commit()
+        conn.close()
+
+        if total_weekly_protein >= 0:
+            print(f'You have {total_weekly_protein} grams of protein left for the week.')
+        else:
+            print(f'You have zero grams of protein left for the week!')

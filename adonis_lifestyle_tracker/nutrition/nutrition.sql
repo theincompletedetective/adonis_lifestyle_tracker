@@ -1,16 +1,16 @@
 create table food (
-    food text primary key,
-    kcal integer,
+    id text primary key,
+    calories integer,
     protein integer
 );
 
 create table week (
     id integer primary key,
-    total_kcal integer,
+    total_calories integer,
     total_protein integer
 );
 
-create table food_week (
-    food text,
-    week integer
+create table week_food (
+    week_id integer,
+    food_id text
 );
