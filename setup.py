@@ -23,12 +23,12 @@ setup(
         get_food=adonis_lifestyle_tracker.nutrition.nutrition:get_food
         get_weekly_kcal_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_kcal_left
         get_weekly_protein_left=adonis_lifestyle_tracker.nutrition.nutrition:get_weekly_protein_left
-        add_weekly_exercise=adonis_lifestyle_tracker.exercise.create:add_weekly_exercise
+        add_week=adonis_lifestyle_tracker.exercise.create:add_week
         add_exercise=adonis_lifestyle_tracker.exercise.create:add_exercise
         add_equipment=adonis_lifestyle_tracker.exercise.create:add_equipment
         add_reps=adonis_lifestyle_tracker.exercise.create:add_reps
         add_resistance=adonis_lifestyle_tracker.exercise.create:add_resistance
-        add_exercise_reps_resistance_to_week=adonis_lifestyle_tracker.exercise.create:add_exercise_reps_resistance_to_week
+        add_weekly_exercise=adonis_lifestyle_tracker.exercise.create:add_weekly_exercise
         get_equipment=adonis_lifestyle_tracker.exercise.read:get_equipment
         get_resistance=adonis_lifestyle_tracker.exercise.read:get_resistance
         update_equipment=adonis_lifestyle_tracker.exercise.update:update_equipment
