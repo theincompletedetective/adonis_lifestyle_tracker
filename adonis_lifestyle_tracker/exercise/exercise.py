@@ -26,7 +26,7 @@ def add_week(week):
     try:
         cursor.execute( 'INSERT INTO week (id) VALUES (?)', (week,) )
     except IntegrityError:
-        print(f"Week {week} is already in the database.")
+        print(f"Week {week} is already in the exercise database.")
     else:
         conn.commit()
         print(
