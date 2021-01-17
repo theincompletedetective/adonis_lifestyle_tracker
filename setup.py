@@ -17,17 +17,17 @@ setup(
     include_package_data=True,
     entry_points='''
         [console_scripts]
-        add_food=adonis_lifestyle_tracker.nutrition.nutrition:add_food
-        add_totals_to_week=adonis_lifestyle_tracker.nutrition.nutrition:add_totals_to_week
-        add_food_to_week=adonis_lifestyle_tracker.nutrition.nutrition:add_food_to_week
-        get_food=adonis_lifestyle_tracker.nutrition.nutrition:get_food
-        get_calories_left=adonis_lifestyle_tracker.nutrition.nutrition:get_calories_left
-        get_protein_left=adonis_lifestyle_tracker.nutrition.nutrition:get_protein_left
-        add_exercise=adonis_lifestyle_tracker.exercise.exercise_script:add_exercise_script
-        add_exercise_to_week=adonis_lifestyle_tracker.exercise.exercise_script:add_exercise_to_week_script
-        get_equipment=adonis_lifestyle_tracker.exercise.exercise_script:get_equipment_script
-        get_resistance=adonis_lifestyle_tracker.exercise.exercise_script:get_resistance_script
-        change_resistance=adonis_lifestyle_tracker.exercise.exercise_script:change_resistance_script
+        add_food=adonis_lifestyle_tracker.script.nutrition_script:add_food_script
+        add_totals_to_week=adonis_lifestyle_tracker.script.nutrition_script:add_totals_to_week_script
+        add_food_to_week=adonis_lifestyle_tracker.script.nutrition_script:add_food_to_week_script
+        get_food=adonis_lifestyle_tracker.script.nutrition_script:get_food_script
+        get_calories_left=adonis_lifestyle_tracker.script.nutrition_script:get_calories_left_script
+        get_protein_left=adonis_lifestyle_tracker.script.nutrition_script:get_protein_left_script
+        add_exercise=adonis_lifestyle_tracker.script.exercise_script:add_exercise_script
+        add_exercise_to_week=adonis_lifestyle_tracker.script.exercise_script:add_exercise_to_week_script
+        get_equipment=adonis_lifestyle_tracker.script.exercise_script:get_equipment_script
+        get_resistance=adonis_lifestyle_tracker.script.exercise_script:get_resistance_script
+        change_resistance=adonis_lifestyle_tracker.script.exercise_script:change_resistance_script
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",

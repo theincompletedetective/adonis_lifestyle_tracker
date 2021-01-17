@@ -86,7 +86,7 @@ while True:
 
         try:
             week = int(values['-WEEK-'])
-        except TypeError:
+        except ValueError:
             sg.popup_error('You must choose a number for the week!', title='Error')
             continue
 
@@ -94,7 +94,7 @@ while True:
 
         try:
             reps = int(values['-REPS-'])
-        except TypeError:
+        except ValueError:
             sg.popup_error('You must choose a number for the reps!', title='Error')
             continue
 
@@ -123,7 +123,7 @@ while True:
 
         try:
             week = int(values['-WEEK-'])
-        except TypeError:
+        except ValueError:
             sg.popup_error('You must choose a number for the week!', title='Error')
             continue
 
@@ -131,7 +131,7 @@ while True:
 
         try:
             reps = int(values['-REPS-'])
-        except TypeError:
+        except ValueError:
             sg.popup_error('You must choose a number for the reps!', title='Error')
             continue
 
@@ -160,7 +160,7 @@ while True:
 
         try:
             week = int(values['-WEEK-'])
-        except TypeError:
+        except ValueError:
             sg.popup_error('You must choose a number for the week!', title='Error')
             continue
 
@@ -168,7 +168,7 @@ while True:
 
         try:
             reps = int(values['-REPS-'])
-        except TypeError:
+        except ValueError:
             sg.popup_error('You must choose a number for the reps!', title='Error')
             continue
 
