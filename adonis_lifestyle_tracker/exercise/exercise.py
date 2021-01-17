@@ -49,8 +49,8 @@ def add_exercise_to_week(db_path, week, exercise, reps, resistance):
             )
         except IntegrityError:
             msg = (
-                f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
-                f"and '{resistance}' resistance is already in the the database."
+                f"Week {week} with the '{exercise}' exercise and {reps} reps "
+                "is already in the database."
             )
         else:
             conn.commit()
@@ -114,11 +114,10 @@ def change_resistance(db_path, week, exercise, reps, new_resistance):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # To make sure that an identical row is not already in database
-    row_in_db = cursor.execute(
+    # To see if an identical row is in the database
+    full_row_in_db = cursor.execute(
         '''
-        SELECT *
-        FROM week_exercise
+        SELECT * from week_exercise
         WHERE week = ?
         AND exercise_id = ?
         AND reps = ?
@@ -127,33 +126,43 @@ def change_resistance(db_path, week, exercise, reps, new_resistance):
         (week, exercise, reps, new_resistance)
     ).fetchone()
 
-    if row_in_db:
+    # To see if the week, exercise, and reps are in the database
+    part_row_in_db = cursor.execute(
+        '''
+        SELECT * from week_exercise
+        WHERE week = ?
+        AND exercise_id = ?
+        AND reps = ?
+        ''',
+        (week, exercise, reps)
+    ).fetchone()
+
+    if full_row_in_db:
         msg = (
-            f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
-            f"and '{new_resistance}' resistance is already in the the database."
+            f"Week {week} with the '{exercise}' exercise, {reps} reps, "
+            f"and '{new_resistance}' resistance is already in the database."
+        )
+    elif part_row_in_db:
+        cursor.execute(
+            '''
+            UPDATE week_exercise
+            SET resistance = ?
+            WHERE week = ?
+            AND exercise_id = ?
+            AND reps = ?
+            ''',
+            (new_resistance, week, exercise, reps)
+        )
+
+        conn.commit()
+        msg = (
+            f"The resistance for week {week}, the '{exercise}' exercise, "
+            f"and {reps} reps has been successfully updated to '{new_resistance}'."
         )
     else:
-        try:
-            cursor.execute(
-                '''
-                UPDATE week_exercise
-                SET resistance = ?
-                WHERE week = ?
-                AND exercise_id = ?
-                AND reps = ?
-                ''',
-                (new_resistance, week, exercise, reps)
-            )
-        except IntegrityError:
-            msg = (
-                f"Week {week}, the '{exercise}' exercise, and {reps} reps are not in the database."
-            )
-        else:
-            conn.commit()
-            msg = (
-                f"The resistance for week {week}, the '{exercise}' exercise, "
-                f"and {reps} reps has been successfully updated to '{new_resistance}'."
-            )
+        msg = (
+            f"Week {week} with the '{exercise}' exercise and {reps} reps is not in the database."
+        )
 
     conn.close()
     return msg
