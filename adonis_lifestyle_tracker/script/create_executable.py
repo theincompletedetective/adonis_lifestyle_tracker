@@ -33,7 +33,7 @@ def create_executable(module):
             '--name=%s' % f'{module} manager gui ({version_num})',
             '--onefile',
             '--noconsole',
-            '--specpath=%s' % os.path.dirname( os.path.abspath( os.path.dirname(__file__) ) ),
+            '--specpath=%s' % os.path.join( os.path.dirname( os.path.abspath( os.path.dirname(__file__) ) ), 'spec'),
             '--add-data=%s' % f'{license_path}{SEPARATOR}.',
             gui_path,
         ])
