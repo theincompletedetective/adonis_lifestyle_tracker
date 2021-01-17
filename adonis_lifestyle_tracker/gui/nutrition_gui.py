@@ -3,7 +3,6 @@ Contains the functions needed to add and update nutrition information in the dat
 using a GUI.
 '''
 import os
-from typing import Type
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.nutrition.nutrition import (
     add_food,
@@ -24,7 +23,6 @@ NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (18, 1)
 
 ADD_BUTTON_COLOR = ('white', '#008000')
-CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 
 layout = [
     [sg.T('Week', size=LABEL_SIZE), sg.I(key='-WEEK-', size=NUM_INPUT_SIZE)],

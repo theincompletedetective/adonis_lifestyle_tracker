@@ -17,6 +17,7 @@ setup(
     include_package_data=True,
     entry_points='''
         [console_scripts]
+        create_executable=adonis_lifestyle_tracker.script.create_executable:create_executable
         add_food=adonis_lifestyle_tracker.script.nutrition_script:add_food_script
         add_totals_to_week=adonis_lifestyle_tracker.script.nutrition_script:add_totals_to_week_script
         add_food_to_week=adonis_lifestyle_tracker.script.nutrition_script:add_food_to_week_script
