@@ -10,7 +10,8 @@ from adonis_lifestyle_tracker.nutrition import (
     add_food_to_week,
     get_food,
     get_calories_left,
-    get_protein_left
+    get_protein_left,
+    delete_food,
 )
 
 
@@ -36,11 +37,11 @@ layout = [
         sg.B('Add Food to Week', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
     ],
     [
-        sg.B('Get Food', size=BUTTON_SIZE),
-        sg.B('Get Calories Left', size=BUTTON_SIZE),
-        sg.B('Get Protein Left', size=BUTTON_SIZE)
+        sg.B( 'Get Food', size=BUTTON_SIZE),
+        sg.B( 'Get Calories Left', size=BUTTON_SIZE),
+        sg.B( 'Get Protein Left', size=BUTTON_SIZE)
     ],
-    [sg.Cancel( size=BUTTON_SIZE, button_color=('black', '#ff4040') )]
+    [sg.B( 'Delete Food', size=BUTTON_SIZE, button_color=('black', '#ff4040') )]
 ]
 
 window = sg.Window('Nutrition Manager', layout)
@@ -48,7 +49,7 @@ window = sg.Window('Nutrition Manager', layout)
 while True:
     event, values = window.read()
 
-    if event in (None, 'Cancel'):
+    if event is None:
         break
 
     if event == 'Add Food':
@@ -73,16 +74,30 @@ while True:
             continue
 
         if food and calories and protein:
-            sg.popup(
-                add_food(DB_PATH, food, calories, protein), title='Message'
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to add food '{food}' with {calories} calories "
+                f"and {protein} grams of protein to the database?",
+                title='Confirmation'
             )
+
+            if confirmation == 'Yes':
+                sg.popup(
+                    add_food(DB_PATH, food, calories, protein), title='Message'
+                )
+
+                # To clear the food-specific fields
+                window['-FOOD-'].update('')
+                window['-KCAL-'].update('')
+                window['-PROTEIN-'].update('')
+
+                # To add all foods to the drop-down menu
+                window['-FOOD-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'food') )
         else:
             sg.popup_error(
                 'You must provide a food name, calories, and protein!',
                 title='Error'
             )
 
-        window['-FOOD-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'food') )
     elif event == 'Add Totals to Week':
 
         try:
@@ -112,11 +127,23 @@ while True:
             )
             continue
 
-        sg.popup(
-            add_totals_to_week(DB_PATH, week, calories, protein),
-            title='Message'
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to add week {week} with {calories} total calories "
+            f"and {protein} total grams of protein to the database?",
+            title='Confirmation'
         )
-        window['-WEEK-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'week') )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                add_totals_to_week(DB_PATH, week, calories, protein),
+                title='Message'
+            )
+
+            window['-WEEK-'].update('')
+            window['-KCAL-'].update('')
+            window['-PROTEIN-'].update('')
+
+            window['-WEEK-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'week') )
     elif event == 'Add Food to Week':
         food = values['-FOOD-'].strip()
 
@@ -130,10 +157,19 @@ while True:
             continue
 
         if food:
-            sg.popup(
-                add_food_to_week(DB_PATH, week, food),
-                title='Message'
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to add food '{food}' to week {week}?",
+                title='Confirmation'
             )
+
+            if confirmation == 'Yes':
+                sg.popup(
+                    add_food_to_week(DB_PATH, week, food),
+                    title='Message'
+                )
+
+                window['-WEEK-'].update('')
+                window['-FOOD-'].update('')
         else:
             sg.popup_error('You must enter a food!', title='Error')
 
@@ -167,6 +203,23 @@ while True:
             continue
 
         sg.popup(get_protein_left(DB_PATH, week), title='Message')
+    elif event == 'Delete Food':
+        food = values['-FOOD-'].strip()
+
+        if food:
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to delete food '{food}' from the database?",
+                title='Confirmation'
+            )
+
+            if confirmation == 'Yes':
+                sg.popup(delete_food(DB_PATH, food), title='Message')
+                window['-FOOD-'].update('')
+
+                window['-FOOD-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'food') )
+        else:
+            sg.popup_error('You must enter a food!', title='Error')
+
     else:
         continue
 

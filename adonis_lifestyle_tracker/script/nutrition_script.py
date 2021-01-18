@@ -9,7 +9,8 @@ from adonis_lifestyle_tracker.nutrition import (
     add_food_to_week,
     get_food,
     get_calories_left,
-    get_protein_left
+    get_protein_left,
+    delete_food,
 )
 
 
@@ -69,3 +70,13 @@ def get_protein_left_script(week):
     based on all the foods in the week_food table, in the database.
     '''
     print( get_protein_left(DB_PATH, week) )
+
+
+@click.command()
+@click.argument('food')
+def delete_food_script(food):
+    '''
+    Deletes FOOD from the food table in the database, as well as
+    deleting every row in the week_food table with food FOOD.
+    '''
+    print( delete_food(DB_PATH, food) )
