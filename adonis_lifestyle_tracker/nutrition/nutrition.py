@@ -4,7 +4,9 @@ from sqlite3 import IntegrityError
 
 
 def add_food(db_path, food, calories, protein):
-    '''Adds the food with the specified calories and protein to the database.'''
+    '''
+    Adds the food with the specified calories and protein to the nutrition database.
+    '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -55,7 +57,7 @@ def add_totals_to_week(db_path, week, total_calories, total_protein):
         conn.close()
 
 
-def add_food_to_week(db_path, food, week):
+def add_food_to_week(db_path, week, food):
     '''Adds a week and food to the week_food table in the nutrition database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -81,7 +83,7 @@ def add_food_to_week(db_path, food, week):
 
 
 def get_food(db_path, food):
-    '''Gets a food's calories and protein from the nutrition database.'''
+    '''Gets a food's calories and protein from the food table in the nutrition database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -101,8 +103,7 @@ def get_food(db_path, food):
 
 def get_calories_left(db_path, week):
     '''
-    Calculates the total number of calories left to consume
-    for the week.
+    Gets the total number of calories left to consume for the specified week.
     '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -139,8 +140,7 @@ def get_calories_left(db_path, week):
 
 def get_protein_left(db_path, week):
     '''
-    Calculates the total grams of protein left to consume
-    for the week.
+    Gets the total grams of protein left to consume for the specified week.
     '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()

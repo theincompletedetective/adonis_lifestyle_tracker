@@ -6,7 +6,10 @@ from sqlite3 import IntegrityError
 
 
 def add_exercise(db_path, exercise, equipment):
-    '''Adds a new exercise and its equipment to the database.'''
+    '''
+    Adds a new exercise and its equipment to the exercise table
+    in the exercise database.
+    '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -28,7 +31,10 @@ def add_exercise(db_path, exercise, equipment):
 
 
 def add_exercise_to_week(db_path, week, exercise, reps, resistance):
-    '''Adds an exercise to the specified week.'''
+    '''
+    Adds an exercise to the specified week in the week_exercise table
+    in the exercise database.
+    '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -66,7 +72,10 @@ def add_exercise_to_week(db_path, week, exercise, reps, resistance):
 
 
 def get_equipment(db_path, exercise):
-    '''Gets the equipment for the specified exercise in the database.'''
+    '''
+    Gets the equipment for the specified exercise from the exercise table
+    in the exercise database.
+    '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -81,7 +90,10 @@ def get_equipment(db_path, exercise):
 
 
 def get_resistance(db_path, week, exercise, reps):
-    '''Gets the resistance for the specified week, exercise, and number of reps.'''
+    '''
+    Gets the resistance for the specified week, exercise, and number of reps
+    in the week_exercise table in the exercise database.
+    '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -109,7 +121,7 @@ def get_resistance(db_path, week, exercise, reps):
 def change_resistance(db_path, week, exercise, reps, new_resistance):
     '''
     Changes the resistance used for the specified exercise, at the given rep range,
-    for the provided week.
+    for the provided week in the week_exercise table in the exercise database.
     '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()

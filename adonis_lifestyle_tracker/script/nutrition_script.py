@@ -26,22 +26,22 @@ def add_food_script(food, calories, protein):
 
 
 @click.command()
-@click.option('-w', '--week', required=True, type=int, help='Week number.')
+@click.argument('week', type=int)
 @click.option('-k', '--total-calories', required=True, type=int, help='Nmber of calories for the week.')
 @click.option('-p', '--total-protein', required=True, type=int, help='Number of grams of protein for the week.')
 def add_totals_to_week_script(week, total_calories, total_protein):
     '''
-    Adds a week, total calories, and total protein to the week table in the nutrition database.
+    Adds week number WEEK, total calories, and total protein to the week table in the nutrition database.
     '''
     print( add_totals_to_week(NUTRITION_DB_PATH, week, total_calories, total_protein) )
 
 
 @click.command()
-@click.option('-f', '--food', required=True, help='Name of the food.')
-@click.option('-w', '--week', required=True, type=int, help='Week number.')
-def add_food_to_week_script(food, week):
-    '''Adds a week and food to the week_food table in the nutrition database.'''
-    print( add_food_to_week(NUTRITION_DB_PATH, food, week) )
+@click.argument('week', type=int)
+@click.argument('food')
+def add_food_to_week_script(week, food):
+    '''Adds week number WEEK and FOOD to the week_food table in the nutrition database.'''
+    print( add_food_to_week(NUTRITION_DB_PATH, week, food) )
 
 
 @click.command()
@@ -63,7 +63,7 @@ def get_calories_left_script(week):
 
 @click.command()
 @click.argument('week', type=int)
-def get_protein_left(week):
+def get_protein_left_script(week):
     '''
     Prints the grams of protein still needed for week number WEEK,
     based on all the foods in the week_food table, in the nutrition database.
