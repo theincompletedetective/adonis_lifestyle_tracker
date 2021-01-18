@@ -4,7 +4,9 @@ using a GUI.
 '''
 import os
 import PySimpleGUI as sg
+from adonis_lifestyle_tracker.config import EXERCISES
 from adonis_lifestyle_tracker.exercise.exercise import (
+    add_equipment,
     add_exercise,
     add_exercise_to_week,
     get_equipment,
@@ -26,21 +28,38 @@ CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 
 layout = [
     [sg.T('Database', size=LABEL_SIZE), sg.I(key='-PATH-'), sg.FileBrowse()],
-    [sg.T('Exercise', size=LABEL_SIZE), sg.I(key='-EXERCISE-', size=INPUT_SIZE)],
-    [sg.T('Equipment', size=LABEL_SIZE), sg.I(key='-EQUIPMENT-', size=INPUT_SIZE)],
+    [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(EXERCISES, key='-EXERCISE-')],
+    [
+        sg.T('Equipment', size=LABEL_SIZE),
+        sg.InputCombo(
+            (
+                'Powerblock Dumbbells',
+                'Powerblock Barbell',
+                'Powerblock Barbell + Fat Gripz',
+                'Powerblock E-Z Curl Bar',
+                'Powerblock E-Z Curl Bar + Fat Gripz',
+                'Bodylastics Bands',
+                'Bodyweight',
+            ),
+            key='-EQUIPMENT-'
+        )
+    ],
     [sg.T('Resistance', size=LABEL_SIZE), sg.I( key='-RESISTANCE-', size=(10, 1) )],
     [sg.T('Week', size=LABEL_SIZE), sg.I( key='-WEEK-', size=(5, 1) )],
     [sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( (3, 5, 8, 13, 21), key='-REPS-' )],
     [
+        sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B('Add Exercise', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B('Add Exercise to Week', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
-        sg.B('Change Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
     ],
     [
         sg.B('Get Equipment', size=BUTTON_SIZE),
         sg.B('Get Resistance', size=BUTTON_SIZE),
-        sg.Cancel( size=BUTTON_SIZE, button_color=('black', '#ff4040') )
+        sg.B('Change Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
     ],
+    [
+        sg.Cancel( size=BUTTON_SIZE, button_color=('black', '#ff4040') )
+    ]
 ]
 
 window = sg.Window('Exercise Manager', layout)
@@ -51,7 +70,24 @@ while True:
     if event in (None, 'Cancel'):
         break
 
-    if event == 'Add Exercise':
+    if event == 'Add Equipment':
+        equipment = values['-EQUIPMENT-'].strip()
+
+        if os.path.isfile( values['-PATH-'].strip() ):
+            db_path = values['-PATH-'].strip()
+        else:
+            sg.popup_error(
+                'You must provide the absolute path to the exercise database!',
+                title='Error'
+            )
+            continue
+
+        if equipment:
+            sg.popup(add_equipment(db_path, equipment), title='Message')
+        else:
+            sg.popup_error('You must provide equipment!', title='Error')
+
+    elif event == 'Add Exercise':
         exercise = values['-EXERCISE-'].strip()
         equipment = values['-EQUIPMENT-'].strip()
 
@@ -71,7 +107,6 @@ while True:
                 'You must provide an exercise and its equipment!',
                 title='Error'
             )
-            continue
 
     elif event == 'Add Exercise to Week':
 
@@ -109,7 +144,6 @@ while True:
             sg.popup_error(
                 'You must provide an exercise and resistance!', title='Error'
             )
-            continue
 
     elif event == 'Change Resistance':
 
@@ -120,6 +154,7 @@ while True:
                 'You must provide the absolute path to the exercise database!',
                 title='Error'
             )
+            continue
 
         try:
             week = int(values['-WEEK-'])
@@ -146,7 +181,6 @@ while True:
             sg.popup_error(
                 'You must provide an exercise and resistance!', title='Error'
             )
-            continue
 
     elif event == 'Get Resistance':
 
@@ -157,6 +191,7 @@ while True:
                 'You must provide the absolute path to the exercise database!',
                 title='Error'
             )
+            continue
 
         try:
             week = int(values['-WEEK-'])
@@ -181,7 +216,6 @@ while True:
             sg.popup_error(
                 'You must provide an exercise and number of reps!', title='Error'
             )
-            continue
 
     elif event == 'Get Equipment':
         exercise = values['-EXERCISE-'].strip()
@@ -199,7 +233,6 @@ while True:
             sg.popup( get_equipment(db_path, exercise), title='Message' )
         else:
             sg.popup_error('You must provide an exercise!', title='Error')
-            continue
 
     else:
         continue

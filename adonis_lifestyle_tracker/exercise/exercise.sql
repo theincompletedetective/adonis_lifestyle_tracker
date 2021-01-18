@@ -1,6 +1,10 @@
+create table equipment (
+    id text primary key
+);
+
 create table exercise (
   id text primary key,
-  equipment text
+  equipment_id text
 );
 
 create table week_exercise (

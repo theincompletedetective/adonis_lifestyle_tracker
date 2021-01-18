@@ -90,7 +90,6 @@ while True:
                 'You must provide a food name, calories, and protein!',
                 title='Error'
             )
-            continue
 
     elif event == 'Add Totals to Week':
 

@@ -4,12 +4,22 @@ Contains the command-line scripts needed to add and update exercise information 
 import click
 from adonis_lifestyle_tracker.config import EXERCISE_DB_PATH
 from adonis_lifestyle_tracker.exercise.exercise import (
+    add_equipment,
     add_exercise,
     add_exercise_to_week,
     get_equipment,
     get_resistance,
     change_resistance
 )
+
+
+@click.command()
+@click.argument('equipment')
+def add_equipment_script(equipment):
+    '''
+    Adds the specified EQUIPMENT to the equipment table in the exercise database.
+    '''
+    print( add_equipment(EXERCISE_DB_PATH, equipment) )
 
 
 @click.command()

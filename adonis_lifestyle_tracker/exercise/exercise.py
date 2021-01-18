@@ -5,6 +5,28 @@ import sqlite3
 from sqlite3 import IntegrityError
 
 
+def add_equipment(db_path, equipment):
+    '''
+    Adds new equipment to the equipment table in the exercise database.
+    '''
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(
+            'INSERT INTO equipment (id) VALUES (?)', (equipment,)
+        )
+    except IntegrityError:
+        return f"The '{equipment}' equipment is already in the database."
+    else:
+        conn.commit()
+        return (
+            f"The '{equipment}' equipment has been successfully added to the database."
+        )
+    finally:
+        conn.close()
+
+
 def add_exercise(db_path, exercise, equipment):
     '''
     Adds a new exercise and its equipment to the exercise table
@@ -13,21 +35,30 @@ def add_exercise(db_path, exercise, equipment):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    try:
-        cursor.execute(
-            'INSERT INTO exercise (id, equipment) VALUES (?, ?)',
-            (exercise, equipment)
+    # To make sure equipment is already in the equipment table
+    equipment_in_db = cursor.execute(
+        'SELECT id FROM equipment WHERE id = ?', (equipment,)
+    ).fetchone()
+
+    if equipment_in_db:
+        try:
+            cursor.execute(
+                'INSERT INTO exercise (id, equipment_id) VALUES (?, ?)',
+                (exercise, equipment)
+            )
+        except IntegrityError:
+            msg = f"The '{exercise}' exercise is already in the database."
+        else:
+            conn.commit()
+            msg = (
+                f"The '{exercise}' exercise with the '{equipment}' "
+                "equipment has been successfully added to the database."
         )
-    except IntegrityError:
-        return f"The '{exercise}' exercise is already in the database."
     else:
-        conn.commit()
-        return (
-            f"The '{exercise}' exercise with the '{equipment}' equipment "
-            "has been successfully added to the database."
-        )
-    finally:
-        conn.close()
+        msg = f"'{equipment}' equipment is not in the database."
+
+    conn.close()
+    return msg
 
 
 def add_exercise_to_week(db_path, week, exercise, reps, resistance):
@@ -79,7 +110,10 @@ def get_equipment(db_path, exercise):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute( 'SELECT equipment FROM exercise WHERE id = ?', (exercise,) )
+    cursor.execute(
+        'SELECT equipment_id FROM exercise WHERE id = ?',
+        (exercise,)
+    )
 
     try:
         return cursor.fetchone()[0]
@@ -112,7 +146,8 @@ def get_resistance(db_path, week, exercise, reps):
         return cursor.fetchone()[0]
     except TypeError:
         return (
-            f"Week {week} with the '{exercise}' exercise and {reps} reps is not in the database."
+            f"Week {week} with the '{exercise}' exercise "
+            f"and {reps} reps is not in the database."
         )
     finally:
         conn.close()
@@ -173,7 +208,8 @@ def change_resistance(db_path, week, exercise, reps, new_resistance):
         )
     else:
         msg = (
-            f"Week {week} with the '{exercise}' exercise and {reps} reps is not in the database."
+            f"Week {week} with the '{exercise}' exercise "
+            f"and {reps} reps is not in the database."
         )
 
     conn.close()
