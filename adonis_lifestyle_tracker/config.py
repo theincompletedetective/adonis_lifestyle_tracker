@@ -4,6 +4,16 @@ import os
 
 NUTRITION_DB_PATH = os.path.join(os.path.dirname(__file__), 'nutrition', 'nutrition.db')
 EXERCISE_DB_PATH = os.path.join(os.path.dirname(__file__), 'exercise', 'exercise.db')
+
+EQUIPMENT = (
+    'Powerblock Dumbbells',
+    'Powerblock Barbell',
+    'Powerblock Barbell + Fat Gripz',
+    'Powerblock E-Z Curl Bar',
+    'Powerblock E-Z Curl Bar + Fat Gripz',
+    'Bodylastics Bands',
+    'Bodyweight',
+)
 EXERCISES = (
     'Barbell Curls',
     'Barbell Front Raises',

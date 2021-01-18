@@ -4,7 +4,7 @@ using a GUI.
 '''
 import os
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.config import EXERCISES
+from adonis_lifestyle_tracker.config import EQUIPMENT, EXERCISES
 from adonis_lifestyle_tracker.exercise.exercise import (
     add_equipment,
     add_exercise,
@@ -29,21 +29,7 @@ CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 layout = [
     [sg.T('Database', size=LABEL_SIZE), sg.I(key='-PATH-'), sg.FileBrowse()],
     [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(EXERCISES, key='-EXERCISE-')],
-    [
-        sg.T('Equipment', size=LABEL_SIZE),
-        sg.InputCombo(
-            (
-                'Powerblock Dumbbells',
-                'Powerblock Barbell',
-                'Powerblock Barbell + Fat Gripz',
-                'Powerblock E-Z Curl Bar',
-                'Powerblock E-Z Curl Bar + Fat Gripz',
-                'Bodylastics Bands',
-                'Bodyweight',
-            ),
-            key='-EQUIPMENT-'
-        )
-    ],
+    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(EQUIPMENT, key='-EQUIPMENT-')],
     [sg.T('Resistance', size=LABEL_SIZE), sg.I( key='-RESISTANCE-', size=(10, 1) )],
     [sg.T('Week', size=LABEL_SIZE), sg.I( key='-WEEK-', size=(5, 1) )],
     [sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( (3, 5, 8, 13, 21), key='-REPS-' )],
