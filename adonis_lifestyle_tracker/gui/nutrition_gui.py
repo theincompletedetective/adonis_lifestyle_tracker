@@ -28,9 +28,9 @@ FOODS = get_sorted_tuple(DB_PATH, 'id', 'food')
 
 layout = [
     [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( WEEKS, key='-WEEK-', size=(5, 1) )],
+    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo( FOODS, key='-FOOD-', size=(30, 1) )],
     [sg.T('Calories', size=LABEL_SIZE), sg.I(key='-KCAL-', size=NUM_INPUT_SIZE)],
     [sg.T('Protein', size=LABEL_SIZE), sg.I(key='-PROTEIN-', size=NUM_INPUT_SIZE)],
-    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo( FOODS, key='-FOOD-', size=(30, 1) )],
     [
         sg.B('Add Food', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B('Add Totals to Week', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),

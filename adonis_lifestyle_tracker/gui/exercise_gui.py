@@ -30,11 +30,11 @@ REPS = get_sorted_tuple(DB_PATH, 'reps', 'week_exercise')
 RESISTANCE = get_sorted_tuple(DB_PATH, 'resistance', 'week_exercise')
 
 layout = [
+    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( WEEKS, key='-WEEK-', size=(6, 1) )],
     [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(EXERCISES, key='-EXERCISE-', size=INPUT_SIZE)],
-    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(EQUIPMENT, key='-EQUIPMENT-', size=INPUT_SIZE)],
-    [sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( RESISTANCE, key='-RESISTANCE-', size=(10, 1) )],
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( WEEKS, key='-WEEK-', size=(5, 1) )],
-    [sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( REPS, key='-REPS-', size=(5, 1) )],
+    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(EQUIPMENT, key='-EQUIPMENT-', size=(INPUT_SIZE))],
+    [sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( REPS, key='-REPS-', size=(6, 1) )],
+    [sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( RESISTANCE, key='-RESISTANCE-', size=(6, 1) )],
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B('Add Exercise', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
