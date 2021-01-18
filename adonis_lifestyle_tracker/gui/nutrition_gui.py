@@ -41,7 +41,9 @@ layout = [
         sg.B( 'Get Calories Left', size=BUTTON_SIZE),
         sg.B( 'Get Protein Left', size=BUTTON_SIZE)
     ],
-    [sg.B( 'Delete Food', size=BUTTON_SIZE, button_color=('black', '#ff4040') )]
+    [
+        sg.B( 'Delete Food', size=BUTTON_SIZE, button_color=('black', '#ff4040') )
+    ]
 ]
 
 window = sg.Window('Nutrition Manager', layout)

@@ -44,9 +44,6 @@ layout = [
         sg.B('Get Equipment', size=BUTTON_SIZE),
         sg.B('Get Resistance', size=BUTTON_SIZE),
         sg.B('Change Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
-    ],
-    [
-        sg.Cancel( size=BUTTON_SIZE, button_color=('black', '#ff4040') )
     ]
 ]
 
@@ -62,24 +59,40 @@ while True:
         equipment = values['-EQUIPMENT-'].strip()
 
         if equipment:
-            sg.popup(add_equipment(DB_PATH, equipment), title='Message')
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to add the '{equipment}' equipment to the database?",
+                title='Confirmation'
+            )
+
+            if confirmation == 'Yes':
+                sg.popup(add_equipment(DB_PATH, equipment), title='Message')
+                window['-EQUIPMENT-'].update('')
+                window['-EQUIPMENT-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'equipment') )
         else:
             sg.popup_error('You must provide equipment!', title='Error')
 
-        window['-EQUIPMENT-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'equipment') )
     elif event == 'Add Exercise':
         exercise = values['-EXERCISE-'].strip()
         equipment = values['-EQUIPMENT-'].strip()
 
         if exercise and equipment:
-            sg.popup(add_exercise(DB_PATH, exercise, equipment), title='Message')
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to add the '{exercise}' exercise with "
+                f"the '{equipment}' equipment to the database?",
+                title='Confirmation'
+            )
+
+            if confirmation == 'Yes':
+                sg.popup(add_exercise(DB_PATH, exercise, equipment), title='Message')
+                window['-EXERCISE-'].update('')
+                window['-EQUIPMENT-'].update('')
+                window['-EXERCISE-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'exercise') )
         else:
             sg.popup_error(
                 'You must provide an exercise and its equipment!',
                 title='Error'
             )
 
-        window['-EXERCISE-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'exercise') )
     elif event == 'Add Exercise to Week':
 
         try:
@@ -99,18 +112,33 @@ while True:
         resistance = values['-RESISTANCE-'].strip()
 
         if exercise and resistance:
-            sg.popup(
-                add_exercise_to_week(DB_PATH, week, exercise, reps, resistance),
-                title='Message'
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to add the '{exercise}' exercise with "
+                f"the '{reps}' reps and '{resistance}' resistance to week {week} in the database?",
+                title='Confirmation'
             )
+
+            if confirmation == 'Yes':
+                sg.popup(
+                    add_exercise_to_week(DB_PATH, week, exercise, reps, resistance),
+                    title='Message'
+                )
+
+                # To clear the input fields
+                window['-WEEK-'].update('')
+                window['-EXERCISE-'].update('')
+                window['-REPS-'].update('')
+                window['-RESISTANCE-'].update('')
+
+                # To add the new information to the dropdowns
+                window['-WEEK-'].update( values=get_sorted_tuple(DB_PATH, 'week', 'week_exercise') )
+                window['-REPS-'].update( values=get_sorted_tuple(DB_PATH, 'reps', 'week_exercise') )
+                window['-RESISTANCE-'].update( values=get_sorted_tuple(DB_PATH, 'resistance', 'week_exercise') )
         else:
             sg.popup_error(
                 'You must provide an exercise and resistance!', title='Error'
             )
 
-        window['-WEEK-'].update( values=get_sorted_tuple(DB_PATH, 'week', 'week_exercise') )
-        window['-REPS-'].update( values=get_sorted_tuple(DB_PATH, 'reps', 'week_exercise') )
-        window['-RESISTANCE-'].update( values=get_sorted_tuple(DB_PATH, 'resistance', 'week_exercise') )
     elif event == 'Change Resistance':
 
         try:
@@ -130,16 +158,30 @@ while True:
         new_resistance = values['-RESISTANCE-'].strip()
 
         if exercise and new_resistance:
-            sg.popup(
-                change_resistance(DB_PATH, week, exercise, reps, new_resistance),
-                title='Message'
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to update the resistance for week {week}, "
+                f"the '{exercise}' exercise, and {reps} reps to '{new_resistance}' in the database?",
+                title='Confirmation'
             )
+
+            if confirmation == 'Yes':
+                sg.popup(
+                    change_resistance(DB_PATH, week, exercise, reps, new_resistance),
+                    title='Message'
+                )
+
+                # To clear the input fields
+                window['-WEEK-'].update('')
+                window['-EXERCISE-'].update('')
+                window['-REPS-'].update('')
+                window['-RESISTANCE-'].update('')
+
+                window['-RESISTANCE-'].update( values=get_sorted_tuple(DB_PATH, 'resistance', 'week_exercise') )
         else:
             sg.popup_error(
                 'You must provide an exercise and resistance!', title='Error'
             )
 
-        window['-RESISTANCE-'].update( values=get_sorted_tuple(DB_PATH, 'reps', 'week_exercise') )
     elif event == 'Get Resistance':
 
         try:
