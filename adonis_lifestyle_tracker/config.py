@@ -1,4 +1,7 @@
-'''Contains the absolute path to the nutrition and exercise databases.'''
+'''
+Contains the absolute path to the database, as well as a tuple of equipment
+and exercises for the exercise GUI.
+'''
 import os
 
 

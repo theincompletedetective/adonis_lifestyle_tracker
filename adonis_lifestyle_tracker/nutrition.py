@@ -1,4 +1,4 @@
-'''Contains the functions needed to CRUD food data in the nutrition database.'''
+'''Contains the functions needed to add and update food information in the database.'''
 import sqlite3
 from sqlite3 import IntegrityError
 

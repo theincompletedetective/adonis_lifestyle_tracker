@@ -63,7 +63,7 @@ while True:
             db_path = values['-PATH-'].strip()
         else:
             sg.popup_error(
-                'You must provide the absolute path to the exercise database!',
+                'You must provide the absolute path to the database!',
                 title='Error'
             )
             continue
@@ -81,7 +81,7 @@ while True:
             db_path = values['-PATH-'].strip()
         else:
             sg.popup_error(
-                'You must provide the absolute path to the exercise database!',
+                'You must provide the absolute path to the database!',
                 title='Error'
             )
             continue
@@ -100,7 +100,7 @@ while True:
             db_path = values['-PATH-'].strip()
         else:
             sg.popup_error(
-                'You must provide the absolute path to the exercise database!',
+                'You must provide the absolute path to the database!',
                 title='Error'
             )
             continue
@@ -137,7 +137,7 @@ while True:
             db_path = values['-PATH-'].strip()
         else:
             sg.popup_error(
-                'You must provide the absolute path to the exercise database!',
+                'You must provide the absolute path to the database!',
                 title='Error'
             )
             continue
@@ -174,7 +174,7 @@ while True:
             db_path = values['-PATH-'].strip()
         else:
             sg.popup_error(
-                'You must provide the absolute path to the exercise database!',
+                'You must provide the absolute path to the database!',
                 title='Error'
             )
             continue
@@ -210,7 +210,7 @@ while True:
             db_path = values['-PATH-'].strip()
         else:
             sg.popup_error(
-                'You must provide the absolute path to the exercise database!',
+                'You must provide the absolute path to the database!',
                 title='Error'
             )
             continue

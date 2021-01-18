@@ -1,6 +1,4 @@
-'''
-Contains the functions needed to add and update exercise information in the database.
-'''
+'''Contains the functions needed to add and update exercise information in the database.'''
 import sqlite3
 from sqlite3 import IntegrityError
 
