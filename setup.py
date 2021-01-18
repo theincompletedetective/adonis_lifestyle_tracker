@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 setup(
     name='adonis_lifestyle_tracker',
     version='1.0.0',
-    description='Helps to manage my calories and food for each week, using the AGR nutrition calculator',
+    description='Tracks my Adonis Lifestyle System food and exercise data',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/esmith1412/adonis_lifestyle_tracker',
@@ -33,7 +33,7 @@ setup(
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: POSIX :: Linux"
     ],
