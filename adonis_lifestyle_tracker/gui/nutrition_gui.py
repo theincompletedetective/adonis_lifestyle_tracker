@@ -2,8 +2,8 @@
 Contains the functions needed to add and update nutrition information in the database,
 using a GUI.
 '''
-import os
 import PySimpleGUI as sg
+from adonis_lifestyle_tracker.common import DB_PATH, get_sorted_tuple
 from adonis_lifestyle_tracker.nutrition import (
     add_food,
     add_totals_to_week,
@@ -16,20 +16,20 @@ from adonis_lifestyle_tracker.nutrition import (
 
 sg.theme('Reddit')
 
-db_path = None
-
 LABEL_SIZE = (10, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (18, 1)
 
 ADD_BUTTON_COLOR = ('white', '#008000')
 
+WEEKS = get_sorted_tuple(DB_PATH, 'id', 'week')
+FOODS = get_sorted_tuple(DB_PATH, 'id', 'food')
+
 layout = [
-    [sg.T('Week', size=LABEL_SIZE), sg.I(key='-WEEK-', size=NUM_INPUT_SIZE)],
+    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( WEEKS, key='-WEEK-', size=(5, 1) )],
     [sg.T('Calories', size=LABEL_SIZE), sg.I(key='-KCAL-', size=NUM_INPUT_SIZE)],
     [sg.T('Protein', size=LABEL_SIZE), sg.I(key='-PROTEIN-', size=NUM_INPUT_SIZE)],
-    [sg.T('Food', size=LABEL_SIZE), sg.I( key='-FOOD-', size=(30, 1) )],
-    [sg.T('Database', size=LABEL_SIZE), sg.I(key='-PATH-'), sg.FileBrowse()],
+    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo( FOODS, key='-FOOD-', size=(30, 1) )],
     [
         sg.B('Add Food', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B('Add Totals to Week', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
@@ -72,18 +72,9 @@ while True:
             )
             continue
 
-        if os.path.isfile( values['-PATH-'].strip() ):
-            db_path = values['-PATH-'].strip()
-        else:
-            sg.popup_error(
-                'You must provide the absolute path to the database!',
-                title='Error'
-            )
-            continue
-
         if food and calories and protein:
             sg.popup(
-                add_food(db_path, food, calories, protein), title='Message'
+                add_food(DB_PATH, food, calories, protein), title='Message'
             )
         else:
             sg.popup_error(
@@ -91,6 +82,7 @@ while True:
                 title='Error'
             )
 
+        window['-FOOD-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'food') )
     elif event == 'Add Totals to Week':
 
         try:
@@ -120,19 +112,11 @@ while True:
             )
             continue
 
-        if os.path.isfile( values['-PATH-'].strip() ):
-            db_path = values['-PATH-'].strip()
-        else:
-            sg.popup_error(
-                'You must provide the absolute path to the database!',
-                title='Error'
-            )
-            continue
-
         sg.popup(
-            add_totals_to_week(db_path, week, calories, protein),
+            add_totals_to_week(DB_PATH, week, calories, protein),
             title='Message'
         )
+        window['-WEEK-'].update( values=get_sorted_tuple(DB_PATH, 'id', 'week') )
     elif event == 'Add Food to Week':
         food = values['-FOOD-'].strip()
 
@@ -145,18 +129,9 @@ while True:
             )
             continue
 
-        if os.path.isfile( values['-PATH-'].strip() ):
-            db_path = values['-PATH-'].strip()
-        else:
-            sg.popup_error(
-                'You must provide the absolute path to the database!',
-                title='Error'
-            )
-            continue
-
         if food:
             sg.popup(
-                add_food_to_week(db_path, week, food),
+                add_food_to_week(DB_PATH, week, food),
                 title='Message'
             )
         else:
@@ -165,17 +140,8 @@ while True:
     elif event == 'Get Food':
         food = values['-FOOD-'].strip()
 
-        if os.path.isfile( values['-PATH-'].strip() ):
-            db_path = values['-PATH-'].strip()
-        else:
-            sg.popup_error(
-                'You must provide the absolute path to the database!',
-                title='Error'
-            )
-            continue
-
         if food:
-            sg.popup(get_food(db_path, food), title='Message')
+            sg.popup(get_food(DB_PATH, food), title='Message')
         else:
             sg.popup_error('You must enter a food!', title='Error')
 
@@ -189,16 +155,7 @@ while True:
             )
             continue
 
-        if os.path.isfile( values['-PATH-'].strip() ):
-            db_path = values['-PATH-'].strip()
-        else:
-            sg.popup_error(
-                'You must provide the absolute path to the database!',
-                title='Error'
-            )
-            continue
-
-        sg.popup(get_calories_left(db_path, week), title='Message')
+        sg.popup(get_calories_left(DB_PATH, week), title='Message')
     elif event == 'Get Protein Left':
         try:
             week = int( values['-WEEK-'].strip() )
@@ -209,16 +166,7 @@ while True:
             )
             continue
 
-        if os.path.isfile( values['-PATH-'].strip() ):
-            db_path = values['-PATH-'].strip()
-        else:
-            sg.popup_error(
-                'You must provide the absolute path to the database!',
-                title='Error'
-            )
-            continue
-
-        sg.popup(get_protein_left(db_path, week), title='Message')
+        sg.popup(get_protein_left(DB_PATH, week), title='Message')
     else:
         continue
 

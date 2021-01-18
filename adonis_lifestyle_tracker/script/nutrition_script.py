@@ -2,7 +2,7 @@
 Contains the command-line scripts needed to add and update nutrition information in the database.
 '''
 import click
-from adonis_lifestyle_tracker.config import DB_PATH
+from adonis_lifestyle_tracker.common import DB_PATH
 from adonis_lifestyle_tracker.nutrition import (
     add_food,
     add_totals_to_week,
