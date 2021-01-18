@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='adonis_lifestyle_tracker',
-    version='1.0.0b1',
+    version='1.0.0',
     description='Helps to manage my calories and food for each week, using the AGR nutrition calculator',
     long_description=long_description,
     long_description_content_type='text/markdown',
