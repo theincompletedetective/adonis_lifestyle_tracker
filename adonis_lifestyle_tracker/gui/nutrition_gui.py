@@ -4,7 +4,7 @@ using a GUI.
 '''
 import os
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.nutrition.nutrition import (
+from adonis_lifestyle_tracker.nutrition import (
     add_food,
     add_totals_to_week,
     add_food_to_week,
@@ -156,7 +156,7 @@ while True:
 
         if food:
             sg.popup(
-                add_food_to_week(db_path, food, week),
+                add_food_to_week(db_path, week, food),
                 title='Message'
             )
         else:

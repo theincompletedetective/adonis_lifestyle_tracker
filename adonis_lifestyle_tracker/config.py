@@ -2,8 +2,7 @@
 import os
 
 
-NUTRITION_DB_PATH = os.path.join(os.path.dirname(__file__), 'nutrition', 'nutrition.db')
-EXERCISE_DB_PATH = os.path.join(os.path.dirname(__file__), 'exercise', 'exercise.db')
+DB_PATH = os.path.join(os.path.dirname(__file__), 'tracker.db')
 
 EQUIPMENT = (
     'Powerblock Dumbbells',

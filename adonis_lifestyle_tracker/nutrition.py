@@ -5,7 +5,7 @@ from sqlite3 import IntegrityError
 
 def add_food(db_path, food, calories, protein):
     '''
-    Adds the food with the specified calories and protein to the nutrition database.
+    Adds the food with the specified calories and protein to the database.
     '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -24,7 +24,7 @@ def add_food(db_path, food, calories, protein):
         conn.commit()
         return (
             f'The food "{food}", with {calories} calories and {protein} grams of protein '
-            'has been successfully added to the nutrition database.'
+            'has been successfully added to the database.'
         )
     finally:
         conn.close()
@@ -32,7 +32,7 @@ def add_food(db_path, food, calories, protein):
 
 def add_totals_to_week(db_path, week, total_calories, total_protein):
     '''
-    Adds a week, total calories, and total protein to the week table in the nutrition database.
+    Adds a week, total calories, and total protein to the week table in the database.
     '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -46,11 +46,11 @@ def add_totals_to_week(db_path, week, total_calories, total_protein):
             (week, total_calories, total_protein)
         )
     except IntegrityError:
-        return f'Week {week} is already in the nurition database.'
+        return f'Week {week} is already in the database.'
     else:
         conn.commit()
         return (
-            f'Week {week} has been successfully added to the nutrition database, '
+            f'Week {week} has been successfully added to the database, '
             f'with {total_calories} total calories, and {total_protein} total grams of protein.'
         )
     finally:
@@ -58,7 +58,7 @@ def add_totals_to_week(db_path, week, total_calories, total_protein):
 
 
 def add_food_to_week(db_path, week, food):
-    '''Adds a week and food to the week_food table in the nutrition database.'''
+    '''Adds a week and food to the week_food table in the database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -67,9 +67,9 @@ def add_food_to_week(db_path, week, food):
     found_week = cursor.execute( 'SELECT * FROM week WHERE id == ?;', (week,) ).fetchone()
 
     if found_food and not found_week:
-        msg = f'Week {week} is not in the nutrition database.'
+        msg = f'Week {week} is not in the database.'
     elif found_week and not found_food:
-        msg =  f'The food "{food}" is not in the nutrition database.'
+        msg =  f'The food "{food}" is not in the database.'
     else:
         cursor.execute(
             'INSERT INTO week_food (week_id, food_id) VALUES (?, ?);',
@@ -83,7 +83,7 @@ def add_food_to_week(db_path, week, food):
 
 
 def get_food(db_path, food):
-    '''Gets a food's calories and protein from the food table in the nutrition database.'''
+    '''Gets a food's calories and protein from the food table in the database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -94,7 +94,7 @@ def get_food(db_path, food):
     try:
         calories, protein = cursor.fetchone()
     except TypeError:
-        return f"The food '{food}' isn't in the nutrition database."
+        return f"The food '{food}' isn't in the database."
     else:
         return f'The food "{food}" has {calories} calories, and {protein} grams of protein.'
     finally:
@@ -113,7 +113,7 @@ def get_calories_left(db_path, week):
             "SELECT total_calories FROM week WHERE id == ?;", (week,)
         ).fetchone()[0]
     except TypeError:
-        print(f'Week {week} is not in the nutrition database.')
+        return f'Week {week} is not in the database.'
     else:
         # To get all the names for the food consumed in a given week
         cursor.execute(
@@ -150,7 +150,7 @@ def get_protein_left(db_path, week):
             "SELECT total_protein FROM week WHERE id == ?", (week,)
         ).fetchone()[0]
     except TypeError:
-        print(f"Week {week} is not in the nutrition database.")
+        return f"Week {week} is not in the database."
     else:
         # To get all the names for the food consumed in a given week
         cursor.execute(

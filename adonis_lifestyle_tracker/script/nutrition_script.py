@@ -2,8 +2,8 @@
 Contains the command-line scripts needed to add and update nutrition information in the database.
 '''
 import click
-from adonis_lifestyle_tracker.config import NUTRITION_DB_PATH
-from adonis_lifestyle_tracker.nutrition.nutrition import (
+from adonis_lifestyle_tracker.config import DB_PATH
+from adonis_lifestyle_tracker.nutrition import (
     add_food,
     add_totals_to_week,
     add_food_to_week,
@@ -20,9 +20,9 @@ from adonis_lifestyle_tracker.nutrition.nutrition import (
 def add_food_script(food, calories, protein):
     '''
     Adds the FOOD with the specified calories and protein to the food table
-    in the nutrition database.
+    in the database.
     '''
-    print( add_food(NUTRITION_DB_PATH, food, calories, protein) )
+    print( add_food(DB_PATH, food, calories, protein) )
 
 
 @click.command()
@@ -31,24 +31,24 @@ def add_food_script(food, calories, protein):
 @click.option('-p', '--total-protein', required=True, type=int, help='Number of grams of protein for the week.')
 def add_totals_to_week_script(week, total_calories, total_protein):
     '''
-    Adds week number WEEK, total calories, and total protein to the week table in the nutrition database.
+    Adds week number WEEK, total calories, and total protein to the week table in the database.
     '''
-    print( add_totals_to_week(NUTRITION_DB_PATH, week, total_calories, total_protein) )
+    print( add_totals_to_week(DB_PATH, week, total_calories, total_protein) )
 
 
 @click.command()
 @click.argument('week', type=int)
 @click.argument('food')
 def add_food_to_week_script(week, food):
-    '''Adds week number WEEK and FOOD to the week_food table in the nutrition database.'''
-    print( add_food_to_week(NUTRITION_DB_PATH, week, food) )
+    '''Adds week number WEEK and FOOD to the week_food table in the database.'''
+    print( add_food_to_week(DB_PATH, week, food) )
 
 
 @click.command()
 @click.argument('food')
 def get_food_script(food):
-    '''Prints the calories and protein for FOOD in the nutrition database.'''
-    print( get_food(NUTRITION_DB_PATH, food) )
+    '''Prints the calories and protein for FOOD in the database.'''
+    print( get_food(DB_PATH, food) )
 
 
 @click.command()
@@ -56,9 +56,9 @@ def get_food_script(food):
 def get_calories_left_script(week):
     '''
     Prints the number of calories left for week number WEEK,
-    based on all the foods in the week_food table, in the nutrition database.
+    based on all the foods in the week_food table, in the database.
     '''
-    print( get_calories_left(NUTRITION_DB_PATH, week) )
+    print( get_calories_left(DB_PATH, week) )
 
 
 @click.command()
@@ -66,6 +66,6 @@ def get_calories_left_script(week):
 def get_protein_left_script(week):
     '''
     Prints the grams of protein still needed for week number WEEK,
-    based on all the foods in the week_food table, in the nutrition database.
+    based on all the foods in the week_food table, in the database.
     '''
-    print( get_protein_left(NUTRITION_DB_PATH, week) )
+    print( get_protein_left(DB_PATH, week) )

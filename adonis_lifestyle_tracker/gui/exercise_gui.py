@@ -5,7 +5,7 @@ using a GUI.
 import os
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.config import EQUIPMENT, EXERCISES
-from adonis_lifestyle_tracker.exercise.exercise import (
+from adonis_lifestyle_tracker.exercise import (
     add_equipment,
     add_exercise,
     add_exercise_to_week,
