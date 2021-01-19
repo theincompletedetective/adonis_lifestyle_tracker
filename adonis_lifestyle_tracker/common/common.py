@@ -6,7 +6,7 @@ import os
 import sqlite3
 
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'tracker.db')
+DB_PATH = os.path.join(os.path.dirname(__file__), 'database', 'tracker.db')
 
 
 def get_sorted_tuple(db_path, column, table):

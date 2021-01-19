@@ -1,7 +1,7 @@
 '''Contains the handler functions to manage the nutrition information in the manager GUI.'''
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.common import get_sorted_tuple
-from adonis_lifestyle_tracker.nutrition import (
+from adonis_lifestyle_tracker.common.common import get_sorted_tuple
+from adonis_lifestyle_tracker.nutrition.nutrition import (
     add_food,
     add_totals_to_week,
     add_food_to_week,
@@ -10,9 +10,6 @@ from adonis_lifestyle_tracker.nutrition import (
     get_protein_left,
     delete_food,
 )
-
-
-sg.theme('Reddit')
 
 
 def handle_add_food(db_path, window, values):

@@ -1,7 +1,7 @@
 '''Contains the handler functions to manage the exercise information in the manager GUI.'''
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.common import get_sorted_tuple
-from adonis_lifestyle_tracker.exercise import (
+from adonis_lifestyle_tracker.common.common import get_sorted_tuple
+from adonis_lifestyle_tracker.exercise.exercise import (
     add_equipment,
     add_exercise,
     add_exercise_to_week,

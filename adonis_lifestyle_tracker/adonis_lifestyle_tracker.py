@@ -1,7 +1,7 @@
 '''Creates a GUI to manage the nutrition and exercise information.'''
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.common import DB_PATH, get_sorted_tuple
-from adonis_lifestyle_tracker.handler.handle_nutrition import (
+from adonis_lifestyle_tracker.common.common import DB_PATH, get_sorted_tuple
+from adonis_lifestyle_tracker.nutrition.handle_nutrition import (
     handle_add_food,
     handle_add_totals_to_week,
     handle_add_food_to_week,
@@ -10,7 +10,7 @@ from adonis_lifestyle_tracker.handler.handle_nutrition import (
     handle_get_protein_left,
     handle_delete_food,
 )
-from adonis_lifestyle_tracker.handler.handle_exercise import (
+from adonis_lifestyle_tracker.exercise.handle_exercise import (
     handle_add_equipment,
     handle_add_exercise,
     handle_add_exercise_to_week,
@@ -30,9 +30,11 @@ BUTTON_SIZE = (18, 1)
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 
+# Nutrition Data
 NUTRITION_WEEKS = get_sorted_tuple(DB_PATH, 'id', 'week')
 FOODS = get_sorted_tuple(DB_PATH, 'id', 'food')
 
+# Exercise Data
 EXERCISE_WEEKS = get_sorted_tuple(DB_PATH, 'week', 'week_exercise')
 EQUIPMENT = get_sorted_tuple(DB_PATH, 'id', 'equipment')
 EXERCISES = get_sorted_tuple(DB_PATH, 'id', 'exercise')
@@ -86,7 +88,7 @@ layout = [
     ],
 ]
 
-window = sg.Window('Adonis Lifestyle Manager', layout)
+window = sg.Window('Adonis Lifestyle Tracker', layout)
 
 while True:
     event, values = window.read()

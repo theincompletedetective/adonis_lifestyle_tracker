@@ -2,14 +2,14 @@
 Contains the command-line scripts needed to add and update exercise information in the database.
 '''
 import click
-from adonis_lifestyle_tracker.common import DB_PATH
-from adonis_lifestyle_tracker.exercise import (
+from adonis_lifestyle_tracker.common.common import DB_PATH
+from adonis_lifestyle_tracker.exercise.exercise import (
     add_equipment,
     add_exercise,
     add_exercise_to_week,
     get_equipment,
     get_resistance,
-    change_resistance
+    change_resistance,
 )
 
 
