@@ -1,7 +1,7 @@
 '''Creates a GUI to manage the nutrition and exercise information.'''
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.common import DB_PATH, get_sorted_tuple
-from adonis_lifestyle_tracker.handlers.handle_nutrition import (
+from adonis_lifestyle_tracker.handler.handle_nutrition import (
     handle_add_food,
     handle_add_totals_to_week,
     handle_add_food_to_week,
@@ -10,7 +10,7 @@ from adonis_lifestyle_tracker.handlers.handle_nutrition import (
     handle_get_protein_left,
     handle_delete_food,
 )
-from adonis_lifestyle_tracker.handlers.handle_exercise import (
+from adonis_lifestyle_tracker.handler.handle_exercise import (
     handle_add_equipment,
     handle_add_exercise,
     handle_add_exercise_to_week,
