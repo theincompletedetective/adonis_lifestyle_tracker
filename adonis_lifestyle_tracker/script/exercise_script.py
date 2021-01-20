@@ -15,6 +15,10 @@ from adonis_lifestyle_tracker.exercise.get_exercise import (
 from adonis_lifestyle_tracker.exercise.update_exercise import (
     update_resistance,
 )
+from adonis_lifestyle_tracker.exercise.delete_exercise import (
+    delete_equipment,
+    delete_exercise,
+)
 
 
 @click.command()
@@ -80,3 +84,21 @@ def update_resistance_script(week, exercise, reps, new_resistance):
     for the provided WEEK, in the database's week_exercise table.
     '''
     print( update_resistance(DB_PATH, week, exercise, reps, new_resistance) )
+
+
+@click.command()
+@click.argument('equipment')
+def delete_equipment_script(equipment):
+    '''
+    Deletes EQUIPMENT from the equipment table in the database.
+    '''
+    print( delete_equipment(DB_PATH, equipment) )
+
+
+@click.command()
+@click.argument('exercise')
+def delete_exercise_script(exercise):
+    '''
+    Deletes EXERCISE from the exercise table in the database.
+    '''
+    print( delete_exercise(DB_PATH, exercise) )

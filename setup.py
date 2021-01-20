@@ -33,6 +33,8 @@ setup(
         get_equipment=adonis_lifestyle_tracker.script.exercise_script:get_equipment_script
         get_resistance=adonis_lifestyle_tracker.script.exercise_script:get_resistance_script
         update_resistance=adonis_lifestyle_tracker.script.exercise_script:update_resistance_script
+        delete_equipment=adonis_lifestyle_tracker.script.exercise_script:delete_equipment_script
+        delete_exercise=adonis_lifestyle_tracker.script.exercise_script:delete_exercise_script
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",

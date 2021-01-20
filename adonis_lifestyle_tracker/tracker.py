@@ -32,33 +32,17 @@ nutrition_layout = [
         sg.B( 'Get Food', size=BUTTON_SIZE),
         sg.B( 'Get Calories Left', size=BUTTON_SIZE),
         sg.B( 'Get Protein Left', size=BUTTON_SIZE)
-    ],
-    [
-        sg.B(
-            'Update Food',
-            size=BUTTON_SIZE,
-            button_color=CHANGE_BUTTON_COLOR,
-            tooltip='Updates the calories and protein for the specified food.'
-        ),
-        sg.B(
-            'Update Week Totals',
-            size=BUTTON_SIZE,
-            button_color=CHANGE_BUTTON_COLOR,
-            tooltip='Updates the total calories and protein for the specified week.'
-        ),
-    ],
-    [
-        sg.B('Delete Food', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR),
-        sg.B('Delete Week', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR),
     ]
 ]
 
 exercise_layout = [
-    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EQUIPMENT-', size=(TEXT_INPUT_SIZE))],
+    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EXERCISE_WEEK-', size=(5, 1) ),],
+    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EQUIPMENT-', size=(TEXT_INPUT_SIZE) )],
     [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EXERCISE-', size=TEXT_INPUT_SIZE)],
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EXERCISE_WEEK-', size=(5, 1) )],
-    [sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-REPS-', size=(6, 1) )],
-    [sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-RESISTANCE-', size=(6, 1) )],
+    [
+        sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-REPS-', size=(6, 1) ),
+        sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-RESISTANCE-', size=(6, 1) )
+    ],
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B('Add Exercise', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
@@ -73,7 +57,7 @@ exercise_layout = [
     [
         sg.B('Get Equipment', size=BUTTON_SIZE),
         sg.B('Get Resistance', size=BUTTON_SIZE),
-        sg.B('Update Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
+        sg.B('Update Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR),
     ]
 ]
 
@@ -134,6 +118,8 @@ while True:
         handle_get_resistance(values, db_path)
     elif event == 'Update Resistance':
         handle_update_resistance(window, values, db_path)
+    elif event == 'Delete Equipment':
+        handle_delete_equipment(window, values, db_path)
     else:
         continue
 

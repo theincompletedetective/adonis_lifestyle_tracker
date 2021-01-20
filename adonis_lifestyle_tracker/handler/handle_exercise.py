@@ -13,6 +13,9 @@ from adonis_lifestyle_tracker.exercise.get_exercise import (
 from adonis_lifestyle_tracker.exercise.update_exercise import (
     update_resistance,
 )
+from adonis_lifestyle_tracker.exercise.delete_exercise import (
+    delete_equipment
+)
 
 
 def handle_add_equipment(window, values, db_path=None):
@@ -216,12 +219,36 @@ def handle_update_resistance(window, values, db_path=None):
                 window['-EXERCISE-'].update('')
                 window['-REPS-'].update('')
                 window['-RESISTANCE-'].update('')
-
                 window['-RESISTANCE-'].update( values=get_sorted_tuple(db_path, 'resistance', 'week_exercise') )
         else:
             sg.popup_error(
                 'You must provide an exercise and resistance!', title='Error'
             )
+
+    else:
+        sg.popup(
+            'You must enter the absolute path to the database!',
+            title='Error'
+        )
+
+
+def handle_delete_equipment(window, values, db_path=None):
+    '''Handles the event to delete some equipment from the database.'''
+    if db_path:
+        equipment = values['-EQUIPMENT-'].strip()
+
+        if equipment:
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to remove the '{equipment}' equipment from the database?",
+                title='Confirmation'
+            )
+
+            if confirmation == 'Yes':
+                sg.popup(delete_equipment(db_path, equipment), title='Message')
+                window['-EQUIPMENT-'].update('')
+                window['-EQUIPMENT-'].update( values=get_sorted_tuple(db_path, 'id', 'equipment') )
+        else:
+            sg.popup_error('You must provide equipment!', title='Error')
 
     else:
         sg.popup(
