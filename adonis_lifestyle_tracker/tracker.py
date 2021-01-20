@@ -71,16 +71,6 @@ exercise_layout = [
         sg.B('Get Equipment', size=BUTTON_SIZE),
         sg.B('Get Resistance', size=BUTTON_SIZE),
         sg.B('Update Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
-    ],
-    [
-        sg.B(
-            'Update Equipment',
-            size=BUTTON_SIZE,
-            button_color=CHANGE_BUTTON_COLOR,
-            tooltip='Updates the equipment for the specified exercise.'
-        ),
-        sg.B('Update Exercise', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR),
-        sg.B('Delete Exercise', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR)
     ]
 ]
 
