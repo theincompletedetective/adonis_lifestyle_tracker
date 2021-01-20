@@ -16,7 +16,8 @@ from adonis_lifestyle_tracker.nutrition.update_nutrition import (
     update_week_totals,
 )
 from adonis_lifestyle_tracker.nutrition.delete_nutrition import (
-    delete_food
+    delete_food,
+    delete_nutrition_week
 )
 
 
@@ -371,11 +372,43 @@ def handle_delete_food(window, values, db_path=None):
 
             if confirmation == 'Yes':
                 sg.popup(delete_food(db_path, food), title='Message')
+
                 window['-FOOD-'].update('')
 
                 window['-FOOD-'].update( values=get_sorted_tuple(db_path, 'id', 'food') )
         else:
             sg.popup_error('You must enter a food!', title='Error')
+
+    else:
+        sg.popup(
+            'You must enter the absolute path to the database!',
+            title='Error'
+        )
+
+
+def handle_delete_week(window, values, db_path=None):
+    '''Handles the event to delete the specified week from the week table in the database.'''
+    if db_path:
+        try:
+            week = int(values['-NUTRITION_WEEK-'])
+        except ValueError:
+            sg.popup_error(
+                'You must provide a number for the week!',
+                title='Error'
+            )
+            return
+
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to delete week {week} from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(delete_nutrition_week(db_path, week), title='Message')
+
+            window['-NUTRITION_WEEK-'].update('')
+
+            window['-NUTRITION_WEEK-'].update( values=get_sorted_tuple(db_path, 'id', 'week') )
 
     else:
         sg.popup(

@@ -46,7 +46,10 @@ nutrition_layout = [
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the total calories and protein for the specified week.'
         ),
-        sg.B('Delete Food', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR)
+    ],
+    [
+        sg.B('Delete Food', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR),
+        sg.B('Delete Week', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR),
     ]
 ]
 
@@ -116,6 +119,8 @@ while True:
         handle_update_week_totals(window, values, db_path)
     elif event == 'Delete Food':
         handle_delete_food(window, values, db_path)
+    elif event == 'Delete Week':
+        handle_delete_week(window, values, db_path)
     # Exercise
     elif event == 'Add Equipment':
         handle_add_equipment(window, values, db_path)
