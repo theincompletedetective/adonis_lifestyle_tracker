@@ -13,8 +13,10 @@ LABEL_SIZE = (10, 1)
 TEXT_INPUT_SIZE = (28, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (18, 1)
+
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
+DELETE_BUTTON_COLOR = ('black', '#ff4040')
 
 nutrition_layout = [
     [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-NUTRITION_WEEK-', size=(5, 1) )],
@@ -32,9 +34,19 @@ nutrition_layout = [
         sg.B( 'Get Protein Left', size=BUTTON_SIZE)
     ],
     [
-        sg.B('Update Food', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR),
-        sg.B('Update Week Totals', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR),
-        sg.B( 'Delete Food', size=BUTTON_SIZE, button_color=('black', '#ff4040') )
+        sg.B(
+            'Update Food',
+            size=BUTTON_SIZE,
+            button_color=CHANGE_BUTTON_COLOR,
+            tooltip='Updates the calories and protein for the specified food.'
+        ),
+        sg.B(
+            'Update Week Totals',
+            size=BUTTON_SIZE,
+            button_color=CHANGE_BUTTON_COLOR,
+            tooltip='Updates the total calories and protein for the specified week.'
+        ),
+        sg.B('Delete Food', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR)
     ]
 ]
 
@@ -47,12 +59,28 @@ exercise_layout = [
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B('Add Exercise', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
-        sg.B('Add Exercise to Week', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
+        sg.B(
+            'Add Exercise to Week',
+            size=BUTTON_SIZE,
+            button_color=ADD_BUTTON_COLOR,
+            tooltip='Adds the specified exercise to the provided week, '
+            'with its number of reps and resistance.'
+        ),
     ],
     [
         sg.B('Get Equipment', size=BUTTON_SIZE),
         sg.B('Get Resistance', size=BUTTON_SIZE),
         sg.B('Update Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
+    ],
+    [
+        sg.B(
+            'Update Equipment',
+            size=BUTTON_SIZE,
+            button_color=CHANGE_BUTTON_COLOR,
+            tooltip='Updates the equipment for the specified exercise.'
+        ),
+        sg.B('Update Exercise', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR),
+        sg.B('Delete Exercise', size=BUTTON_SIZE, button_color=DELETE_BUTTON_COLOR)
     ]
 ]
 
