@@ -1,24 +1,8 @@
 '''Creates a GUI to manage the nutrition and exercise information.'''
-import os
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.common.common import get_sorted_tuple, handle_get_db_path
-from adonis_lifestyle_tracker.nutrition.handle_nutrition import (
-    handle_add_food,
-    handle_add_totals_to_week,
-    handle_add_food_to_week,
-    handle_get_food,
-    handle_get_calories_left,
-    handle_get_protein_left,
-    handle_delete_food,
-)
-from adonis_lifestyle_tracker.exercise.handle_exercise import (
-    handle_add_equipment,
-    handle_add_exercise,
-    handle_add_exercise_to_week,
-    handle_get_equipment,
-    handle_get_resistance,
-    handle_change_resistance,
-)
+from adonis_lifestyle_tracker.handler.common import handle_load_database
+from adonis_lifestyle_tracker.handler.handle_nutrition import *
+from adonis_lifestyle_tracker.handler.handle_exercise import *
 
 
 sg.theme('Reddit')
@@ -26,10 +10,9 @@ sg.theme('Reddit')
 db_path = None
 
 LABEL_SIZE = (10, 1)
-INPUT_SIZE = (28, 1)
+TEXT_INPUT_SIZE = (28, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (18, 1)
-
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 
@@ -54,8 +37,8 @@ nutrition_layout = [
 ]
 
 exercise_layout = [
-    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EQUIPMENT-', size=(INPUT_SIZE))],
-    [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EXERCISE-', size=INPUT_SIZE)],
+    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EQUIPMENT-', size=(TEXT_INPUT_SIZE))],
+    [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EXERCISE-', size=TEXT_INPUT_SIZE)],
     [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EXERCISE_WEEK-', size=(5, 1) )],
     [sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-REPS-', size=(6, 1) )],
     [sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-RESISTANCE-', size=(6, 1) )],
@@ -94,33 +77,11 @@ while True:
     if event is None:
         break
 
+    # Database
     if event == 'Load Database':
-
-        if os.path.isfile(values['-PATH-']) and values['-PATH-'].endswith('.db'):
-            db_path = values['-PATH-']
-
-            # Nutrition info
-            window['-FOOD-'].update( values=get_sorted_tuple(db_path, 'id', 'food') )
-            window['-NUTRITION_WEEK-'].update( values=get_sorted_tuple(db_path, 'id', 'week') )
-
-            # Exercise info
-            window['-EQUIPMENT-'].update( values=get_sorted_tuple(db_path, 'id', 'equipment') )
-            window['-EXERCISE-'].update( values=get_sorted_tuple(db_path, 'id', 'exercise') )
-            window['-EXERCISE_WEEK-'].update( values=get_sorted_tuple(db_path, 'week', 'week_exercise') )
-            window['-REPS-'].update( values=get_sorted_tuple(db_path, 'reps', 'week_exercise') )
-            window['-RESISTANCE-'].update( values=get_sorted_tuple(db_path, 'resistance', 'week_exercise') )
-
-            sg.popup('The database information has been successfully loaded!', title='Success')
-        else:
-            sg.popup_error(
-                'You must enter the absolute path to the database file!',
-                title='Error'
-            )
-            window['-PATH-'].update('')
-            continue
-
+        db_path = handle_load_database(window, values)
     # Nutrition
-    if event == 'Add Food':
+    elif event == 'Add Food':
         handle_add_food(window, values, db_path)
     elif event == 'Add Totals to Week':
         handle_add_totals_to_week(window, values, db_path)
@@ -134,7 +95,6 @@ while True:
         handle_get_protein_left(values, db_path)
     elif event == 'Delete Food':
         handle_delete_food(window, values, db_path)
-
     # Exercise
     elif event == 'Add Equipment':
         handle_add_equipment(window, values, db_path)
@@ -147,7 +107,7 @@ while True:
     elif event == 'Get Resistance':
         handle_get_resistance(values, db_path)
     elif event == 'Change Resistance':
-        handle_change_resistance(window, values, db_path)
+        handle_update_resistance(window, values, db_path)
     else:
         continue
 

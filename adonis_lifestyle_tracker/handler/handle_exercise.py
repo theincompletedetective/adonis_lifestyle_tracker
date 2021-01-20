@@ -1,13 +1,17 @@
 '''Contains the handler functions to manage the exercise information in the manager GUI.'''
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.common.common import get_sorted_tuple
-from adonis_lifestyle_tracker.exercise.exercise import (
+from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
+from adonis_lifestyle_tracker.exercise.add_exercise import (
     add_equipment,
     add_exercise,
     add_exercise_to_week,
+)
+from adonis_lifestyle_tracker.exercise.get_exercise import (
     get_equipment,
     get_resistance,
-    change_resistance
+)
+from adonis_lifestyle_tracker.exercise.update_exercise import (
+    update_resistance,
 )
 
 
@@ -175,7 +179,7 @@ def handle_get_resistance(values, db_path=None):
         )
 
 
-def handle_change_resistance(window, values, db_path=None):
+def handle_update_resistance(window, values, db_path=None):
     '''Handles the event to update the resistance for a given exercise, in the specified week.'''
     if db_path:
         try:
@@ -203,7 +207,7 @@ def handle_change_resistance(window, values, db_path=None):
 
             if confirmation == 'Yes':
                 sg.popup(
-                    change_resistance(db_path, week, exercise, reps, new_resistance),
+                    update_resistance(db_path, week, exercise, reps, new_resistance),
                     title='Message'
                 )
 

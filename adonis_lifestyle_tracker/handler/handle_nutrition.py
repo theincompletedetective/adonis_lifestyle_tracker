@@ -1,14 +1,18 @@
 '''Contains the handler functions to manage the nutrition information in the manager GUI.'''
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.common.common import get_sorted_tuple
-from adonis_lifestyle_tracker.nutrition.nutrition import (
+from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
+from adonis_lifestyle_tracker.nutrition.add_nutrition import (
     add_food,
     add_totals_to_week,
     add_food_to_week,
+)
+from adonis_lifestyle_tracker.nutrition.get_nutrition import (
     get_food,
     get_calories_left,
     get_protein_left,
-    delete_food,
+)
+from adonis_lifestyle_tracker.nutrition.delete_nutrition import (
+    delete_food
 )
 
 

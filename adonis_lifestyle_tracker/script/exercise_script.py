@@ -2,14 +2,18 @@
 Contains the command-line scripts needed to add and update exercise information in the database.
 '''
 import click
-from adonis_lifestyle_tracker.common.common import DB_PATH
-from adonis_lifestyle_tracker.exercise.exercise import (
+from adonis_lifestyle_tracker.script.common import DB_PATH
+from adonis_lifestyle_tracker.exercise.add_exercise import (
     add_equipment,
     add_exercise,
     add_exercise_to_week,
+)
+from adonis_lifestyle_tracker.exercise.get_exercise import (
     get_equipment,
     get_resistance,
-    change_resistance,
+)
+from adonis_lifestyle_tracker.exercise.update_exercise import (
+    update_resistance,
 )
 
 
@@ -70,9 +74,9 @@ def get_resistance_script(week, exercise, reps):
 @click.argument('exercise')
 @click.argument('reps', type=int)
 @click.argument('new_resistance')
-def change_resistance_script(week, exercise, reps, new_resistance):
+def update_resistance_script(week, exercise, reps, new_resistance):
     '''
     Changes the RESISTANCE for the specified EXERCISE, at the given number of REPS,
     for the provided WEEK, in the database's week_exercise table.
     '''
-    print( change_resistance(DB_PATH, week, exercise, reps, new_resistance) )
+    print( update_resistance(DB_PATH, week, exercise, reps, new_resistance) )
