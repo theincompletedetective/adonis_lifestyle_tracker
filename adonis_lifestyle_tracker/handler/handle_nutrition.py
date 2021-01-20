@@ -13,6 +13,7 @@ from adonis_lifestyle_tracker.nutrition.get_nutrition import (
 )
 from adonis_lifestyle_tracker.nutrition.update_nutrition import (
     update_food,
+    update_week_totals,
 )
 from adonis_lifestyle_tracker.nutrition.delete_nutrition import (
     delete_food
@@ -298,6 +299,58 @@ def handle_update_food(values, db_path=None):
         else:
             sg.popup_error('You must enter a food!', title='Error')
 
+    else:
+        sg.popup(
+            'You must enter the absolute path to the database!',
+            title='Error'
+        )
+
+
+def handle_update_week_totals(window, values, db_path=None):
+    '''Handles the event to update the total calories and protein for the specified week.'''
+    if db_path:
+        try:
+            week = int(values['-NUTRITION_WEEK-'])
+        except ValueError:
+            sg.popup_error(
+                'You must provide a number for the week!',
+                title='Error'
+            )
+            return
+
+        try:
+            calories = int(values['-KCAL-'])
+        except ValueError:
+            sg.popup_error(
+                'You must provide a number for the calories!',
+                title='Error'
+            )
+            return
+
+        try:
+            protein = int(values['-PROTEIN-'])
+        except ValueError:
+            sg.popup_error(
+                'You must provide a number for the grams of protein!',
+                title='Error'
+            )
+            return
+
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update week {week} with {calories} total calories "
+            f"and {protein} total grams of protein?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_week_totals(db_path, week, calories, protein),
+                title='Message'
+            )
+
+            window['-NUTRITION_WEEK-'].update('')
+            window['-KCAL-'].update('')
+            window['-PROTEIN-'].update('')
     else:
         sg.popup(
             'You must enter the absolute path to the database!',

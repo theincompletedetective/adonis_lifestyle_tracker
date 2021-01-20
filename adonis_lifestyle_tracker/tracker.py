@@ -94,6 +94,8 @@ while True:
         handle_get_protein_left(values, db_path)
     elif event == 'Update Food':
         handle_update_food(values, db_path)
+    elif event == 'Update Week Totals':
+        handle_update_week_totals(window, values, db_path)
     elif event == 'Delete Food':
         handle_delete_food(window, values, db_path)
     # Exercise

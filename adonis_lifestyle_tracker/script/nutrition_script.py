@@ -15,6 +15,7 @@ from adonis_lifestyle_tracker.nutrition.get_nutrition import (
 )
 from adonis_lifestyle_tracker.nutrition.update_nutrition import (
     update_food,
+    update_week_totals,
 )
 from adonis_lifestyle_tracker.nutrition.delete_nutrition import (
     delete_food
@@ -98,3 +99,12 @@ def update_food_script(food, calories, protein):
     Updates FOOD with the specified calories and protein in the database's food table.
     '''
     print( update_food(DB_PATH, food, calories=calories, protein=protein) )
+
+
+@click.command()
+@click.argument('week', type=int)
+@click.option('-k', '--total-calories', required=True, type=int, help='Nmber of calories for the week.')
+@click.option('-p', '--total-protein', required=True, type=int, help='Number of grams of protein for the week.')
+def update_week_totals_script(week, total_calories, total_protein):
+    '''Updates the total calories and protein for WEEK to the specified values.'''
+    print( update_week_totals(DB_PATH, week, total_calories, total_protein) )
