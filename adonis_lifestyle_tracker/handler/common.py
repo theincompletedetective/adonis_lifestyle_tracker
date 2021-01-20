@@ -14,7 +14,9 @@ def get_sorted_tuple(db_path, column, table):
     elems_list = [elem[0] for elem in cursor.fetchall()]
     elems_list.sort()
 
-    elems_tuple = tuple(elems_list)
+    elems_set = set(elems_list)
+
+    elems_tuple = tuple(elems_set)
 
     db.commit()
     db.close()
