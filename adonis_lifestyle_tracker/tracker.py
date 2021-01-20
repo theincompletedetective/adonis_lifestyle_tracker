@@ -32,6 +32,8 @@ nutrition_layout = [
         sg.B( 'Get Protein Left', size=BUTTON_SIZE)
     ],
     [
+        sg.B('Update Food', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR),
+        sg.B('Update Week Totals', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR),
         sg.B( 'Delete Food', size=BUTTON_SIZE, button_color=('black', '#ff4040') )
     ]
 ]
@@ -50,7 +52,7 @@ exercise_layout = [
     [
         sg.B('Get Equipment', size=BUTTON_SIZE),
         sg.B('Get Resistance', size=BUTTON_SIZE),
-        sg.B('Change Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
+        sg.B('Update Resistance', size=BUTTON_SIZE, button_color=CHANGE_BUTTON_COLOR)
     ]
 ]
 
@@ -62,10 +64,7 @@ layout = [
         ]])
     ],
     [sg.Frame('Database', layout=[
-        [
-            sg.I(key='-PATH-', size=(38, 1), enable_events=True), sg.FileBrowse(),
-            sg.B('Load Database', button_color=('white', '#8a2be2'))
-        ]
+        [sg.I(key='-PATH-', size=(56, 1), enable_events=True), sg.FileBrowse()]
     ])]
 ]
 
@@ -78,7 +77,7 @@ while True:
         break
 
     # Database
-    if event == 'Load Database':
+    if event == '-PATH-':
         db_path = handle_load_database(window, values)
     # Nutrition
     elif event == 'Add Food':
@@ -93,6 +92,8 @@ while True:
         handle_get_calories_left(values, db_path)
     elif event == 'Get Protein Left':
         handle_get_protein_left(values, db_path)
+    elif event == 'Update Food':
+        handle_update_food(values, db_path)
     elif event == 'Delete Food':
         handle_delete_food(window, values, db_path)
     # Exercise
@@ -106,7 +107,7 @@ while True:
         handle_get_equipment(values, db_path)
     elif event == 'Get Resistance':
         handle_get_resistance(values, db_path)
-    elif event == 'Change Resistance':
+    elif event == 'Update Resistance':
         handle_update_resistance(window, values, db_path)
     else:
         continue
