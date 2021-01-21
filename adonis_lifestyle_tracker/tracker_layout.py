@@ -1,20 +1,37 @@
 '''Contains the PySimpleGUI layout for the Adonis Lifestyle Tracker GUI.'''
+import os
+import sys
 import PySimpleGUI as sg
+from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 
 
 sg.theme('Reddit')
+
+DB_PATH = os.path.join(sys._MEIPASS, 'tracker.db')
 
 LABEL_SIZE = (10, 1)
 TEXT_INPUT_SIZE = (28, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (18, 1)
+
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 DELETE_BUTTON_COLOR = ('black', '#ff4040')
 
+# To update the program window with the nutrition info in the database
+FOODS = get_sorted_tuple(DB_PATH, 'id', 'food')
+NUTRITION_WEEKS = get_sorted_tuple(DB_PATH, 'id', 'week')
+
+# To update the program window with the exercise info in the database
+EQUIPMENT = get_sorted_tuple(DB_PATH, 'id', 'equipment')
+EXERCISES = get_sorted_tuple(DB_PATH, 'id', 'exercise')
+EXERCISE_WEEKS = get_sorted_tuple(DB_PATH, 'week', 'week_exercise')
+REPS = get_sorted_tuple(DB_PATH, 'reps', 'week_exercise')
+RESISTANCE = get_sorted_tuple(DB_PATH, 'resistance', 'week_exercise')
+
 nutrition_layout = [
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)],
-    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-FOOD-', size=TEXT_INPUT_SIZE)],
+    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(NUTRITION_WEEKS, key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)],
+    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo(FOODS, key='-FOOD-', size=TEXT_INPUT_SIZE)],
     [sg.T('Calories', size=LABEL_SIZE), sg.I(key='-KCAL-', size=NUM_INPUT_SIZE)],
     [sg.T('Protein', size=LABEL_SIZE), sg.I(key='-PROTEIN-', size=NUM_INPUT_SIZE)],
     [
@@ -47,12 +64,12 @@ nutrition_layout = [
 ]
 
 exercise_layout = [
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)],
-    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EQUIPMENT-', size=TEXT_INPUT_SIZE)],
-    [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EXERCISE-', size=TEXT_INPUT_SIZE)],
+    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(EXERCISE_WEEKS, key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)],
+    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(EQUIPMENT, key='-EQUIPMENT-', size=TEXT_INPUT_SIZE)],
+    [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(EXERCISES, key='-EXERCISE-', size=TEXT_INPUT_SIZE)],
     [
-        sg.T('Reps', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-REPS-', size=NUM_INPUT_SIZE),
-        sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-RESISTANCE-', size=NUM_INPUT_SIZE)
+        sg.T('Reps', size=LABEL_SIZE), sg.InputCombo(REPS, key='-REPS-', size=NUM_INPUT_SIZE),
+        sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo(RESISTANCE, key='-RESISTANCE-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
@@ -94,8 +111,5 @@ layout = [
             sg.Tab('Nutrition', nutrition_layout),
             sg.Tab('Exercise', exercise_layout)
         ]])
-    ],
-    [sg.Frame('Database', layout=[
-        [sg.I(key='-PATH-', size=(56, 1), enable_events=True), sg.FileBrowse()]
-    ])]
+    ]
 ]
