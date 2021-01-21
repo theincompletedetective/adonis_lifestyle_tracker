@@ -12,10 +12,11 @@ try:
 except AttributeError:
     DB_PATH = os.path.join( os.path.dirname(__file__), 'tracker.db' )
 
-LABEL_SIZE = (10, 1)
-TEXT_INPUT_SIZE = (28, 1)
+NUTRITION_LABEL_SIZE = (7, 1)
+EXERCISE_LABEL_SIZE = (10, 1)
+TEXT_INPUT_SIZE = (30, 1)
 NUM_INPUT_SIZE = (6, 1)
-BUTTON_SIZE = (18, 1)
+BUTTON_SIZE = (23, 1)
 
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
@@ -33,10 +34,22 @@ REPS = get_sorted_tuple(DB_PATH, 'reps', 'week_exercise')
 RESISTANCE = get_sorted_tuple(DB_PATH, 'resistance', 'week_exercise')
 
 nutrition_layout = [
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(NUTRITION_WEEKS, key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)],
-    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo(FOODS, key='-FOOD-', size=TEXT_INPUT_SIZE)],
-    [sg.T('Calories', size=LABEL_SIZE), sg.I(key='-KCAL-', size=NUM_INPUT_SIZE)],
-    [sg.T('Protein', size=LABEL_SIZE), sg.I(key='-PROTEIN-', size=NUM_INPUT_SIZE)],
+    [
+        sg.T('Week', size=NUTRITION_LABEL_SIZE),
+        sg.InputCombo(NUTRITION_WEEKS, key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)
+    ],
+    [
+        sg.T('Food', size=NUTRITION_LABEL_SIZE),
+        sg.InputCombo(FOODS, key='-FOOD-', size=TEXT_INPUT_SIZE)
+    ],
+    [
+        sg.T('Calories', size=NUTRITION_LABEL_SIZE),
+        sg.I(key='-KCAL-', size=NUM_INPUT_SIZE)
+    ],
+    [
+        sg.T('Protein', size=NUTRITION_LABEL_SIZE),
+        sg.I(key='-PROTEIN-', size=NUM_INPUT_SIZE)
+    ],
     [
         sg.B('Add Food', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B(
@@ -67,12 +80,23 @@ nutrition_layout = [
 ]
 
 exercise_layout = [
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(EXERCISE_WEEKS, key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)],
-    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo(EQUIPMENT, key='-EQUIPMENT-', size=TEXT_INPUT_SIZE)],
-    [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(EXERCISES, key='-EXERCISE-', size=TEXT_INPUT_SIZE)],
     [
-        sg.T('Reps', size=LABEL_SIZE), sg.InputCombo(REPS, key='-REPS-', size=NUM_INPUT_SIZE),
-        sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo(RESISTANCE, key='-RESISTANCE-', size=NUM_INPUT_SIZE)
+        sg.T('Week', size=EXERCISE_LABEL_SIZE),
+        sg.InputCombo(EXERCISE_WEEKS, key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)
+    ],
+    [
+        sg.T('Exercise', size=EXERCISE_LABEL_SIZE),
+        sg.InputCombo(EXERCISES, key='-EXERCISE-', size=TEXT_INPUT_SIZE),
+        sg.T('Equipment'),
+        sg.InputCombo( EQUIPMENT, key='-EQUIPMENT-', size=(25, 1) )
+    ],
+    [
+        sg.T('Reps', size=EXERCISE_LABEL_SIZE),
+        sg.InputCombo(REPS, key='-REPS-', size=NUM_INPUT_SIZE)
+    ],
+    [
+        sg.T('Resistance', size=EXERCISE_LABEL_SIZE),
+        sg.InputCombo(RESISTANCE, key='-RESISTANCE-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
