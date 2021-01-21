@@ -7,7 +7,10 @@ from adonis_lifestyle_tracker.handler.handle_exercise import *
 from adonis_lifestyle_tracker.tracker.tracker_layout import layout
 
 
-DB_PATH = os.path.join(sys._MEIPASS, 'tracker.db')
+try:
+    DB_PATH = os.path.join(sys._MEIPASS, 'tracker.db')
+except AttributeError:
+    DB_PATH = os.path.join( os.path.dirname(__file__), 'tracker.db' )
 
 window = sg.Window('Adonis Lifestyle Tracker', layout)
 

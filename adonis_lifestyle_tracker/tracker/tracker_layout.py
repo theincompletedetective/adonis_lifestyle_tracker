@@ -7,7 +7,10 @@ from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 
 sg.theme('Reddit')
 
-DB_PATH = os.path.join(sys._MEIPASS, 'tracker.db')
+try:
+    DB_PATH = os.path.join(sys._MEIPASS, 'tracker.db')
+except AttributeError:
+    DB_PATH = os.path.join( os.path.dirname(__file__), 'tracker.db' )
 
 LABEL_SIZE = (10, 1)
 TEXT_INPUT_SIZE = (28, 1)
