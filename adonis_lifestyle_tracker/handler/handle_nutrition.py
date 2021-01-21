@@ -15,6 +15,9 @@ from adonis_lifestyle_tracker.nutrition.get_nutrition import (
 from adonis_lifestyle_tracker.nutrition.update_nutrition import (
     update_food,
 )
+from adonis_lifestyle_tracker.nutrition.delete_nutrition import (
+    delete_food,
+)
 
 
 def handle_add_food(window, values, db_path=None):
@@ -317,3 +320,23 @@ def handle_update_food(window, values, db_path=None):
             # To clear the food-specific fields
             window['-FOOD-'].update('')
             window['-PROTEIN-'].update('')
+
+
+def handle_delete_food(window, values, db_path=None):
+    '''Handles the event to delete a food from the database.'''
+    food = values['-FOOD-'].strip()
+
+    if food:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to delete food '{food}' from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(delete_food(db_path, food), title='Message')
+
+            # To clear the food-specific fields
+            window['-FOOD-'].update('')
+
+            # To add all foods to the drop-down menu
+            window['-FOOD-'].update( values=get_sorted_tuple(db_path, 'id', 'food') )
