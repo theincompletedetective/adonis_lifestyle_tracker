@@ -36,7 +36,7 @@ while True:
     elif event == 'Get Week Totals':
         handle_get_week_totals(values, DB_PATH)
     elif event == 'Update Food':
-        handle_update_food(values, DB_PATH)
+        handle_update_food(window, values, DB_PATH)
     # Exercise
     elif event == 'Add Equipment':
         handle_add_equipment(window, values, DB_PATH)

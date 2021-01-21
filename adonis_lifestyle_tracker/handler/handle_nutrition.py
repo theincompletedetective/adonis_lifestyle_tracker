@@ -12,6 +12,9 @@ from adonis_lifestyle_tracker.nutrition.get_nutrition import (
     get_protein_left,
     get_weekly_totals,
 )
+from adonis_lifestyle_tracker.nutrition.update_nutrition import (
+    update_food,
+)
 
 
 def handle_add_food(window, values, db_path=None):
@@ -236,3 +239,81 @@ def handle_get_week_totals(values, db_path=None):
             'You must enter the absolute path to the database!',
             title='Error'
         )
+
+
+def handle_update_food(window, values, db_path=None):
+    '''Handles the event to update the calories and protein for the specified food.'''
+    food = values['-FOOD-'].strip()
+    calories = None
+    protein = None
+
+    if not food:
+        sg.popup_error('You must enter a food!', title='Error')
+        return
+
+    if values['-KCAL-'].strip():
+        try:
+            calories = int(values['-KCAL-'])
+        except ValueError:
+            sg.popup_error(
+                'You must provide a number for the calories!',
+                title='Error'
+            )
+            return
+    
+    if values['-PROTEIN-'].strip():
+        try:
+            protein = int(values['-PROTEIN-'])
+        except ValueError:
+            sg.popup_error(
+                'You must provide a number for the grams of protein!',
+                title='Error'
+            )
+            return
+
+    if food and calories and protein:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the calories for food '{food}' "
+            f"to {calories}, and the grams of protein to {protein}?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_food(db_path, food, calories=calories, protein=protein),
+                title='Message'
+            )
+
+            # To clear the food-specific fields
+            window['-FOOD-'].update('')
+            window['-KCAL-'].update('')
+            window['-PROTEIN-'].update('')
+    elif food and calories and not protein:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the calories for food '{food}' to {calories}?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_food(db_path, food, calories=calories), title='Message'
+            )
+
+            # To clear the food-specific fields
+            window['-FOOD-'].update('')
+            window['-KCAL-'].update('')
+
+    else:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the grams of protein for food '{food}' to {protein}?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_food(db_path, food, protein=protein), title='Message'
+            )
+
+            # To clear the food-specific fields
+            window['-FOOD-'].update('')
+            window['-PROTEIN-'].update('')
