@@ -6,8 +6,6 @@ from adonis_lifestyle_tracker.handler.handle_exercise import *
 from adonis_lifestyle_tracker.tracker_layout import layout
 
 
-sg.theme('Reddit')
-
 db_path = None
 
 window = sg.Window('Adonis Lifestyle Tracker', layout)

@@ -2,19 +2,19 @@
 import PySimpleGUI as sg
 
 
+sg.theme('Reddit')
+
 LABEL_SIZE = (10, 1)
 TEXT_INPUT_SIZE = (28, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (18, 1)
-
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 DELETE_BUTTON_COLOR = ('black', '#ff4040')
 
-
 nutrition_layout = [
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-NUTRITION_WEEK-', size=(5, 1) )],
-    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-FOOD-', size=(30, 1) )],
+    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)],
+    [sg.T('Food', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-FOOD-', size=TEXT_INPUT_SIZE)],
     [sg.T('Calories', size=LABEL_SIZE), sg.I(key='-KCAL-', size=NUM_INPUT_SIZE)],
     [sg.T('Protein', size=LABEL_SIZE), sg.I(key='-PROTEIN-', size=NUM_INPUT_SIZE)],
     [
@@ -47,12 +47,12 @@ nutrition_layout = [
 ]
 
 exercise_layout = [
-    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EXERCISE_WEEK-', size=(5, 1) ),],
-    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EQUIPMENT-', size=(TEXT_INPUT_SIZE) )],
+    [sg.T('Week', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)],
+    [sg.T('Equipment', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-EQUIPMENT-', size=TEXT_INPUT_SIZE)],
     [sg.T('Exercise', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-EXERCISE-', size=TEXT_INPUT_SIZE)],
     [
-        sg.T('Reps', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-REPS-', size=(6, 1) ),
-        sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-RESISTANCE-', size=(6, 1) )
+        sg.T('Reps', size=LABEL_SIZE), sg.InputCombo(tuple(), key='-REPS-', size=NUM_INPUT_SIZE),
+        sg.T('Resistance', size=LABEL_SIZE), sg.InputCombo( tuple(), key='-RESISTANCE-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
