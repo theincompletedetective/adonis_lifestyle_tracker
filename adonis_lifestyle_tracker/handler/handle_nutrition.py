@@ -10,6 +10,7 @@ from adonis_lifestyle_tracker.nutrition.get_nutrition import (
     get_food,
     get_calories_left,
     get_protein_left,
+    get_weekly_totals,
 )
 
 
@@ -209,6 +210,26 @@ def handle_get_protein_left(values, db_path=None):
             )
         else:
             sg.popup(get_protein_left(db_path, week), title='Message')
+
+    else:
+        sg.popup(
+            'You must enter the absolute path to the database!',
+            title='Error'
+        )
+
+
+def handle_get_week_totals(values, db_path=None):
+    '''Handles the event to get the total calories and protein for the specified week.'''
+    if db_path:
+        try:
+            week = int(values['-NUTRITION_WEEK-'])
+        except ValueError:
+            sg.popup_error(
+                'You must provide a number for the week!',
+                title='Error'
+            )
+        else:
+            sg.popup(get_weekly_totals(db_path, week), title='Message')
 
     else:
         sg.popup(
