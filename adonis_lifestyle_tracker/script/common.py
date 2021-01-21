@@ -1,14 +1,5 @@
-'''Contains the variables and functions needed by both the exercise and nutrition scripts.'''
-from os.path import (
-    join as os_path_join,
-    abspath as os_path_abspath,
-    dirname as os_path_dirname
-)
-from pathlib import Path
+'''Contains the absolute path to the database, for the exercise and nutrition scripts.'''
+import os.path
 
 
-DB_PATH = os_path_join(
-    os_path_abspath(Path( os_path_dirname(__file__) ).parent), # the adonis_lifestyle_tracker directory
-    'database',
-    'tracker.db'
-)
+DB_PATH = os.path.join(os.path.abspath( os.path.dirname(__file__) ), 'tracker.db')
