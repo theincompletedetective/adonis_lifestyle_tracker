@@ -100,5 +100,5 @@ def delete_week_script(week, exercise, reps, resistance):
 @click.command()
 @click.argument('equipment')
 def delete_equipment_script(equipment):
-    '''Deletes EQUIPMENT from the database.'''
+    '''Deletes EQUIPMENT from the database, as well as any associated exercises.'''
     print( delete_equipment(DB_PATH, equipment) )
