@@ -33,12 +33,13 @@ def add_food_script(food, calories, protein):
     print( add_food(DB_PATH, food, calories, protein) )
 
 
+@click.command()
 @click.argument('week', type=int)
 @click.option(
     '-k', '--total-calories', required=True, type=int, help='Total number of calories to eat for the week.'
 )
 @click.option(
-    '-p', '--total-protein', required=True, type=int, help='Total grams of protein to eat in the week..'
+    '-p', '--total-protein', required=True, type=int, help='Total grams of protein to eat in the week.'
 )
 def add_weekly_totals_script(week, total_calories, total_protein):
     '''
