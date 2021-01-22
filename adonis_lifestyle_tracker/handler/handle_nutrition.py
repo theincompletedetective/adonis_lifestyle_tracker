@@ -128,7 +128,7 @@ def handle_add_food_to_week(window, values, db_path=None):
 
     if food:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add food '{food}' to week {week}?",
+            f"Are you sure you want to add the '{food}' food to week {week}?",
             title='Confirmation'
         )
 
