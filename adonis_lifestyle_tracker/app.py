@@ -3,7 +3,7 @@ import PySimpleGUI as sg
 from adonis_lifestyle_tracker.handler.common import handle_load_database
 from adonis_lifestyle_tracker.handler.handle_nutrition import *
 from adonis_lifestyle_tracker.handler.handle_exercise import *
-from adonis_lifestyle_tracker.tracker.tracker_layout import layout
+from adonis_lifestyle_tracker.layout import layout
 
 
 db_path = None

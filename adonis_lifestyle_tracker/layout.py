@@ -1,16 +1,8 @@
 '''Contains the PySimpleGUI layout for the Adonis Lifestyle Tracker GUI.'''
-import os
-import sys
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 
 
 sg.theme('Reddit')
-
-try:
-    DB_PATH = os.path.join(sys._MEIPASS, 'tracker.db')
-except AttributeError:
-    DB_PATH = os.path.join( os.path.dirname(__file__), 'tracker.db' )
 
 NUTRITION_LABEL_SIZE = (7, 1)
 EXERCISE_LABEL_SIZE = (10, 1)
