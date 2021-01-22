@@ -301,3 +301,5 @@ def handle_delete_food(window, values, db_path=None):
             window['-FOOD-'].update(
                 values=get_sorted_tuple(db_path, 'id', 'food')
             )
+    else:
+        sg.popup_error('You must enter a food!', title='Error')

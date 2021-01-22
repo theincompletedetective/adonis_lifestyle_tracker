@@ -22,25 +22,14 @@ ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 DELETE_BUTTON_COLOR = ('black', '#ff4040')
 
-# To update the program window with the nutrition info in the database
-FOODS = get_sorted_tuple(DB_PATH, 'id', 'food')
-NUTRITION_WEEKS = get_sorted_tuple(DB_PATH, 'id', 'week')
-
-# To update the program window with the exercise info in the database
-EQUIPMENT = get_sorted_tuple(DB_PATH, 'id', 'equipment')
-EXERCISES = get_sorted_tuple(DB_PATH, 'id', 'exercise')
-EXERCISE_WEEKS = get_sorted_tuple(DB_PATH, 'week', 'week_exercise')
-REPS = get_sorted_tuple(DB_PATH, 'reps', 'week_exercise')
-RESISTANCE = get_sorted_tuple(DB_PATH, 'resistance', 'week_exercise')
-
 nutrition_layout = [
     [
         sg.T('Week', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(NUTRITION_WEEKS, key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(FOODS, key='-FOOD-', size=TEXT_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-FOOD-', size=TEXT_INPUT_SIZE)
     ],
     [
         sg.T('Calories', size=NUTRITION_LABEL_SIZE),
@@ -101,21 +90,21 @@ nutrition_layout = [
 exercise_layout = [
     [
         sg.T('Week', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(EXERCISE_WEEKS, key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Exercise', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(EXERCISES, key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE),
+        sg.InputCombo(tuple(), key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE),
         sg.T('Equipment'),
-        sg.InputCombo( EQUIPMENT, key='-EQUIPMENT-', font=('Any', 9), size=TEXT_INPUT_SIZE)
+        sg.InputCombo( tuple(), key='-EQUIPMENT-', font=('Any', 9), size=TEXT_INPUT_SIZE)
     ],
     [
         sg.T('Reps', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(REPS, key='-REPS-', size=NUM_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-REPS-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Resistance', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(RESISTANCE, key='-RESISTANCE-', size=NUM_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-RESISTANCE-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
@@ -177,5 +166,8 @@ layout = [
             sg.Tab('Nutrition', nutrition_layout),
             sg.Tab('Exercise', exercise_layout)
         ]])
-    ]
+    ],
+    [sg.Frame('Database', layout=[
+        [sg.I( key='-PATH-', enable_events=True, size=(75, 1) ), sg.FileBrowse()]
+    ])]
 ]
