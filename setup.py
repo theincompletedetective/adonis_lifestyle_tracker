@@ -33,6 +33,7 @@ setup(
         get_resistance=adonis_lifestyle_tracker.script.exercise_script:get_resistance_script
         update_exercise=adonis_lifestyle_tracker.script.exercise_script:update_exercise_script
         update_resistance=adonis_lifestyle_tracker.script.exercise_script:update_resistance_script
+        delete_equipment=adonis_lifestyle_tracker.script.exercise_script:delete_equipment_script
         delete_exercise=adonis_lifestyle_tracker.script.exercise_script:delete_exercise_script
         delete_week=adonis_lifestyle_tracker.script.exercise_script.delete_week_script
     ''',
