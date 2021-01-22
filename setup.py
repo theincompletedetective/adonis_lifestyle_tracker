@@ -15,6 +15,10 @@ setup(
     license='GNU GPLv3',
     packages=find_packages(),
     include_package_data=True,
+    entry_points='''
+        [console_scripts]
+        add_food=adonis_lifestyle_tracker.script.nutrition_script:add_food_script
+    ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",
         'Development Status :: 5 - Production/Stable',
