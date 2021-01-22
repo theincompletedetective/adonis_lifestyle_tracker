@@ -30,7 +30,7 @@ def add_food(db_path, food, calories, protein):
         conn.close()
 
 
-def add_totals_to_week(db_path, week, total_calories, total_protein):
+def add_weekly_totals(db_path, week, total_calories, total_protein):
     '''
     Adds a week, total calories, and total protein to the week table
     in the database.

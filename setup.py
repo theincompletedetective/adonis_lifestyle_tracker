@@ -18,6 +18,13 @@ setup(
     entry_points='''
         [console_scripts]
         add_food=adonis_lifestyle_tracker.script.nutrition_script:add_food_script
+        add_weekly_totals=adonis_lifestyle_tracker.script.nutrition_script:add_weekly_totals_script
+        add_food_to_week=adonis_lifestyle_tracker.script.nutrition_script:add_food_to_week_script
+        get_food=adonis_lifestyle_tracker.script.nutrition_script:get_food_script
+        get_calories_left=adonis_lifestyle_tracker.script.nutrition_script:get_calories_left_script
+        get_protein_left=adonis_lifestyle_tracker.script.nutrition_script:get_protein_left_script
+        update_food=adonis_lifestyle_tracker.script.nutrition_script:update_food_script
+        delete_food=adonis_lifestyle_tracker.script.nutrition_script:delete_food_script
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",

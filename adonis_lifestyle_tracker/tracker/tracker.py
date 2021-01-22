@@ -15,7 +15,7 @@ while True:
 
     if event is None:
         break
-    
+
     # Database
     if event == '-PATH-':
         db_path = handle_load_database(window, values)
@@ -26,7 +26,7 @@ while True:
         if event == 'Add Food':
             handle_add_food(window, values, db_path)
         elif event == 'Add Totals to Week':
-            handle_add_totals_to_week(window, values, db_path)
+            handle_add_weekly_totals(window, values, db_path)
         elif event == 'Add Food to Week':
             handle_add_food_to_week(window, values, db_path)
         elif event == 'Get Food':
