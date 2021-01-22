@@ -17,7 +17,7 @@ from adonis_lifestyle_tracker.exercise.update_exercise import (
 from adonis_lifestyle_tracker.exercise.delete_exercise import (
     delete_equipment,
     delete_exercise,
-    delete_week,
+    delete_exercise_from_week,
 )
 
 
@@ -92,9 +92,9 @@ def delete_exercise_script(exercise):
 @click.argument('exercise')
 @click.argumet('reps', type=int)
 @click.option('-r', '--resistance', required=True, help='Amount of resistance used for the exercise.')
-def delete_week_script(week, exercise, reps, resistance):
+def delete_exercise_from_week_script(week, exercise, reps, resistance):
     '''Deletes the specified exercise, reps, and resistance from the specified WEEK.'''
-    print( delete_week(DB_PATH, week, exercise, reps, resistance) )
+    print( delete_exercise_from_week(DB_PATH, week, exercise, reps, resistance) )
 
 
 @click.command()

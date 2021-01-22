@@ -28,14 +28,14 @@ setup(
         delete_food=adonis_lifestyle_tracker.script.nutrition_script:delete_food_script
         add_equipment=adonis_lifestyle_tracker.script.exercise_script:add_equipment_script
         add_exercise=adonis_lifestyle_tracker.script.exercise_script:add_exercise_script
-        add_week=adonis_lifestyle_tracker.script.exercise_script:add_exercise_to_week_script
+        add_exercise_to_week=adonis_lifestyle_tracker.script.exercise_script:add_exercise_to_week_script
         get_equipment=adonis_lifestyle_tracker.script.exercise_script:get_equipment_script
         get_resistance=adonis_lifestyle_tracker.script.exercise_script:get_resistance_script
         update_exercise=adonis_lifestyle_tracker.script.exercise_script:update_exercise_script
         update_resistance=adonis_lifestyle_tracker.script.exercise_script:update_resistance_script
         delete_equipment=adonis_lifestyle_tracker.script.exercise_script:delete_equipment_script
         delete_exercise=adonis_lifestyle_tracker.script.exercise_script:delete_exercise_script
-        delete_week=adonis_lifestyle_tracker.script.exercise_script.delete_week_script
+        delete_exercise_from_week=adonis_lifestyle_tracker.script.exercise_script.delete_exercise_from_week_script
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",
