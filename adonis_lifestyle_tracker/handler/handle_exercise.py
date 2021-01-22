@@ -14,6 +14,9 @@ from adonis_lifestyle_tracker.exercise.update_exercise import (
     update_resistance,
     update_exercise,
 )
+from adonis_lifestyle_tracker.exercise.delete_exercise import (
+    delete_exercise,
+)
 
 
 def handle_add_equipment(window, values, db_path=None):
@@ -252,3 +255,21 @@ def handle_update_exercise(window, values, db_path):
             'You must provide an exercise and its equipment!',
             title='Error'
         )
+
+
+def handle_delete_exercise(window, values, db_path=None):
+    '''Handles the event to delete an exercise from the database.'''
+    exercise = values['-EXERCISE-'].strip()
+
+    if exercise:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to delete the '{exercise}' exercise from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(delete_exercise(db_path, exercise), title='Message')
+            window['-EXERCISE-'].update('')
+            window['-EXERCISE-'].update( values=get_sorted_tuple(db_path, 'id', 'exercise') )
+    else:
+        sg.popup_error('You must provide an exercise!', title='Error')

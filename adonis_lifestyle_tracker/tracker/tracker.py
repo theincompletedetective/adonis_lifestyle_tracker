@@ -54,6 +54,8 @@ while True:
         handle_update_resistance(window, values, DB_PATH)
     elif event == 'Update Exercise':
         handle_update_exercise(window, values, DB_PATH)
+    elif event == 'Delete Exercise':
+        handle_delete_exercise(window, values, DB_PATH)
     else:
         continue
 
