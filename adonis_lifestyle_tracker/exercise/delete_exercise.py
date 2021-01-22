@@ -14,6 +14,7 @@ def delete_equipment(db_path, equipment):
 
     if equipment_in_db:
         cursor.execute( 'DELETE FROM equipment WHERE id = ?', (equipment,) )
+        cursor.execute( 'DELETE FROM exercise WHERE equipment_id = ?', (equipment,) )
         conn.commit()
         msg = f"The '{equipment}' equipment has been successfully deleted from the database."
     else:
