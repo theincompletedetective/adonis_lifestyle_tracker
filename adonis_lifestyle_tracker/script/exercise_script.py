@@ -37,8 +37,8 @@ def add_exercise_script(exercise, equipment):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='Name of the exercise.')
-@click.option('--reps', required=True, help='Number of repetitions of the exercise.')
+@click.argument('exercise')
+@click.argumet('reps', type=int)
 @click.option('-r', '--resistance', required=True, help='Amount of resistance used for the exercise.')
 def add_exercise_to_week_script(week, exercise, reps, resistance):
     '''Adds the specified exercise, reps, and resistance to the specified WEEK.'''
@@ -54,11 +54,11 @@ def get_equipment_script(exercise):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='Name of the exercise.')
-@click.option('-r', '--reps', required=True, help='Number of repetitions of the exercise.')
-def get_resistance_script(week, exercise, resistance):
+@click.argument('exercise')
+@click.argumet('reps', type=int)
+def get_resistance_script(week, exercise, reps):
     '''Gets the resistance for the specified exercise and rep range for WEEK.'''
-    print( get_resistance(DB_PATH, week, exercise, resistance) )
+    print( get_resistance(DB_PATH, week, exercise, reps) )
 
 
 @click.command()
@@ -72,8 +72,8 @@ def update_exercise_script(exercise, equipment):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='Name of the exercise.')
-@click.option('-r', '--reps', required=True, help='Number of repetitions of the exercise.')
+@click.argument('exercise')
+@click.argumet('reps', type=int)
 def update_resistance_script(week, exercise, reps):
     '''Updates the resistance of the exercise and reps for WEEK.'''
     print( update_resistance(DB_PATH, week, exercise, reps) )
@@ -88,8 +88,8 @@ def delete_exercise_script(exercise):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='Name of the exercise')
-@click.option('--reps', required=True, help='Number of repetitions of the exercise.')
+@click.argument('exercise')
+@click.argumet('reps', type=int)
 @click.option('-r', '--resistance', required=True, help='Amount of resistance used for the exercise.')
 def delete_week_script(week, exercise, reps, resistance):
     '''Deletes the specified exercise, reps, and resistance from the specified WEEK.'''
