@@ -13,8 +13,8 @@ except AttributeError:
     DB_PATH = os.path.join( os.path.dirname(__file__), 'tracker.db' )
 
 NUTRITION_LABEL_SIZE = (7, 1)
-EXERCISE_LABEL_SIZE = (10, 1)
-TEXT_INPUT_SIZE = (30, 1)
+EXERCISE_LABEL_SIZE = (8, 1)
+TEXT_INPUT_SIZE = (28, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (23, 1)
 
@@ -105,9 +105,9 @@ exercise_layout = [
     ],
     [
         sg.T('Exercise', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(EXERCISES, key='-EXERCISE-', size=TEXT_INPUT_SIZE),
+        sg.InputCombo(EXERCISES, key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE),
         sg.T('Equipment'),
-        sg.InputCombo( EQUIPMENT, key='-EQUIPMENT-', size=(25, 1) )
+        sg.InputCombo( EQUIPMENT, key='-EQUIPMENT-', font=('Any', 9), size=TEXT_INPUT_SIZE)
     ],
     [
         sg.T('Reps', size=EXERCISE_LABEL_SIZE),
