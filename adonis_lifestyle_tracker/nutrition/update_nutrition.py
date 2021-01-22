@@ -1,6 +1,7 @@
-'''Contains the functions needed to update nutrition information in the database.'''
+'''
+Contains the functions needed to update nutrition information in the database.
+'''
 import sqlite3
-from sqlite3 import IntegrityError
 
 
 def update_food(db_path, food, calories=None, protein=None):
@@ -12,8 +13,7 @@ def update_food(db_path, food, calories=None, protein=None):
 
     # To make sure the food is already in the database
     food_in_db = cursor.execute(
-        'SELECT id FROM food WHERE id = ?',
-        (food,)
+        'SELECT id FROM food WHERE id = ?', (food,)
     ).fetchone()
 
     if food_in_db:
@@ -29,8 +29,9 @@ def update_food(db_path, food, calories=None, protein=None):
             )
             conn.commit()
             msg = (
-                f"The calories for food '{food}' have been updated to {calories}, "
-                f"and its grams of protein have been updated to {protein}."
+                f"The calories for the '{food}' food have been updated "
+                f"to {calories}, and its grams of protein have been "
+                f"updated to {protein}."
             )
         elif calories and not protein:
             cursor.execute(
@@ -40,7 +41,10 @@ def update_food(db_path, food, calories=None, protein=None):
                 (calories, food)
             )
             conn.commit()
-            msg = f"The calories for food '{food}' have been updated to {calories}."
+            msg = (
+                f"The calories for the '{food}' food have been updated "
+                f"to {calories}."
+            )
         else: # protein only
             cursor.execute(
                 '''
@@ -49,7 +53,10 @@ def update_food(db_path, food, calories=None, protein=None):
                 (protein, food)
             )
             conn.commit()
-            msg = f"The grams of protein for food '{food}' have been updated to {protein}."
+            msg = (
+                f"The grams of protein for the '{food}' food have been updated "
+                f"to {protein}."
+            )
 
     else:
         msg = f"The '{food}' food is not in the database."

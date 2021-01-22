@@ -81,16 +81,19 @@ def update_exercise(db_path, exercise, equipment):
     ).fetchone()
 
     if not equipment_in_db:
-        msg = f"The equipment '{equipment}' is not in the database."
+        msg = f"The '{equipment}' equipment is not in the database."
     elif not exercise_in_db:
-        msg = f"The exercise '{exercise}' is not in the database."
+        msg = f"The '{exercise}' exercise is not in the database."
     else:
         cursor.execute(
             'UPDATE exercise SET equipment_id = ? WHERE id = ?',
             (equipment, exercise)
         )
         conn.commit()
-        msg = f"The equipment for exercise '{exercise}' has been successfully updated to '{equipment}'."
+        msg = (
+            f"The equipment for the '{exercise}' execise has been "
+            f"successfully updated to '{equipment}'."
+        )
 
     conn.close()
     return msg

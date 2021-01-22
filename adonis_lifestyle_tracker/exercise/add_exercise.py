@@ -50,7 +50,7 @@ def add_exercise(db_path, exercise, equipment):
             msg = (
                 f"The '{exercise}' exercise with the '{equipment}' "
                 "equipment has been successfully added to the database."
-        )
+            )
     else:
         msg = f"'{equipment}' equipment is not in the database."
 
