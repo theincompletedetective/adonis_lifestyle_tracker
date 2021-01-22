@@ -16,6 +16,7 @@ from adonis_lifestyle_tracker.exercise.update_exercise import (
 )
 from adonis_lifestyle_tracker.exercise.delete_exercise import (
     delete_exercise,
+    delete_week,
 )
 
 
@@ -273,3 +274,53 @@ def handle_delete_exercise(window, values, db_path=None):
             window['-EXERCISE-'].update( values=get_sorted_tuple(db_path, 'id', 'exercise') )
     else:
         sg.popup_error('You must provide an exercise!', title='Error')
+
+
+def handle_delete_week(window, values, db_path=None):
+    '''
+    Handles the event to delete a week, along with its exercise, reps, 
+    and resistance from the database.
+    '''
+    try:
+        week = int(values['-EXERCISE_WEEK-'])
+    except ValueError:
+        sg.popup_error('You must choose a number for the week!', title='Error')
+        return
+
+    exercise = values['-EXERCISE-'].strip()
+
+    try:
+        reps = int(values['-REPS-'])
+    except ValueError:
+        sg.popup_error('You must choose a number for the reps!', title='Error')
+        return
+
+    resistance = values['-RESISTANCE-'].strip()
+
+    if exercise and resistance:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to remove week {week} with the '{exercise}' exercise, "
+            f"'{reps}' reps and '{resistance}' resistance from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                delete_week(db_path, week, exercise, reps, resistance),
+                title='Message'
+            )
+
+            # To clear the input fields
+            window['-EXERCISE_WEEK-'].update('')
+            window['-EXERCISE-'].update('')
+            window['-REPS-'].update('')
+            window['-RESISTANCE-'].update('')
+
+            # To add the new information to the dropdowns
+            window['-EXERCISE_WEEK-'].update( values=get_sorted_tuple(db_path, 'week', 'week_exercise') )
+            window['-REPS-'].update( values=get_sorted_tuple(db_path, 'reps', 'week_exercise') )
+            window['-RESISTANCE-'].update( values=get_sorted_tuple(db_path, 'resistance', 'week_exercise') )
+    else:
+        sg.popup_error(
+            'You must provide an exercise and resistance!', title='Error'
+        )

@@ -56,6 +56,8 @@ while True:
         handle_update_exercise(window, values, DB_PATH)
     elif event == 'Delete Exercise':
         handle_delete_exercise(window, values, DB_PATH)
+    elif event == 'Delete Week':
+        handle_delete_week(window, values, DB_PATH)
     else:
         continue
 
