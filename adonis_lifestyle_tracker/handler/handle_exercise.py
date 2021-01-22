@@ -12,6 +12,7 @@ from adonis_lifestyle_tracker.exercise.get_exercise import (
 )
 from adonis_lifestyle_tracker.exercise.update_exercise import (
     update_resistance,
+    update_exercise,
 )
 
 
@@ -225,5 +226,29 @@ def handle_update_resistance(window, values, db_path=None):
     else:
         sg.popup(
             'You must enter the absolute path to the database!',
+            title='Error'
+        )
+
+
+def handle_update_exercise(window, values, db_path):
+    '''Handles the event to update the equipment for the specified exercise.'''
+    exercise = values['-EXERCISE-'].strip()
+    equipment = values['-EQUIPMENT-'].strip()
+
+    if exercise and equipment:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the equipment "
+            f"for '{exercise}' exercise to '{equipment}'?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(update_exercise(db_path, exercise, equipment), title='Message')
+            window['-EXERCISE-'].update('')
+            window['-EQUIPMENT-'].update('')
+            window['-EXERCISE-'].update( values=get_sorted_tuple(db_path, 'id', 'exercise') )
+    else:
+        sg.popup_error(
+            'You must provide an exercise and its equipment!',
             title='Error'
         )

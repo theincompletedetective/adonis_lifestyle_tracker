@@ -52,6 +52,8 @@ while True:
         handle_get_resistance(values, DB_PATH)
     elif event == 'Update Resistance':
         handle_update_resistance(window, values, DB_PATH)
+    elif event == 'Update Exercise':
+        handle_update_exercise(window, values, DB_PATH)
     else:
         continue
 
