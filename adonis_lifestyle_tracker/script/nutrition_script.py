@@ -9,7 +9,8 @@ from adonis_lifestyle_tracker.nutrition.add_nutrition import (
 from adonis_lifestyle_tracker.nutrition.get_nutrition import (
     get_food,
     get_calories_left,
-    get_protein_left
+    get_protein_left,
+    get_weekly_totals,
 )
 from adonis_lifestyle_tracker.nutrition.update_nutrition import (
     update_food,
@@ -73,6 +74,13 @@ def get_calories_left_script(week):
 def get_protein_left_script(week):
     '''Prints the grams of protein left to consume for WEEK.'''
     print( get_protein_left(DB_PATH, week) )
+
+
+@click.command()
+@click.argument('week', type=int)
+def get_weekly_totals_script(week):
+    '''Gets the total calories and protein for WEEK.'''
+    print( get_weekly_totals(DB_PATH, week) )
 
 
 @click.command()

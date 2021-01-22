@@ -13,10 +13,10 @@ except AttributeError:
     DB_PATH = os.path.join( os.path.dirname(__file__), 'tracker.db' )
 
 NUTRITION_LABEL_SIZE = (7, 1)
-EXERCISE_LABEL_SIZE = (8, 1)
+EXERCISE_LABEL_SIZE = (10, 1)
 TEXT_INPUT_SIZE = (28, 1)
 NUM_INPUT_SIZE = (6, 1)
-BUTTON_SIZE = (23, 1)
+BUTTON_SIZE = (26, 1)
 
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
@@ -29,7 +29,7 @@ nutrition_layout = [
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-FOOD-', size=TEXT_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-FOOD-', font=('Any', 9), size=TEXT_INPUT_SIZE)
     ],
     [
         sg.T('Calories', size=NUTRITION_LABEL_SIZE),
@@ -168,6 +168,6 @@ layout = [
         ]])
     ],
     [sg.Frame('Database', layout=[
-        [sg.I( key='-PATH-', enable_events=True, size=(75, 1) ), sg.FileBrowse()]
+        [sg.I( key='-PATH-', enable_events=True, size=(80, 1) ), sg.FileBrowse()]
     ])]
 ]
