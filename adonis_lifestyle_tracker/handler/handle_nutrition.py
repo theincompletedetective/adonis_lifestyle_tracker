@@ -45,8 +45,8 @@ def handle_add_food(window, values, db_path=None):
 
     if food and calories and protein:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add food '{food}' with {calories} "
-            f"calories and {protein} grams of protein to the database?",
+            f"Are you sure you want to add the '{food}' food, "
+            f"with {calories} calories and {protein} grams of protein?",
             title='Confirmation'
         )
 
@@ -94,8 +94,8 @@ def handle_add_totals_to_week(window, values, db_path=None):
         return
 
     confirmation = sg.popup_yes_no(
-        f"Are you sure you want to add week {week} with {calories} "
-        f"total calories and {protein} total grams of protein to the database?",
+        f"Are you sure you want to add week {week}, with {calories} "
+        f"total calories and {protein} total grams of protein?",
         title='Confirmation'
     )
 
@@ -269,7 +269,7 @@ def handle_update_food(window, values, db_path=None):
     else:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the grams of protein "
-            f"for food '{food}' to {protein}?",
+            f"for the '{food}' food to {protein}?",
             title='Confirmation'
         )
 
@@ -288,7 +288,8 @@ def handle_delete_food(window, values, db_path=None):
 
     if food:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to delete food '{food}' from the database?",
+            f"Are you sure you want to delete the '{food}' food "
+            "from the database?",
             title='Confirmation'
         )
 

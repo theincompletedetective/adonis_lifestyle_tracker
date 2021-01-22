@@ -1,4 +1,6 @@
-'''Contains the handler functions to manage the exercise information in the GUI.'''
+'''
+Contains the handler functions to manage the exercise information in the GUI.
+'''
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.exercise.add_exercise import (
@@ -26,8 +28,7 @@ def handle_add_equipment(window, values, db_path=None):
 
     if equipment:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add the '{equipment}' "
-            "equipment to the database?",
+            f"Are you sure you want to add the '{equipment}' equipment?",
             title='Confirmation'
         )
 
@@ -49,7 +50,7 @@ def handle_add_exercise(window, values, db_path=None):
     if exercise and equipment:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to add the '{exercise}' exercise "
-            f"with the '{equipment}' equipment to the database?",
+            f"with the '{equipment}' equipment?",
             title='Confirmation'
         )
 
@@ -97,8 +98,7 @@ def handle_add_exercise_to_week(window, values, db_path=None):
     if exercise and resistance:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to add the '{exercise}' exercise with "
-            f"{reps} reps and '{resistance}' resistance to week {week} "
-            "in the database?",
+            f"{reps} reps and '{resistance}' resistance to week {week}?",
             title='Confirmation'
         )
 
@@ -129,7 +129,9 @@ def handle_add_exercise_to_week(window, values, db_path=None):
 
 
 def handle_get_equipment(values, db_path=None):
-    '''Handles the event to display the equipment used for the given exercise.'''
+    '''
+    Handles the event to display the equipment used for the given exercise.
+    '''
     exercise = values['-EXERCISE-'].strip()
 
     if exercise:
@@ -188,18 +190,18 @@ def handle_update_resistance(window, values, db_path=None):
         sg.popup_error('You must choose a number for the reps!', title='Error')
         return
 
-    new_resistance = values['-RESISTANCE-'].strip()
+    resistance = values['-RESISTANCE-'].strip()
 
-    if exercise and new_resistance:
+    if exercise and resistance:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to update the resistance to '{new_resistance}', "
-            f"for week {week}, the '{exercise}' exercise, and {reps} reps?",
+            f"Are you sure you want to update the resistance for week {week}, "
+            f"the '{exercise}' exercise, and {reps} reps to '{resistance}'?",
             title='Confirmation'
         )
 
         if confirmation == 'Yes':
             sg.popup(
-                update_resistance(db_path, week, exercise, reps, new_resistance),
+                update_resistance(db_path, week, exercise, reps, resistance),
                 title='Message'
             )
 
@@ -225,7 +227,7 @@ def handle_update_exercise(window, values, db_path):
     if exercise and equipment:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the equipment "
-            f"for '{exercise}' exercise to '{equipment}'?",
+            f"for the '{exercise}' exercise to '{equipment}'?",
             title='Confirmation'
         )
 
@@ -249,8 +251,7 @@ def handle_delete_exercise(window, values, db_path=None):
 
     if exercise:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to delete the '{exercise}' exercise "
-            "from the database?",
+            f"Are you sure you want to delete the '{exercise}' exercise?",
             title='Confirmation'
         )
 
@@ -287,8 +288,8 @@ def handle_delete_week(window, values, db_path=None):
 
     if exercise and resistance:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to remove week {week} from the database, "
-            f"with the '{exercise}' exercise, {reps} reps, and '{resistance}' resistance?",
+            f"Are you sure you want to remove week {week} with the '{exercise}'"
+            f" exercise, {reps} reps, and '{resistance}' resistance?",
             title='Confirmation'
         )
 
