@@ -18,7 +18,7 @@ def get_sorted_tuple(db_path, column, table):
     cursor.execute(f'SELECT {column} FROM {table}')
 
     elems_tuple = tuple( sorted({elem[0] for elem in cursor.fetchall()}) )
-    
+
     db.close()
     return elems_tuple
 
@@ -58,6 +58,6 @@ def handle_load_database(window, values):
         return db_path
     else:
         sg.popup_error(
-            'You must provide the absolute path to the database',
+            'You must provide the absolute path to the database!',
             title='Error'
         )
