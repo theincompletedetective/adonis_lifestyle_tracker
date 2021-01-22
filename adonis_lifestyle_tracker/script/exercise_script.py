@@ -37,9 +37,9 @@ def add_exercise_script(exercise, equipment):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='')
-@click.option('--reps', required=True, help='')
-@click.option('-r', '--resistance', required=True, help='')
+@click.option('-e', '--exercise', required=True, help='Name of the exercise.')
+@click.option('--reps', required=True, help='Number of repetitions of the exercise.')
+@click.option('-r', '--resistance', required=True, help='Amount of resistance used for the exercise.')
 def add_exercise_to_week_script(week, exercise, reps, resistance):
     '''Adds the specified exercise, reps, and resistance to the specified WEEK.'''
     print( add_exercise_to_week(DB_PATH, week, exercise, reps, resistance) )
@@ -54,8 +54,8 @@ def get_equipment_script(exercise):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='')
-@click.option('-r', '--reps', required=True, help='')
+@click.option('-e', '--exercise', required=True, help='Name of the exercise.')
+@click.option('-r', '--reps', required=True, help='Number of repetitions of the exercise.')
 def get_resistance_script(week, exercise, resistance):
     '''Gets the resistance for the specified exercise and rep range for WEEK.'''
     print( get_resistance(DB_PATH, week, exercise, resistance) )
@@ -72,8 +72,8 @@ def update_exercise_script(exercise, equipment):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='')
-@click.option('-r', '--reps', required=True, help='')
+@click.option('-e', '--exercise', required=True, help='Name of the exercise.')
+@click.option('-r', '--reps', required=True, help='Number of repetitions of the exercise.')
 def update_resistance_script(week, exercise, reps):
     '''Updates the resistance of the exercise and reps for WEEK.'''
     print( update_resistance(DB_PATH, week, exercise, reps) )
@@ -88,9 +88,9 @@ def delete_exercise_script(exercise):
 
 @click.command()
 @click.argument('week', type=int)
-@click.option('-e', '--exercise', required=True, help='')
-@click.option('--reps', required=True, help='')
-@click.option('-r', '--resistance', required=True, help='')
+@click.option('-e', '--exercise', required=True, help='Name of the exercise')
+@click.option('--reps', required=True, help='Number of repetitions of the exercise.')
+@click.option('-r', '--resistance', required=True, help='Amount of resistance used for the exercise.')
 def delete_week_script(week, exercise, reps, resistance):
     '''Deletes the specified exercise, reps, and resistance from the specified WEEK.'''
     print( delete_week(DB_PATH, week, exercise, reps, resistance) )
