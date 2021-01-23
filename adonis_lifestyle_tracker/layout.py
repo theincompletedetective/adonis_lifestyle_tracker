@@ -144,7 +144,7 @@ exercise_layout = [
             tooltip='Deletes the specified exercise and its equipment from the database.'
         ),
         sg.B(
-            'Delete Week',
+            'Delete Exercise from Week',
             size=BUTTON_SIZE,
             button_color=DELETE_BUTTON_COLOR,
             tooltip='Deletes the week with the specified exercise, reps, and resistance.'

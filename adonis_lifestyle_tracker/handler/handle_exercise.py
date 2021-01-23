@@ -18,7 +18,7 @@ from adonis_lifestyle_tracker.exercise.update_exercise import (
 )
 from adonis_lifestyle_tracker.exercise.delete_exercise import (
     delete_exercise,
-    delete_week,
+    delete_exercise_from_week,
 )
 
 
@@ -267,7 +267,7 @@ def handle_delete_exercise(window, values, db_path=None):
 
 def handle_delete_week(window, values, db_path=None):
     '''
-    Handles the event to delete a week, along with its exercise, reps, 
+    Handles the event to delete a week, along with its exercise, reps,
     and resistance from the database.
     '''
     try:
@@ -295,7 +295,7 @@ def handle_delete_week(window, values, db_path=None):
 
         if confirmation == 'Yes':
             sg.popup(
-                delete_week(db_path, week, exercise, reps, resistance),
+                delete_exercise_from_week(db_path, week, exercise, reps, resistance),
                 title='Message'
             )
 
