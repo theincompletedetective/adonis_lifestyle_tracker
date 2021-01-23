@@ -160,10 +160,6 @@ def handle_update_resistance(window, values, db_path=None):
                 window['-EXERCISE-'].update('')
                 window['-REPS-'].update('')
                 window['-RESISTANCE-'].update('')
-
-                window['-RESISTANCE-'].update(
-                    values=get_sorted_tuple(db_path, 'resistance', 'week_exercise')
-                )
         else:
             sg.popup_error(
                 'You must provide an exercise and resistance!', title='Error'
