@@ -101,7 +101,7 @@ def handle_add_weekly_totals(window, values, db_path=None):
         )
 
 
-def handle_add_food_to_week(window, values, db_path=None):
+def handle_add_food_to_week(day, window, values, db_path=None):
     '''Handles the event to add a food to a given week.'''
     food = values['-FOOD-'].strip()
 
@@ -115,13 +115,14 @@ def handle_add_food_to_week(window, values, db_path=None):
 
     if food:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add the '{food}' food to week {week}?",
+            f"Are you sure you want to add the '{food}' food "
+            f"to day '{day}', in week {week}?",
             title='Confirmation'
         )
 
         if confirmation == 'Yes':
             sg.popup(
-                add_weekly_food(db_path, week, food), title='Message'
+                add_weekly_food(db_path, week, day, food), title='Message'
             )
 
             window['-NUTRITION_WEEK-'].update('')
