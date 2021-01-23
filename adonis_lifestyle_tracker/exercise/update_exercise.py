@@ -76,6 +76,7 @@ def update_resistance(db_path, exercise, reps, resistance):
 
     if exercise_in_db:
         cursor.execute( f'UPDATE exercise SET reps{reps} = ?', (resistance,) )
+        db.commit()
         msg = (
             f"The '{exercise}' exercise had its resistance for {reps} reps "
             f"updated to '{resistance}'."

@@ -59,7 +59,7 @@ def add_weekly_totals(db_path, week, total_calories, total_protein):
         conn.close()
 
 
-def add_weekly_food(db_path, week, day, food):
+def add_weekly_food(db_path, week, food):
     '''Adds a week and food to the week_food table in the database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -68,6 +68,7 @@ def add_weekly_food(db_path, week, day, food):
     found_food = cursor.execute(
         'SELECT * FROM food WHERE id == ?;', (food,)
     ).fetchone()
+
     found_week = cursor.execute(
         'SELECT * FROM week WHERE id == ?;', (week,)
     ).fetchone()
@@ -79,13 +80,13 @@ def add_weekly_food(db_path, week, day, food):
     else:
         cursor.execute(
             '''
-            INSERT INTO week_food (week_id, day_id, food_id)
+            INSERT INTO week_food (week_id, food_id)
                 VALUES (?, ?);
             ''',
-            (week, day, food)
+            (week, food)
         )
         conn.commit()
-        msg = f'The "{food}" food has been added to day {day} of week {week}.'
+        msg = f'The "{food}" food has been added to week {week}.'
 
     conn.close()
     return msg

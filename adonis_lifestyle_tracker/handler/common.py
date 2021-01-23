@@ -61,12 +61,6 @@ def handle_load_database(window, values):
         window['-EXERCISE_WEEK-'].update(
             values=get_sorted_tuple(db_path, 'week', 'week_exercise')
         )
-        window['-REPS-'].update(
-            values=get_sorted_tuple(db_path, 'reps', 'week_exercise')
-        )
-        window['-RESISTANCE-'].update(
-            values=get_sorted_tuple(db_path, 'resistance', 'week_exercise')
-        )
 
         sg.popup('The database has been successfully loaded!', title='Success')
 

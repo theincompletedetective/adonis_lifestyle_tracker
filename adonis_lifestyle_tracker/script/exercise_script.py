@@ -54,22 +54,6 @@ def get_resistance_script(week, exercise, reps):
 
 
 @click.command()
-@click.argument('old')
-@click.argument('new')
-def rename_equipment_script(old, new):
-    '''Changes the name of the OLD equipment in the database to NEW equipment.'''
-    print( rename_equipment(DB_PATH, old, new) )
-
-
-@click.command()
-@click.argument('exercise')
-@click.argument('equipment')
-def update_exercise_script(exercise, equipment):
-    '''Updates the EQUIPMENT for EXERCISE in the database.'''
-    print( update_exercise(DB_PATH, exercise, equipment) )
-
-
-@click.command()
 @click.argument('week', type=int)
 @click.argument('exercise')
 @click.argument('reps', type=int)
@@ -77,30 +61,3 @@ def update_exercise_script(exercise, equipment):
 def update_resistance_script(week, exercise, reps, resistance):
     '''Updates WEEK's RESISTANCE for the specified EXERCISE and REPS in the database.'''
     print( update_resistance(DB_PATH, week, exercise, reps, resistance) )
-
-
-@click.command()
-@click.argument('exercise')
-def delete_exercise_script(exercise):
-    '''Deletes EXERCISE from the database.'''
-    print( delete_exercise(DB_PATH, exercise) )
-
-
-@click.command()
-@click.argument('week', type=int)
-@click.argument('exercise')
-@click.argument('reps', type=int)
-@click.argument('resistance')
-def delete_weekly_exercise_script(week, exercise, reps, resistance):
-    '''
-    Deletes the specified EXERCISE, REPS, and RESISTANCE from the specified WEEK
-    in the database.
-    '''
-    print( delete_weekly_exercise(DB_PATH, week, exercise, reps, resistance) )
-
-
-@click.command()
-@click.argument('equipment')
-def delete_equipment_script(equipment):
-    '''Deletes EQUIPMENT and any associated exercises from the database.'''
-    print( delete_equipment(DB_PATH, equipment) )

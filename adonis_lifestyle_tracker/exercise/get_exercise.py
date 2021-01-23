@@ -30,10 +30,12 @@ def get_resistance(db_path, exercise, reps):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
+    cursor.execute(
+        f'SELECT reps{reps} FROM exercise WHERE id = ?', (exercise,)
+    )
+
     try:
-        return cursor.execute(
-            f'SELECT reps{reps} FROM exercise WHERE id = ?', (exercise,)
-        ).fetchone()[0]
+        return cursor.fetchone()[0]
     except TypeError:
         return (
             f"The '{exercise}' exercise is not in the database."

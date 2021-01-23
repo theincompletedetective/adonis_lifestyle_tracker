@@ -111,26 +111,3 @@ def get_protein_left(db_path, week):
             return (
                 f'You have zero grams of protein needed for week {week}.'
             )
-
-
-def get_weekly_totals(db_path, week):
-    '''Gets the total calories and protein for the specified week.'''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-
-    cursor.execute(
-        'SELECT total_calories, total_protein FROM week WHERE id = ?',
-        (week,)
-    )
-
-    try:
-        total_calories, total_protein = cursor.fetchone()
-    except TypeError:
-        return f"Week {week} is not in the database."
-    else:
-        return (
-            f"Week {week} has {total_calories} total calories "
-            f"and {total_protein} total grams of protein."
-        )
-    finally:
-        conn.close()

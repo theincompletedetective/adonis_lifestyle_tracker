@@ -6,7 +6,7 @@ sg.theme('Reddit')
 
 NUTRITION_LABEL_SIZE = (7, 1)
 EXERCISE_LABEL_SIZE = (10, 1)
-TEXT_INPUT_SIZE = (29, 1)
+TEXT_INPUT_SIZE = (25, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (24, 1)
 
@@ -17,9 +17,7 @@ DELETE_BUTTON_COLOR = ('black', '#ff4040')
 nutrition_layout = [
     [
         sg.T('Week', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE),
-        sg.B( 'Choose Day', size=(9, 1) ),
-        sg.B('View Day', size=(7, 1), button_color=CHANGE_BUTTON_COLOR),
+        sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
@@ -75,11 +73,11 @@ exercise_layout = [
     ],
     [
         sg.T('Reps', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-REPS-', size=NUM_INPUT_SIZE)
+        sg.I(key='-REPS-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Resistance', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-RESISTANCE-', size=NUM_INPUT_SIZE)
+        sg.I(key='-RESISTANCE-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
@@ -116,20 +114,20 @@ exercise_layout = [
 ]
 
 layout = [
-    [sg.Frame('Database Path', layout=[
-        [
-            sg.I(
-                key='-PATH-',
-                enable_events=True, size=(79, 1),
-                tooltip='Choose the absolute path to the database.'
-            ),
-            sg.FileBrowse()
-        ]
-    ])],
     [
         sg.TabGroup([[
             sg.Tab('Nutrition', nutrition_layout),
             sg.Tab('Exercise', exercise_layout)
         ]])
-    ]
+    ],
+    [sg.Frame('Database Path', layout=[
+        [
+            sg.I(
+                key='-PATH-',
+                enable_events=True, size=(74, 1),
+                tooltip='Choose the absolute path to the database.'
+            ),
+            sg.FileBrowse()
+        ]
+    ])]
 ]
