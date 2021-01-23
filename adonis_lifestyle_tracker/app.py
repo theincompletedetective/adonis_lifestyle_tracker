@@ -35,12 +35,6 @@ while True:
             handle_get_calories_left(values, db_path)
         elif event == 'Get Protein Left':
             handle_get_protein_left(values, db_path)
-        elif event == 'Get Week Totals':
-            handle_get_week_totals(values, db_path)
-        elif event == 'Update Food':
-            handle_update_food(window, values, db_path)
-        elif event == 'Delete Food':
-            handle_delete_food(window, values, db_path)
         # Exercise
         elif event == 'Add Equipment':
             handle_add_equipment(window, values, db_path)
@@ -54,12 +48,6 @@ while True:
             handle_get_resistance(values, db_path)
         elif event == 'Update Resistance':
             handle_update_resistance(window, values, db_path)
-        elif event == 'Update Exercise':
-            handle_update_exercise(window, values, db_path)
-        elif event == 'Delete Exercise':
-            handle_delete_exercise(window, values, db_path)
-        elif event == 'Delete Week':
-            handle_delete_week(window, values, db_path)
         else:
             continue
 

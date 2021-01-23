@@ -1,23 +1,10 @@
 '''Contains the scripts to manage the nutrition information in the database.'''
 import click
 from adonis_lifestyle_tracker.script.common import DB_PATH
-from adonis_lifestyle_tracker.nutrition.add_nutrition import (
-    add_food,
-    add_weekly_totals,
-    add_food_to_week,
-)
-from adonis_lifestyle_tracker.nutrition.get_nutrition import (
-    get_food,
-    get_calories_left,
-    get_protein_left,
-    get_weekly_totals,
-)
-from adonis_lifestyle_tracker.nutrition.update_nutrition import (
-    update_food,
-)
-from adonis_lifestyle_tracker.nutrition.delete_nutrition import (
-    delete_food,
-)
+from adonis_lifestyle_tracker.nutrition.add_nutrition import *
+from adonis_lifestyle_tracker.nutrition.get_nutrition import *
+from adonis_lifestyle_tracker.nutrition.update_nutrition import *
+from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
 @click.command()
@@ -98,7 +85,27 @@ def update_food_script(food, calories, protein):
 
 
 @click.command()
+@click.argument('week', type=int)
+@click.option(
+    '-k', '--total-calories', required=True, type=int, help='Total number of calories to eat for the week.'
+)
+@click.option(
+    '-p', '--total-protein', required=True, type=int, help='Total grams of protein to eat in the week.'
+)
+def update_weeklytotals_script(week, total_calories, total_protein):
+    '''Updates the total calories and protein for WEEK.'''
+    print( update_weekly_totals(DB_PATH, week, total_calories, total_protein) )
+
+
+@click.command()
 @click.argument('food')
 def delete_food_script(food):
     '''Deletes FOOD from the database.'''
     print( delete_food(DB_PATH, food) )
+
+
+@click.command()
+@click.argument('week', type=int)
+def delete_week_script(week):
+    '''Deletes WEEK from the database.'''
+    print( delete_week(DB_PATH, week) )

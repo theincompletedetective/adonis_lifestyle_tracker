@@ -25,7 +25,9 @@ setup(
         get_protein_left=adonis_lifestyle_tracker.script.nutrition_script:get_protein_left_script
         get_weekly_totals=adonis_lifestyle_tracker.script.nutrition_script:get_weekly_totals_script
         update_food=adonis_lifestyle_tracker.script.nutrition_script:update_food_script
+        update_weekly_totals=adonis_lifestyle_tracker.scirpt.nutrition_script:update_weekly_totals_script
         delete_food=adonis_lifestyle_tracker.script.nutrition_script:delete_food_script
+        delete_week=adonis_lifestyle_tracker.script.nutrition_script:delete_week_script
         add_equipment=adonis_lifestyle_tracker.script.exercise_script:add_equipment_script
         add_exercise=adonis_lifestyle_tracker.script.exercise_script:add_exercise_script
         add_exercise_to_week=adonis_lifestyle_tracker.script.exercise_script:add_exercise_to_week_script

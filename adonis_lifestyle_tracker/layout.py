@@ -57,25 +57,6 @@ nutrition_layout = [
             size=BUTTON_SIZE,
             tooltip='Displays the grams of protein left to consume for the specified week.'
         )
-    ],
-    [
-        sg.B(
-            'Get Week Totals',
-            size=BUTTON_SIZE,
-            tooltip='Displays the total calories and protein for the specified week.'
-        ),
-        sg.B(
-            'Update Food',
-            size=BUTTON_SIZE,
-            button_color=CHANGE_BUTTON_COLOR,
-            tooltip='Updates the calories and protein for the specified food.'
-        ),
-        sg.B(
-            'Delete Food',
-            size=BUTTON_SIZE,
-            button_color=DELETE_BUTTON_COLOR,
-            tooltip='Deletes the specified food from the database.'
-        ),
     ]
 ]
 
@@ -128,26 +109,6 @@ exercise_layout = [
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the resistance used for the specified exercise '
             'in the provided week, with the given rep range.'
-        )
-    ],
-    [
-        sg.B(
-            'Update Exercise',
-            size=BUTTON_SIZE,
-            button_color=CHANGE_BUTTON_COLOR,
-            tooltip='Updates the equipment used for the specified exercise.'
-        ),
-        sg.B(
-            'Delete Exercise',
-            size=BUTTON_SIZE,
-            button_color=DELETE_BUTTON_COLOR,
-            tooltip='Deletes the specified exercise and its equipment from the database.'
-        ),
-        sg.B(
-            'Delete Exercise from Week',
-            size=BUTTON_SIZE,
-            button_color=DELETE_BUTTON_COLOR,
-            tooltip='Deletes the week with the specified exercise, reps, and resistance.'
         )
     ]
 ]

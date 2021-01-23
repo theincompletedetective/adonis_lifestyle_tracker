@@ -60,6 +60,36 @@ def update_food(db_path, food, calories=None, protein=None):
 
     else:
         msg = f"The '{food}' food is not in the database."
-    
+
+    conn.close()
+    return msg
+
+
+def update_weekly_totals(db_path, week, total_calories, total_protein):
+    '''Updates the total calories and protein for the specified week.'''
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # To make sure week is in database
+    week_in_db = cursor.execute(
+        'SELECT id FROM week WHERE id = ?', (week,)
+    ).fetchone()
+
+    if week_in_db:
+        cursor.execute(
+            'UPDATE week SET total_calories = ? WHERE id = ?', (total_calories, week)
+        )
+        cursor.execute(
+            'UPDATE week SET total_protein = ? WHERE id = ?', (total_protein, week,)
+        )
+
+        conn.commit()
+        msg = (
+            f"Total calories for week {week} have been updated to {total_calories}, "
+            f"and the total protein has been updated to {total_protein} grams."
+        )
+    else:
+        msg = f"Week {week} is not in the database."
+
     conn.close()
     return msg
