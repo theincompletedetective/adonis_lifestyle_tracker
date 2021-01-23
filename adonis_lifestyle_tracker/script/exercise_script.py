@@ -39,10 +39,10 @@ def add_exercise_script(exercise, equipment):
 @click.command()
 @click.argument('week', type=int)
 @click.argument('exercise')
-@click.argumet('reps', type=int)
-@click.option('-r', '--resistance', required=True, help='Amount of resistance used for the exercise.')
+@click.argument('reps', type=int)
+@click.argument('resistance')
 def add_exercise_to_week_script(week, exercise, reps, resistance):
-    '''Adds the specified exercise, reps, and resistance to the specified WEEK.'''
+    '''Adds the specified EXERCISE, REPS reps, and RESISTANCE resistance to the specified WEEK.'''
     print( add_exercise_to_week(DB_PATH, week, exercise, reps, resistance) )
 
 
@@ -56,7 +56,7 @@ def get_equipment_script(exercise):
 @click.command()
 @click.argument('week', type=int)
 @click.argument('exercise')
-@click.argumet('reps', type=int)
+@click.argument('reps', type=int)
 def get_resistance_script(week, exercise, reps):
     '''Gets the resistance for the specified exercise and rep range for WEEK.'''
     print( get_resistance(DB_PATH, week, exercise, reps) )
@@ -74,10 +74,11 @@ def update_exercise_script(exercise, equipment):
 @click.command()
 @click.argument('week', type=int)
 @click.argument('exercise')
-@click.argumet('reps', type=int)
-def update_resistance_script(week, exercise, reps):
+@click.argument('reps', type=int)
+@click.argument('resistance')
+def update_resistance_script(week, exercise, reps, resistance):
     '''Updates the resistance of the exercise and reps for WEEK.'''
-    print( update_resistance(DB_PATH, week, exercise, reps) )
+    print( update_resistance(DB_PATH, week, exercise, reps, resistance) )
 
 
 @click.command()
@@ -90,8 +91,8 @@ def delete_exercise_script(exercise):
 @click.command()
 @click.argument('week', type=int)
 @click.argument('exercise')
-@click.argumet('reps', type=int)
-@click.option('-r', '--resistance', required=True, help='Amount of resistance used for the exercise.')
+@click.argument('reps', type=int)
+@click.argument('resistance')
 def delete_exercise_from_week_script(week, exercise, reps, resistance):
     '''Deletes the specified exercise, reps, and resistance from the specified WEEK.'''
     print( delete_exercise_from_week(DB_PATH, week, exercise, reps, resistance) )

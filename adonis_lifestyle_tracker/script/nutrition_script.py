@@ -92,7 +92,7 @@ def update_food_script(food, calories, protein):
 @click.option(
     '-p', '--total-protein', required=True, type=int, help='Total grams of protein to eat in the week.'
 )
-def update_weeklytotals_script(week, total_calories, total_protein):
+def update_weekly_totals_script(week, total_calories, total_protein):
     '''Updates the total calories and protein for WEEK.'''
     print( update_weekly_totals(DB_PATH, week, total_calories, total_protein) )
 
