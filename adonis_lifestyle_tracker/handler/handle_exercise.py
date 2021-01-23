@@ -58,7 +58,7 @@ def handle_add_exercise(window, values, db_path=None):
         )
 
 
-def handle_add_exercise_to_week(window, values, db_path=None):
+def handle_add_weekly_exercise(window, values, db_path=None):
     '''
     Handles the event to add the specified exercise, reps,
     and resistance to the given week.
@@ -70,49 +70,27 @@ def handle_add_exercise_to_week(window, values, db_path=None):
             'You must choose a number for the week!',
             title='Error'
         )
-        return
-
-    exercise = values['-EXERCISE-'].strip()
-
-    try:
-        reps = int(values['-REPS-'])
-    except ValueError:
-        sg.popup_error('You must choose a number for the reps!', title='Error')
-        return
-
-    resistance = values['-RESISTANCE-'].strip()
-
-    if exercise and resistance:
-        confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add the '{exercise}' exercise with "
-            f"{reps} reps and '{resistance}' resistance to week {week}?",
-            title='Confirmation'
-        )
-
-        if confirmation == 'Yes':
-            sg.popup(
-                add_weekly_exercise(db_path, week, exercise, reps, resistance),
-                title='Message'
-            )
-
-            window['-EXERCISE_WEEK-'].update('')
-            window['-EXERCISE-'].update('')
-            window['-REPS-'].update('')
-            window['-RESISTANCE-'].update('')
-
-            window['-EXERCISE_WEEK-'].update(
-                values=get_sorted_tuple(db_path, 'week', 'week_exercise')
-            )
-            window['-REPS-'].update(
-                values=get_sorted_tuple(db_path, 'reps', 'week_exercise')
-            )
-            window['-RESISTANCE-'].update(
-                values=get_sorted_tuple(db_path, 'resistance', 'week_exercise')
-            )
     else:
-        sg.popup_error(
-            'You must provide an exercise and resistance!', title='Error'
-        )
+        exercise = values['-EXERCISE-'].strip()
+
+        if exercise:
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to add the '{exercise}' exercise to week {week}?",
+                title='Confirmation'
+            )
+
+            if confirmation == 'Yes':
+                sg.popup(
+                    add_weekly_exercise(db_path, week, exercise),
+                    title='Message'
+                )
+
+                window['-EXERCISE_WEEK-'].update('')
+                window['-EXERCISE_WEEK-'].update(
+                    values=get_sorted_tuple(db_path, 'week', 'week_exercise')
+                )
+        else:
+            sg.popup_error('You must provide an exercise!', title='Error')
 
 
 def handle_get_equipment(values, db_path=None):
@@ -129,15 +107,9 @@ def handle_get_equipment(values, db_path=None):
 
 def handle_get_resistance(values, db_path=None):
     '''
-    Handles the event to display the resistance used for a given rep range,
-    in a given week.
+    Handles the event to display the resistance used for
+    a given exercise/rep range.
     '''
-    try:
-        week = int(values['-EXERCISE_WEEK-'])
-    except ValueError:
-        sg.popup_error('You must choose a number for the week!', title='Error')
-        return
-
     exercise = values['-EXERCISE-'].strip()
 
     try:
@@ -148,7 +120,7 @@ def handle_get_resistance(values, db_path=None):
 
     if exercise and reps:
         sg.popup(
-            get_resistance(db_path, week, exercise, reps),
+            get_resistance(db_path, exercise, reps),
             title='Message'
         )
     else:
@@ -163,47 +135,39 @@ def handle_update_resistance(window, values, db_path=None):
     Handles the event to update the resistance for a given exercise,
     in the specified week.
     '''
-    try:
-        week = int(values['-EXERCISE_WEEK-'])
-    except ValueError:
-        sg.popup_error('You must choose a number for the week!', title='Error')
-        return
-
     exercise = values['-EXERCISE-'].strip()
 
     try:
         reps = int(values['-REPS-'])
     except ValueError:
         sg.popup_error('You must choose a number for the reps!', title='Error')
-        return
-
-    resistance = values['-RESISTANCE-'].strip()
-
-    if exercise and resistance:
-        confirmation = sg.popup_yes_no(
-            f"Are you sure you want to update the resistance for week {week}, "
-            f"the '{exercise}' exercise, and {reps} reps to '{resistance}'?",
-            title='Confirmation'
-        )
-
-        if confirmation == 'Yes':
-            sg.popup(
-                update_resistance(db_path, week, exercise, reps, resistance),
-                title='Message'
-            )
-
-            window['-EXERCISE_WEEK-'].update('')
-            window['-EXERCISE-'].update('')
-            window['-REPS-'].update('')
-            window['-RESISTANCE-'].update('')
-
-            window['-RESISTANCE-'].update(
-                values=get_sorted_tuple(db_path, 'resistance', 'week_exercise')
-            )
     else:
-        sg.popup_error(
-            'You must provide an exercise and resistance!', title='Error'
-        )
+        resistance = values['-RESISTANCE-'].strip()
+
+        if exercise and resistance:
+            confirmation = sg.popup_yes_no(
+                f"Are you sure you want to update the resistance for "
+                f"the '{exercise}' exercise, and {reps} reps to '{resistance}'?",
+                title='Confirmation'
+            )
+
+            if confirmation == 'Yes':
+                sg.popup(
+                    update_resistance(db_path, exercise, reps, resistance),
+                    title='Message'
+                )
+
+                window['-EXERCISE-'].update('')
+                window['-REPS-'].update('')
+                window['-RESISTANCE-'].update('')
+
+                window['-RESISTANCE-'].update(
+                    values=get_sorted_tuple(db_path, 'resistance', 'week_exercise')
+                )
+        else:
+            sg.popup_error(
+                'You must provide an exercise and resistance!', title='Error'
+            )
 
 
 def handle_update_exercise(window, values, db_path):

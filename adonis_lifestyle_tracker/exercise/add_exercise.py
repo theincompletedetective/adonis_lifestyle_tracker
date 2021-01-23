@@ -58,10 +58,9 @@ def add_exercise(db_path, exercise, equipment):
     return msg
 
 
-def add_weekly_exercise(db_path, week, exercise, reps, resistance):
+def add_weekly_exercise(db_path, week, exercise):
     '''
-    Adds an exercise to the specified week in the week_exercise table
-    in the database.
+    Adds the specified exercise to the provided week in the database.
     '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -75,22 +74,19 @@ def add_weekly_exercise(db_path, week, exercise, reps, resistance):
         try:
             cursor.execute(
                 '''
-                INSERT INTO week_exercise
-                    (week, exercise_id, reps, resistance)
-                VALUES(?, ?, ?, ?)
+                INSERT INTO week_exercise (week, exercise_id)
+                    VALUES(?, ?)
                 ''',
-                (week, exercise, reps, resistance)
+                (week, exercise)
             )
         except IntegrityError:
             msg = (
-                f"Week {week} with the '{exercise}' exercise and {reps} reps "
-                "is already in the database."
+                f"The '{exercise}' exercise has already been added to week {week}."
             )
         else:
             conn.commit()
             msg = (
-                f"Week {week} with the '{exercise}' exercise, '{reps}' reps, "
-                f"and '{resistance}' resistance has been successfully added to the database."
+                f"The '{exercise}' exercise has been successfully added to week {week}."
             )
     else:
         msg = f"The '{exercise}' exercise is not in the database."

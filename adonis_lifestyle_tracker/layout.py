@@ -65,9 +65,7 @@ nutrition_layout = [
 exercise_layout = [
     [
         sg.T('Week', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE),
-        sg.B( 'Choose Day', size=(9, 1) ),
-        sg.B('View Day', size=(7, 1), button_color=CHANGE_BUTTON_COLOR),
+        sg.InputCombo(tuple(), key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Exercise', size=EXERCISE_LABEL_SIZE),

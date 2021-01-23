@@ -23,31 +23,20 @@ def get_equipment(db_path, exercise):
         conn.close()
 
 
-def get_resistance(db_path, week, exercise, reps):
+def get_resistance(db_path, exercise, reps):
     '''
-    Gets the resistance for the specified week, exercise, and number of reps
-    in the week_exercise table in the database.
+    Gets the resistance for the specified exercise, and the provided number of reps.
     '''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute(
-        '''
-        SELECT resistance
-        FROM week_exercise
-        WHERE week = ?
-        AND exercise_id = ?
-        AND reps = ?
-        ''',
-        (week, exercise, reps)
-    )
-
     try:
-        return cursor.fetchone()[0]
+        return cursor.execute(
+            f'SELECT reps{reps} FROM exercise WHERE id = ?', (exercise,)
+        ).fetchone()[0]
     except TypeError:
         return (
-            f"Week {week} with the '{exercise}' exercise "
-            f"and {reps} reps is not in the database."
+            f"The '{exercise}' exercise is not in the database."
         )
     finally:
         conn.close()

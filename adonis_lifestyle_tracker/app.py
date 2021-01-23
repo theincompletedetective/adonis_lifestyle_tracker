@@ -59,7 +59,7 @@ while True:
         elif event == 'Add Exercise':
             handle_add_exercise(window, values, db_path)
         elif event == 'Add Weekly Exercise':
-            handle_add_exercise_to_week(window, values, db_path)
+            handle_add_weekly_exercise(window, values, db_path)
         elif event == 'Get Equipment':
             handle_get_equipment(values, db_path)
         elif event == 'Get Resistance':

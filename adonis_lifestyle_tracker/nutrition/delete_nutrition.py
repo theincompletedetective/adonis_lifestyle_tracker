@@ -53,8 +53,8 @@ def delete_week(db_path, week):
     return msg
 
 
-def delete_weekly_food(db_path, week, day, food):
-    '''Deletes the food from the specified day of the week in the database.'''
+def delete_daily_food(db_path, week, day, food):
+    '''Deletes the food from the specified day of the provided week.'''
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
 
@@ -86,6 +86,43 @@ def delete_weekly_food(db_path, week, day, food):
         msg = (
             f"The '{food}' food has been successfully deleted "
             f"from day '{day}', in week {week}."
+        )
+    
+    db.close()
+    return msg
+
+
+def delete_weekly_food(db_path, week, food):
+    '''Deletes the food from the specified week in the database.'''
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+
+    # To make sure week is in database
+    week_in_db = cursor.execute(
+        'SELECT id FROM week WHERE id = ?', (week,)
+    ).fetchone()
+
+    # To make sure the food is in database
+    food_in_db = cursor.execute(
+        'SELECT id FROM food WHERE id = ?', (food,)
+    ).fetchone()
+
+    if not week_in_db:
+        msg = f"Week {week} is not in the database."
+    elif not food_in_db:
+        msg = f"The '{food}' food is not in the database."
+    else:
+        cursor.execute(
+            '''
+            DELETE FROM week_food
+            WHERE week_id = ?
+            AND food_id = ?
+            ''',
+            (week, food)
+        )
+        db.commit()
+        msg = (
+            f"The '{food}' food has been successfully deleted from week {week}."
         )
     
     db.close()

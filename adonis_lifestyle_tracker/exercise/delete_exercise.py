@@ -51,43 +51,29 @@ def delete_exercise(db_path, exercise):
     return msg
 
 
-def delete_weekly_exercise(db_path, week, exercise, reps, resistance):
+def delete_weekly_exercise(db_path, week, exercise):
     '''Deletes the specified week from the exercise database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # To make sure the week, exercise, reps, and resistance are in the database
-    week_in_db = cursor.execute(
-        '''
-        SELECT * FROM week_exercise
-        WHERE week = ?
-        AND exercise_id = ?
-        AND reps = ?
-        AND resistance = ?
-        ''',
-        (week, exercise, reps, resistance)
+    # To make sure the week and exercise are in the database
+    exercise_in_week = cursor.execute(
+        'SELECT * FROM week_exercise WHERE exercise_id = ?',
+        (exercise,)
     ).fetchone()
 
-    if week_in_db:
+    if exercise_in_week:
         cursor.execute(
-            '''
-            DELETE FROM week_exercise
-            WHERE week = ?
-            AND exercise_id = ?
-            AND reps = ?
-            AND resistance = ?
-            ''',
-            (week, exercise, reps, resistance)
+            'DELETE FROM week_exercise WHERE exercise = ?',
+            (exercise,)
         )
         conn.commit()
         msg = (
-            f"Week {week} with the '{exercise}' exercise, {reps} reps, "
-            f"and '{resistance}' resistance has been successfully removed from the database."
+            f"The '{exercise}' exercise has been successfully deleted from week {week}."
         )
     else:
         msg = (
-            f"Week {week} with the '{exercise}' exercise, {reps} reps, "
-            f"and '{resistance}' resistance is not in the database."
+            f"The '{exercise}' exercise is not in week {week} in the database."
         )
 
     conn.close()
