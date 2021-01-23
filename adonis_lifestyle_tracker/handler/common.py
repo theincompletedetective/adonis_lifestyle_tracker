@@ -61,3 +61,4 @@ def handle_load_database(window, values):
             'You must provide the absolute path to the database!',
             title='Error'
         )
+        window['-PATH-'].update('')
