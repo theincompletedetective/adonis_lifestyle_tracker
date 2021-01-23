@@ -1,24 +1,10 @@
 '''Contains the scripts to manage the exercise information in the database.'''
 import click
 from adonis_lifestyle_tracker.script.common import DB_PATH
-from adonis_lifestyle_tracker.exercise.add_exercise import (
-    add_equipment,
-    add_exercise,
-    add_exercise_to_week,
-)
-from adonis_lifestyle_tracker.exercise.get_exercise import (
-    get_equipment,
-    get_resistance,
-)
-from adonis_lifestyle_tracker.exercise.update_exercise import (
-    update_exercise,
-    update_resistance,
-)
-from adonis_lifestyle_tracker.exercise.delete_exercise import (
-    delete_equipment,
-    delete_exercise,
-    delete_exercise_from_week,
-)
+from adonis_lifestyle_tracker.exercise.add_exercise import *
+from adonis_lifestyle_tracker.exercise.get_exercise import *
+from adonis_lifestyle_tracker.exercise.update_exercise import *
+from adonis_lifestyle_tracker.exercise.delete_exercise import *
 
 
 @click.command()
@@ -32,7 +18,7 @@ def add_equipment_script(equipment):
 @click.argument('exercise')
 @click.argument('equipment')
 def add_exercise_script(exercise, equipment):
-    '''Adds EXERCISE and EQUIPMENT to the exercise table in the database.'''
+    '''Adds EXERCISE and its EQUIPMENT to the database.'''
     print( add_exercise(DB_PATH, exercise, equipment) )
 
 
@@ -41,9 +27,12 @@ def add_exercise_script(exercise, equipment):
 @click.argument('exercise')
 @click.argument('reps', type=int)
 @click.argument('resistance')
-def add_exercise_to_week_script(week, exercise, reps, resistance):
-    '''Adds the specified EXERCISE, REPS reps, and RESISTANCE resistance to the specified WEEK.'''
-    print( add_exercise_to_week(DB_PATH, week, exercise, reps, resistance) )
+def add_weekly_exercise_script(week, exercise, reps, resistance):
+    '''
+    Adds the specified EXERCISE, REPS, and RESISTANCE to the provided WEEK
+    in the database.
+    '''
+    print( add_weekly_exercise(DB_PATH, week, exercise, reps, resistance) )
 
 
 @click.command()
@@ -58,17 +47,26 @@ def get_equipment_script(exercise):
 @click.argument('exercise')
 @click.argument('reps', type=int)
 def get_resistance_script(week, exercise, reps):
-    '''Gets the resistance for the specified exercise and rep range for WEEK.'''
+    '''
+    Prints WEEK's resistance for the specified EXERCISE and REPS.
+    '''
     print( get_resistance(DB_PATH, week, exercise, reps) )
+
+
+@click.command()
+@click.argument('old')
+@click.argument('new')
+def rename_equipment_script(old, new):
+    '''Changes the name of the OLD equipment in the database to NEW equipment.'''
+    print( rename_equipment(DB_PATH, old, new) )
 
 
 @click.command()
 @click.argument('exercise')
 @click.argument('equipment')
 def update_exercise_script(exercise, equipment):
-    '''Updates the EQUIPMENT for EXERCISE.'''
+    '''Updates the EQUIPMENT for EXERCISE in the database.'''
     print( update_exercise(DB_PATH, exercise, equipment) )
-
 
 
 @click.command()
@@ -77,14 +75,14 @@ def update_exercise_script(exercise, equipment):
 @click.argument('reps', type=int)
 @click.argument('resistance')
 def update_resistance_script(week, exercise, reps, resistance):
-    '''Updates the resistance of the exercise and reps for WEEK.'''
+    '''Updates WEEK's RESISTANCE for the specified EXERCISE and REPS in the database.'''
     print( update_resistance(DB_PATH, week, exercise, reps, resistance) )
 
 
 @click.command()
 @click.argument('exercise')
 def delete_exercise_script(exercise):
-    '''Deletes EXERCISE in the database.'''
+    '''Deletes EXERCISE from the database.'''
     print( delete_exercise(DB_PATH, exercise) )
 
 
@@ -93,13 +91,16 @@ def delete_exercise_script(exercise):
 @click.argument('exercise')
 @click.argument('reps', type=int)
 @click.argument('resistance')
-def delete_exercise_from_week_script(week, exercise, reps, resistance):
-    '''Deletes the specified exercise, reps, and resistance from the specified WEEK.'''
-    print( delete_exercise_from_week(DB_PATH, week, exercise, reps, resistance) )
+def delete_weekly_exercise_script(week, exercise, reps, resistance):
+    '''
+    Deletes the specified EXERCISE, REPS, and RESISTANCE from the specified WEEK
+    in the database.
+    '''
+    print( delete_weekly_exercise(DB_PATH, week, exercise, reps, resistance) )
 
 
 @click.command()
 @click.argument('equipment')
 def delete_equipment_script(equipment):
-    '''Deletes EQUIPMENT from the database, as well as any associated exercises.'''
+    '''Deletes EQUIPMENT and any associated exercises from the database.'''
     print( delete_equipment(DB_PATH, equipment) )

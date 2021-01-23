@@ -59,7 +59,7 @@ def add_weekly_totals(db_path, week, total_calories, total_protein):
         conn.close()
 
 
-def add_food_to_week(db_path, week, food):
+def add_weekly_food(db_path, week, food):
     '''Adds a week and food to the week_food table in the database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()

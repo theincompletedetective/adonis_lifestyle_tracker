@@ -3,23 +3,10 @@ Contains the handler functions to manage the exercise information in the GUI.
 '''
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
-from adonis_lifestyle_tracker.exercise.add_exercise import (
-    add_equipment,
-    add_exercise,
-    add_exercise_to_week,
-)
-from adonis_lifestyle_tracker.exercise.get_exercise import (
-    get_equipment,
-    get_resistance,
-)
-from adonis_lifestyle_tracker.exercise.update_exercise import (
-    update_resistance,
-    update_exercise,
-)
-from adonis_lifestyle_tracker.exercise.delete_exercise import (
-    delete_exercise,
-    delete_exercise_from_week,
-)
+from adonis_lifestyle_tracker.exercise.add_exercise import *
+from adonis_lifestyle_tracker.exercise.get_exercise import *
+from adonis_lifestyle_tracker.exercise.update_exercise import *
+from adonis_lifestyle_tracker.exercise.delete_exercise import *
 
 
 def handle_add_equipment(window, values, db_path=None):
@@ -104,7 +91,7 @@ def handle_add_exercise_to_week(window, values, db_path=None):
 
         if confirmation == 'Yes':
             sg.popup(
-                add_exercise_to_week(db_path, week, exercise, reps, resistance),
+                add_weekly_exercise(db_path, week, exercise, reps, resistance),
                 title='Message'
             )
 
@@ -295,7 +282,7 @@ def handle_delete_week(window, values, db_path=None):
 
         if confirmation == 'Yes':
             sg.popup(
-                delete_exercise_from_week(db_path, week, exercise, reps, resistance),
+                delete_weekly_exercise(db_path, week, exercise, reps, resistance),
                 title='Message'
             )
 

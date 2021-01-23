@@ -16,7 +16,7 @@ from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
     '-p', '--protein', required=True, type=int, help='Grams of protein in the food.'
 )
 def add_food_script(food, calories, protein):
-    '''Adds FOOD to the food table database, with its calories and grams of protein.'''
+    '''Adds FOOD to the database, with its calories and grams of protein.'''
     print( add_food(DB_PATH, food, calories, protein) )
 
 
@@ -38,9 +38,9 @@ def add_weekly_totals_script(week, total_calories, total_protein):
 @click.command()
 @click.argument('week', type=int)
 @click.argument('food')
-def add_food_to_week_script(week, food):
+def add_weekly_food_script(week, food):
     '''Adds WEEK and FOOD to the week_food relation table in the database.'''
-    print( add_food_to_week(DB_PATH, week, food) )
+    print( add_weekly_food(DB_PATH, week, food) )
 
 
 @click.command()
@@ -67,8 +67,16 @@ def get_protein_left_script(week):
 @click.command()
 @click.argument('week', type=int)
 def get_weekly_totals_script(week):
-    '''Gets the total calories and protein for WEEK.'''
+    '''Prints the total calories and protein for WEEK.'''
     print( get_weekly_totals(DB_PATH, week) )
+
+
+@click.command()
+@click.argument('old')
+@click.argument('new')
+def rename_food_script(old, new):
+    '''Changes the name of the OLD food in the database to NEW food.'''
+    print( rename_food(DB_PATH, old, new) )
 
 
 @click.command()

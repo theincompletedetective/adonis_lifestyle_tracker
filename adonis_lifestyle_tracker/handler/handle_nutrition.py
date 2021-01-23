@@ -4,23 +4,10 @@ in the manager GUI.
 '''
 import PySimpleGUI as sg
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
-from adonis_lifestyle_tracker.nutrition.add_nutrition import (
-    add_food,
-    add_weekly_totals,
-    add_food_to_week,
-)
-from adonis_lifestyle_tracker.nutrition.get_nutrition import (
-    get_food,
-    get_calories_left,
-    get_protein_left,
-    get_weekly_totals,
-)
-from adonis_lifestyle_tracker.nutrition.update_nutrition import (
-    update_food,
-)
-from adonis_lifestyle_tracker.nutrition.delete_nutrition import (
-    delete_food,
-)
+from adonis_lifestyle_tracker.nutrition.add_nutrition import *
+from adonis_lifestyle_tracker.nutrition.get_nutrition import *
+from adonis_lifestyle_tracker.nutrition.update_nutrition import *
+from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
 def handle_add_food(window, values, db_path=None):
@@ -134,7 +121,7 @@ def handle_add_food_to_week(window, values, db_path=None):
 
         if confirmation == 'Yes':
             sg.popup(
-                add_food_to_week(db_path, week, food), title='Message'
+                add_weekly_food(db_path, week, food), title='Message'
             )
 
             window['-NUTRITION_WEEK-'].update('')

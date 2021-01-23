@@ -34,12 +34,12 @@ nutrition_layout = [
     [
         sg.B('Add Food', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B(
-            'Add Totals to Week',
+            'Add Weekly Totals',
             size=BUTTON_SIZE,
             button_color=ADD_BUTTON_COLOR,
             tooltip='Adds the total calories and total protein for the specified week.'
         ),
-        sg.B('Add Food to Week', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR)
+        sg.B('Add Weekly Food', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR)
     ],
     [
         sg.B(
@@ -88,7 +88,7 @@ exercise_layout = [
             tooltip='Adds the specified exercise and its equipment to the database.'
         ),
         sg.B(
-            'Add Exercise to Week',
+            'Add Weekly Exercise',
             size=BUTTON_SIZE,
             button_color=ADD_BUTTON_COLOR,
             tooltip='Adds the specified exercise to the provided week, '

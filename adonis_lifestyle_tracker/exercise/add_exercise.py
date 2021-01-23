@@ -58,7 +58,7 @@ def add_exercise(db_path, exercise, equipment):
     return msg
 
 
-def add_exercise_to_week(db_path, week, exercise, reps, resistance):
+def add_weekly_exercise(db_path, week, exercise, reps, resistance):
     '''
     Adds an exercise to the specified week in the week_exercise table
     in the database.

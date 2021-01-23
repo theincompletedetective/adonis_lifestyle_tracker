@@ -4,6 +4,29 @@ Contains the functions needed to update nutrition information in the database.
 import sqlite3
 
 
+def rename_food(db_path, old_food, new_food):
+    '''Changes the name of the specified food in the database.'''
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+
+    # To make sure the food is already in the database
+    food_in_db = cursor.execute(
+        'SELECT id FROM food WHERE id = ?', (old_food,)
+    ).fetchone()
+
+    if food_in_db:
+        cursor.execute(
+            'UPDATE food set id = ? WHERE id = ?', (new_food, old_food)
+        )
+        db.commit()
+        msg = f"The name for '{old_food}' food has been updated to '{new_food}'."
+    else:
+        msg = f"The '{old_food}' food is not in the database."
+
+    db.close()
+    return msg
+
+
 def update_food(db_path, food, calories=None, protein=None):
     '''
     Adds the food with the specified calories and protein to the database.

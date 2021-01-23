@@ -51,7 +51,7 @@ def delete_exercise(db_path, exercise):
     return msg
 
 
-def delete_exercise_from_week(db_path, week, exercise, reps, resistance):
+def delete_weekly_exercise(db_path, week, exercise, reps, resistance):
     '''Deletes the specified week from the exercise database.'''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()

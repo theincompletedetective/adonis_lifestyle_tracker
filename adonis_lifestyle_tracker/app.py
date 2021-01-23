@@ -25,9 +25,9 @@ while True:
         # Nutrition
         if event == 'Add Food':
             handle_add_food(window, values, db_path)
-        elif event == 'Add Totals to Week':
+        elif event == 'Add Weekly Totals':
             handle_add_weekly_totals(window, values, db_path)
-        elif event == 'Add Food to Week':
+        elif event == 'Add Weekly Food':
             handle_add_food_to_week(window, values, db_path)
         elif event == 'Get Food':
             handle_get_food(values, db_path)
@@ -40,7 +40,7 @@ while True:
             handle_add_equipment(window, values, db_path)
         elif event == 'Add Exercise':
             handle_add_exercise(window, values, db_path)
-        elif event == 'Add Exercise to Week':
+        elif event == 'Add Weekly Exercise':
             handle_add_exercise_to_week(window, values, db_path)
         elif event == 'Get Equipment':
             handle_get_equipment(values, db_path)
