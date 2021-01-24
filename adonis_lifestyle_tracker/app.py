@@ -17,7 +17,7 @@ while True:
         break
 
     # Database
-    if event == '-PATH-':
+    if event == 'Load Database':
         db_path = handle_load_database(window, values)
     # Nutrition
     elif event == 'Add Food':

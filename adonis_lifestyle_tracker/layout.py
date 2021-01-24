@@ -122,12 +122,9 @@ layout = [
     ],
     [sg.Frame('Database Path', layout=[
         [
-            sg.I(
-                key='-PATH-',
-                enable_events=True, size=(74, 1),
-                tooltip='Choose the absolute path to the database.'
-            ),
-            sg.FileBrowse()
+            sg.I( key='-PATH-', enable_events=True, size=(56, 1) ),
+            sg.FileBrowse(),
+            sg.Button( 'Load Database', button_color=('white', '#8a2be2') )
         ]
     ])]
 ]
