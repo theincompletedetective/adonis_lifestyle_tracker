@@ -21,6 +21,7 @@ create table week (
 
 create table week_food (
     week_id integer,
+    day_id text,
     food_id text
 );
 
@@ -47,6 +48,7 @@ create table exercise (
 
 create table week_exercise (
   week integer,
+  day_id text,
   exercise_id text,
-  UNIQUE(week, exercise_id)
+  UNIQUE(week, day_id, exercise_id)
 );

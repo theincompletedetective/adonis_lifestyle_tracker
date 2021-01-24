@@ -17,7 +17,15 @@ DELETE_BUTTON_COLOR = ('black', '#ff4040')
 nutrition_layout = [
     [
         sg.T('Week', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE),
+        sg.T('Day'),
+        sg.I(
+            key='-DAY-',
+            size=(10, 1),
+            tooltip="You must click the 'Choose Date' button to select the day.",
+            disabled=True
+        ),
+        sg.B( 'Get Day', button_color=('black', '#ffa500') )
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
@@ -57,6 +65,13 @@ nutrition_layout = [
             size=BUTTON_SIZE,
             tooltip='Displays the grams of protein left to consume for the specified week.'
         )
+    ],
+    [
+        sg.B(
+            'Get Weekly Totals',
+            size=BUTTON_SIZE,
+            tooltip='Displays the total calories and protein for the specified week.'
+        ),
     ]
 ]
 

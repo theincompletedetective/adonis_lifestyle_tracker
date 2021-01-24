@@ -101,8 +101,6 @@ def handle_add_weekly_totals(window, values, db_path=None):
 
 def handle_add_weekly_food(window, values, db_path=None):
     '''Handles the event to add a food to a given week.'''
-    food = values['-FOOD-'].strip()
-
     try:
         week = int(values['-NUTRITION_WEEK-'])
     except ValueError:
@@ -111,22 +109,27 @@ def handle_add_weekly_food(window, values, db_path=None):
         )
         return
 
-    if food:
+    food = values['-FOOD-'].strip()
+    day = values['-DAY-']
+
+    if food and day:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to add the food '{food}' "
-            f"to week {week} in the database?",
+            f"to day '{day}' of week {week} in the database?",
             title='Confirmation'
         )
 
         if confirmation == 'Yes':
             sg.popup(
-                add_weekly_food(db_path, week, food), title='Message'
+                add_weekly_food(db_path, week, day, food), title='Message'
             )
 
             window['-NUTRITION_WEEK-'].update('')
+            window['-DAY-'].update('')
             window['-FOOD-'].update('')
+
     else:
-        sg.popup_error('You must enter a food!', title='Error')
+        sg.popup_error('You must enter a food and choose a day!', title='Error')
 
 
 def handle_get_food(values, db_path=None):
@@ -171,3 +174,16 @@ def handle_get_protein_left(values, db_path=None):
         )
     else:
         sg.popup(get_protein_left(db_path, week), title='Message')
+
+
+def handle_get_weekly_totals(values, db_path=None):
+    '''Handles the event to display the total calories and protein for the given week.'''
+    try:
+        week = int(values['-NUTRITION_WEEK-'])
+    except ValueError:
+        sg.popup_error(
+            'You must provide a number for the week!',
+            title='Error'
+        )
+    else:
+        sg.popup(get_weekly_totals(db_path, week), title='Message')

@@ -1,12 +1,13 @@
 '''Creates a GUI to manage the nutrition and exercise information.'''
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.handler.common import handle_load_database
+from adonis_lifestyle_tracker.handler.common import handle_load_database, get_date
 from adonis_lifestyle_tracker.handler.handle_nutrition import *
 from adonis_lifestyle_tracker.handler.handle_exercise import *
 from adonis_lifestyle_tracker.layout import layout
 
 
 db_path = None
+day = None
 
 window = sg.Window('Adonis Lifestyle Tracker', layout)
 
@@ -15,6 +16,10 @@ while True:
 
     if event is None:
         break
+
+    if event == 'Get Day':
+        day = get_date()
+        window['-DAY-'].update(day)
 
     # Database
     if event == 'Load Database':
@@ -34,6 +39,8 @@ while True:
             handle_get_calories_left(values, db_path)
         elif event == 'Get Protein Left':
             handle_get_protein_left(values, db_path)
+        elif event == 'Get Weekly Totals':
+            handle_get_weekly_totals(values, db_path)
         # Exercise
         elif event == 'Add Equipment':
             handle_add_equipment(window, values, db_path)
