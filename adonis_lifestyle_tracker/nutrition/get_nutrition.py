@@ -8,8 +8,8 @@ def get_food(db_path, food):
     '''
     Gets a food's calories and protein from the food table in the database.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     cursor.execute(
         'SELECT calories, protein FROM food WHERE id == ?;', (food,)
@@ -18,29 +18,28 @@ def get_food(db_path, food):
     try:
         calories, protein = cursor.fetchone()
     except TypeError:
-        return f"The '{food}' food isn't in the database."
+        return f"The food '{food}' isn't in the database."
     else:
         return (
-            f'The "{food}" food has {calories} calories and {protein} '
-            'grams of protein.'
+            f"The food '{food}' has {calories} calories and {protein} grams of protein."
         )
     finally:
-        conn.close()
+        db.close()
 
 
 def get_calories_left(db_path, week):
     '''
     Gets the total number of calories left to consume for the specified week.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     try:
-        total_weekly_calories = cursor.execute(
+        total_calories = cursor.execute(
             "SELECT total_calories FROM week WHERE id == ?;", (week,)
         ).fetchone()[0]
     except TypeError:
-        return f'Week {week} is not in the database.'
+        return f"Week {week} isn't in the database."
     else:
         # To get all the names for the food consumed in a given week
         cursor.execute(
@@ -56,15 +55,14 @@ def get_calories_left(db_path, week):
 
             # To substract the grams of protein for each food consumed
             # in the week
-            total_weekly_calories -= cursor.fetchone()[0]
+            total_calories -= cursor.fetchone()[0]
 
-        conn.commit()
-        conn.close()
+        db.commit()
+        db.close()
 
-        if total_weekly_calories >= 0:
+        if total_calories >= 0:
             return (
-                f'You have {total_weekly_calories} calories left '
-                f'to eat for week {week}.'
+                f'You have {total_calories} calories left to eat for week {week}.'
             )
         else:
             return f'You have zero calories left to eat for week {week}.'
@@ -74,11 +72,11 @@ def get_protein_left(db_path, week):
     '''
     Gets the total grams of protein left to consume for the specified week.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     try:
-        total_weekly_protein = cursor.execute(
+        total_protein = cursor.execute(
             "SELECT total_protein FROM week WHERE id == ?", (week,)
         ).fetchone()[0]
     except TypeError:
@@ -97,40 +95,16 @@ def get_protein_left(db_path, week):
 
             # To substract the grams of protein for each food consumed
             # in the week
-            total_weekly_protein -= cursor.fetchone()[0]
+            total_protein -= cursor.fetchone()[0]
 
-        conn.commit()
-        conn.close()
+        db.commit()
+        db.close()
 
-        if total_weekly_protein >= 0:
+        if total_protein >= 0:
             return (
-                f'You still have to eat {total_weekly_protein} more grams '
-                f'of protein for week {week}.'
+                f'You have {total_protein} grams of protein left to eat for week {week}.'
             )
         else:
             return (
-                f'You have zero grams of protein needed for week {week}.'
+                f'You have zero grams of protein left to eat for week {week}.'
             )
-
-
-def get_weekly_totals(db_path, week):
-    '''Gets the total calories and protein for the specified week.'''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-
-    cursor.execute(
-        'SELECT total_calories, total_protein FROM week WHERE id = ?',
-        (week,)
-    )
-
-    try:
-        total_calories, total_protein = cursor.fetchone()
-    except TypeError:
-        return f"Week {week} is not in the database."
-    else:
-        return (
-            f"Week {week} has {total_calories} total calories "
-            f"and {total_protein} total grams of protein."
-        )
-    finally:
-        conn.close()

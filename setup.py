@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 setup(
     name='adonis_lifestyle_tracker',
     version='1.0.0',
-    description='Tracks my Adonis Lifestyle System food and exercise data',
+    description='Tracks my Adonis Lifestyle System food and exercise data for each week',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/esmith1412/adonis_lifestyle_tracker',
@@ -19,23 +19,16 @@ setup(
         [console_scripts]
         add_food=adonis_lifestyle_tracker.script.nutrition_script:add_food_script
         add_weekly_totals=adonis_lifestyle_tracker.script.nutrition_script:add_weekly_totals_script
-        add_food_to_week=adonis_lifestyle_tracker.script.nutrition_script:add_food_to_week_script
+        add_weekly_food=adonis_lifestyle_tracker.script.nutrition_script:add_weekly_food_script
         get_food=adonis_lifestyle_tracker.script.nutrition_script:get_food_script
         get_calories_left=adonis_lifestyle_tracker.script.nutrition_script:get_calories_left_script
         get_protein_left=adonis_lifestyle_tracker.script.nutrition_script:get_protein_left_script
-        get_weekly_totals=adonis_lifestyle_tracker.script.nutrition_script:get_weekly_totals_script
-        update_food=adonis_lifestyle_tracker.script.nutrition_script:update_food_script
-        delete_food=adonis_lifestyle_tracker.script.nutrition_script:delete_food_script
         add_equipment=adonis_lifestyle_tracker.script.exercise_script:add_equipment_script
         add_exercise=adonis_lifestyle_tracker.script.exercise_script:add_exercise_script
-        add_week=adonis_lifestyle_tracker.script.exercise_script:add_exercise_to_week_script
         get_equipment=adonis_lifestyle_tracker.script.exercise_script:get_equipment_script
         get_resistance=adonis_lifestyle_tracker.script.exercise_script:get_resistance_script
-        update_exercise=adonis_lifestyle_tracker.script.exercise_script:update_exercise_script
+        update_equipment=adonis_lifestyle_tracker.script.exercise_script:update_equipment_script
         update_resistance=adonis_lifestyle_tracker.script.exercise_script:update_resistance_script
-        delete_equipment=adonis_lifestyle_tracker.script.exercise_script:delete_equipment_script
-        delete_exercise=adonis_lifestyle_tracker.script.exercise_script:delete_exercise_script
-        delete_week=adonis_lifestyle_tracker.script.exercise_script.delete_week_script
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.7",
