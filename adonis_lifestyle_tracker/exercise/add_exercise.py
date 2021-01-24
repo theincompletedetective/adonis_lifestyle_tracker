@@ -89,7 +89,7 @@ def add_weekly_exercise(db_path, week, exercise):
                 f"The '{exercise}' exercise has been successfully added to week {week}."
             )
     else:
-        msg = f"The '{exercise}' exercise is not in the database."
+        msg = f"The '{exercise}' exercise isn't in the database."
 
     conn.close()
     return msg

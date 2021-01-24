@@ -4,7 +4,6 @@ from adonis_lifestyle_tracker.script.common import DB_PATH
 from adonis_lifestyle_tracker.exercise.add_exercise import *
 from adonis_lifestyle_tracker.exercise.get_exercise import *
 from adonis_lifestyle_tracker.exercise.update_exercise import *
-from adonis_lifestyle_tracker.exercise.delete_exercise import *
 
 
 @click.command()

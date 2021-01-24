@@ -6,8 +6,6 @@ import PySimpleGUI as sg
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.nutrition.add_nutrition import *
 from adonis_lifestyle_tracker.nutrition.get_nutrition import *
-from adonis_lifestyle_tracker.nutrition.update_nutrition import *
-from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
 def handle_add_food(window, values, db_path=None):
@@ -32,7 +30,7 @@ def handle_add_food(window, values, db_path=None):
 
     if food and calories and protein:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add the '{food}' food, "
+            f"Are you sure you want to add the food '{food}' to the database, "
             f"with {calories} calories and {protein} grams of protein?",
             title='Confirmation'
         )
@@ -115,7 +113,8 @@ def handle_add_weekly_food(window, values, db_path=None):
 
     if food:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add the '{food}' food to week {week}?",
+            f"Are you sure you want to add the food '{food}' "
+            f"to week {week} in the database?",
             title='Confirmation'
         )
 

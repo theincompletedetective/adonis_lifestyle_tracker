@@ -18,7 +18,7 @@ def get_equipment(db_path, exercise):
     try:
         return cursor.fetchone()[0]
     except TypeError:
-        return f"The '{exercise}' exercise is not in the database."
+        return f"The '{exercise}' exercise isn't in the database."
     finally:
         conn.close()
 
@@ -38,7 +38,7 @@ def get_resistance(db_path, exercise, reps):
         return cursor.fetchone()[0]
     except TypeError:
         return (
-            f"The '{exercise}' exercise is not in the database."
+            f"The '{exercise}' exercise isn't in the database."
         )
     finally:
         conn.close()

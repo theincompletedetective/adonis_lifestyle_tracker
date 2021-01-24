@@ -3,22 +3,7 @@ Contains the handler functions needed for both the exercise and nutrition GUIs.
 '''
 import os
 import sqlite3
-from datetime import datetime
 import PySimpleGUI as sg
-
-
-def get_date():
-    '''Gets the specified day, using the PySimpleGUI date-picker.'''
-    now = datetime.now()
-
-    month, day, year = sg.popup_get_date(
-        start_mon = now.month,
-        start_day = now.day,
-        start_year = now.year,
-        close_when_chosen = True,
-    )
-
-    return f'{month}-{day}-{year}'
 
 
 def get_sorted_tuple(db_path, column, table):

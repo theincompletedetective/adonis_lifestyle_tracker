@@ -6,7 +6,6 @@ from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.exercise.add_exercise import *
 from adonis_lifestyle_tracker.exercise.get_exercise import *
 from adonis_lifestyle_tracker.exercise.update_exercise import *
-from adonis_lifestyle_tracker.exercise.delete_exercise import *
 
 
 def handle_add_equipment(window, values, db_path=None):
@@ -15,7 +14,7 @@ def handle_add_equipment(window, values, db_path=None):
 
     if equipment:
         confirmation = sg.popup_yes_no(
-            f"Are you sure you want to add the '{equipment}' equipment?",
+            f"Are you sure you want to add the '{equipment}' equipment to the database?",
             title='Confirmation'
         )
 
@@ -37,7 +36,7 @@ def handle_add_exercise(window, values, db_path=None):
     if exercise and equipment:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to add the '{exercise}' exercise "
-            f"with the '{equipment}' equipment?",
+            f"to the database, with the '{equipment}' equipment?",
             title='Confirmation'
         )
 
@@ -75,7 +74,8 @@ def handle_add_weekly_exercise(window, values, db_path=None):
 
         if exercise:
             confirmation = sg.popup_yes_no(
-                f"Are you sure you want to add the '{exercise}' exercise to week {week}?",
+                f"Are you sure you want to add the '{exercise}' exercise "
+                f"to week {week} in the database?",
                 title='Confirmation'
             )
 
@@ -148,8 +148,8 @@ def handle_update_resistance(window, values, db_path=None):
 
         if exercise and resistance:
             confirmation = sg.popup_yes_no(
-                f"Are you sure you want to update the resistance for "
-                f"the '{exercise}' exercise, and {reps} reps to '{resistance}'?",
+                f"Are you sure you want to update the resistance in the database "
+                f"to '{resistance}', for the '{exercise}' exercise, and {reps} reps?",
                 title='Confirmation'
             )
 

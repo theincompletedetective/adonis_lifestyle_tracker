@@ -3,8 +3,6 @@ import click
 from adonis_lifestyle_tracker.script.common import DB_PATH
 from adonis_lifestyle_tracker.nutrition.add_nutrition import *
 from adonis_lifestyle_tracker.nutrition.get_nutrition import *
-from adonis_lifestyle_tracker.nutrition.update_nutrition import *
-from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
 @click.command()

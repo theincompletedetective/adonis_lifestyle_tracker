@@ -19,12 +19,12 @@ def add_food(db_path, food, calories, protein):
             (food, calories, protein)
         )
     except IntegrityError:
-        return f'The "{food}" food is already in the database.'
+        return f"The food '{food}' is already in the database."
     else:
         conn.commit()
         return (
-            f"The '{food}' food, with {calories} calories and {protein} "
-            "grams of protein has been successfully added to the database."
+            f"The food '{food}' has been successfully added to the database, "
+            f"with {calories} calories and {protein} grams of protein."
         )
     finally:
         conn.close()
@@ -74,9 +74,9 @@ def add_weekly_food(db_path, week, food):
     ).fetchone()
 
     if found_food and not found_week:
-        msg = f'Week {week} is not in the database.'
+        msg = f"Week {week} isn't in the database."
     elif found_week and not found_food:
-        msg =  f'The "{food}" food is not in the database.'
+        msg = f"The food '{food}' isn't in the database."
     else:
         cursor.execute(
             '''
@@ -86,7 +86,7 @@ def add_weekly_food(db_path, week, food):
             (week, food)
         )
         conn.commit()
-        msg = f'The "{food}" food has been added to week {week}.'
+        msg = f"The food '{food}' has been sucessfully added to week {week}."
 
     conn.close()
     return msg
