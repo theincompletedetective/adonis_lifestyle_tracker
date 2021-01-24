@@ -98,7 +98,7 @@ def handle_get_resistance(values, db_path=None):
         )
 
 
-def handle_update_exercise(window, values, db_path=None):
+def handle_update_equipment(window, values, db_path=None):
     '''Handles the event to update the equipment for the specified exercise.'''
     exercise = values['-EXERCISE-'].strip()
     equipment = values['-EQUIPMENT-'].strip()
@@ -112,7 +112,7 @@ def handle_update_exercise(window, values, db_path=None):
 
         if confirmation == 'Yes':
             sg.popup(
-                update_exercise(db_path, exercise, equipment),
+                update_equipment(db_path, exercise, equipment),
                 title='Message'
             )
             window['-EXERCISE-'].update('')
@@ -141,8 +141,8 @@ def handle_update_resistance(window, values, db_path=None):
 
         if exercise and resistance:
             confirmation = sg.popup_yes_no(
-                f"Are you sure you want to update the resistance in the database "
-                f"to '{resistance}', for the '{exercise}' exercise, and {reps} reps?",
+                f"Are you sure you want to update the resistance for {reps} reps "
+                f"of the '{exercise}' exercise to '{resistance}'?",
                 title='Confirmation'
             )
 

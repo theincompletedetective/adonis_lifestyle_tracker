@@ -40,10 +40,17 @@ def get_resistance_script(week, exercise, reps):
 
 
 @click.command()
-@click.argument('week', type=int)
 @click.argument('exercise')
 @click.argument('reps', type=int)
 @click.argument('resistance')
-def update_resistance_script(week, exercise, reps, resistance):
-    '''Updates WEEK's RESISTANCE for the specified EXERCISE and REPS in the database.'''
-    print( update_resistance(DB_PATH, week, exercise, reps, resistance) )
+def update_resistance_script(exercise, reps, resistance):
+    '''Updates EXERCISE's RESISTANCE for the number of REPS in the database.'''
+    print( update_resistance(DB_PATH, exercise, reps, resistance) )
+
+
+@click.command()
+@click.argument('exercise')
+@click.argument('equipment')
+def update_equipment_script(exercise, equipment):
+    '''Updates the EQUIPMENT for EXERCISE in the database.'''
+    print( update_equipment(DB_PATH, exercise, equipment) )

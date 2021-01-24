@@ -28,7 +28,7 @@ def update_resistance(db_path, exercise, reps, resistance):
     return msg
 
 
-def update_exercise(db_path, exercise, equipment):
+def update_equipment(db_path, exercise, equipment):
     '''Updates the equipment for the specified exercise.'''
     db = sqlite3.connect(db_path)
     cursor = db.cursor()

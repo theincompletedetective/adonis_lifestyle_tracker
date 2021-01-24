@@ -92,20 +92,24 @@ exercise_layout = [
             tooltip='Adds a new piece of workout equipment to the database.'
         ),
         sg.B(
-            'Add Exercise',
+            'Get Equipment',
             size=BUTTON_SIZE,
-            button_color=ADD_BUTTON_COLOR,
-            tooltip='Adds a new exercise to the database, and chooses its equipment.'
+            tooltip='Display the equipment for the specified exercise.'
         ),
         sg.B(
-            'Update Exercise',
+            'Update Equipment',
             size=BUTTON_SIZE,
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the equipment for the specified exercise.'
         )
     ],
     [
-        sg.B('Get Equipment', size=BUTTON_SIZE),
+        sg.B(
+            'Add Exercise',
+            size=BUTTON_SIZE,
+            button_color=ADD_BUTTON_COLOR,
+            tooltip='Adds a new exercise to the database, and chooses its equipment.'
+        ),
         sg.B(
             'Get Resistance',
             size=BUTTON_SIZE,

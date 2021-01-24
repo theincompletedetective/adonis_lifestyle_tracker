@@ -39,8 +39,8 @@ while True:
             handle_add_equipment(window, values, db_path)
         elif event == 'Add Exercise':
             handle_add_exercise(window, values, db_path)
-        elif event == 'Update Exercise':
-            handle_update_exercise(window, values, db_path)
+        elif event == 'Update Equipment':
+            handle_update_equipment(window, values, db_path)
         elif event == 'Get Equipment':
             handle_get_equipment(values, db_path)
         elif event == 'Get Resistance':

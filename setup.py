@@ -27,6 +27,7 @@ setup(
         add_exercise=adonis_lifestyle_tracker.script.exercise_script:add_exercise_script
         get_equipment=adonis_lifestyle_tracker.script.exercise_script:get_equipment_script
         get_resistance=adonis_lifestyle_tracker.script.exercise_script:get_resistance_script
+        update_equipment=adonis_lifestyle_tracker.script.exercise_script:update_equipment_script
         update_resistance=adonis_lifestyle_tracker.script.exercise_script:update_resistance_script
     ''',
     classifiers=[
