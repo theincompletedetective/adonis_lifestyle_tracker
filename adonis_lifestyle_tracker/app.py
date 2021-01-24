@@ -1,13 +1,12 @@
 '''Creates a GUI to manage the nutrition and exercise information.'''
 import PySimpleGUI as sg
-from adonis_lifestyle_tracker.handler.common import handle_load_database, get_date
+from adonis_lifestyle_tracker.handler.common import handle_load_database
 from adonis_lifestyle_tracker.handler.handle_nutrition import *
 from adonis_lifestyle_tracker.handler.handle_exercise import *
 from adonis_lifestyle_tracker.layout import layout
 
 
 db_path = None
-day = None
 
 window = sg.Window('Adonis Lifestyle Tracker', layout)
 
@@ -17,10 +16,6 @@ while True:
     if event is None:
         break
 
-    if event == 'Get Day':
-        day = get_date()
-        window['-DAY-'].update(day)
-
     # Database
     if event == 'Load Database':
         db_path = handle_load_database(window, values)
@@ -29,9 +24,9 @@ while True:
         # Nutrition
         if event == 'Add Food':
             handle_add_food(window, values, db_path)
-        elif event == 'Add Weekly Totals':
+        elif event == 'Add Week':
             handle_add_weekly_totals(window, values, db_path)
-        elif event == 'Add Weekly Food':
+        elif event == 'Add Food to Week':
             handle_add_weekly_food(window, values, db_path)
         elif event == 'Get Food':
             handle_get_food(values, db_path)
@@ -39,15 +34,13 @@ while True:
             handle_get_calories_left(values, db_path)
         elif event == 'Get Protein Left':
             handle_get_protein_left(values, db_path)
-        elif event == 'Get Weekly Totals':
-            handle_get_weekly_totals(values, db_path)
         # Exercise
         elif event == 'Add Equipment':
             handle_add_equipment(window, values, db_path)
         elif event == 'Add Exercise':
             handle_add_exercise(window, values, db_path)
-        elif event == 'Add Weekly Exercise':
-            handle_add_weekly_exercise(window, values, db_path)
+        elif event == 'Update Exercise':
+            handle_update_exercise(window, values, db_path)
         elif event == 'Get Equipment':
             handle_get_equipment(values, db_path)
         elif event == 'Get Resistance':

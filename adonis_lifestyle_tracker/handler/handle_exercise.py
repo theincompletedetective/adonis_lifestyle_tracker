@@ -20,10 +20,12 @@ def handle_add_equipment(window, values, db_path=None):
 
         if confirmation == 'Yes':
             sg.popup(add_equipment(db_path, equipment), title='Message')
+
             window['-EQUIPMENT-'].update('')
             window['-EQUIPMENT-'].update(
                 values=get_sorted_tuple(db_path, 'id', 'equipment')
             )
+
     else:
         sg.popup_error('You must provide some equipment!', title='Error')
 
@@ -45,54 +47,18 @@ def handle_add_exercise(window, values, db_path=None):
                 add_exercise(db_path, exercise, equipment),
                 title='Message'
             )
+
             window['-EXERCISE-'].update('')
             window['-EQUIPMENT-'].update('')
             window['-EXERCISE-'].update(
                 values=get_sorted_tuple(db_path, 'id', 'exercise')
             )
+
     else:
         sg.popup_error(
             'You must provide an exercise and its equipment!',
             title='Error'
         )
-
-
-def handle_add_weekly_exercise(window, values, db_path=None):
-    '''
-    Handles the event to add the specified exercise, reps,
-    and resistance to the given week.
-    '''
-    try:
-        week = int(values['-EXERCISE_WEEK-'])
-    except ValueError:
-        sg.popup_error(
-            'You must choose a number for the week!',
-            title='Error'
-        )
-    else:
-        exercise = values['-EXERCISE-'].strip()
-
-        if exercise:
-            confirmation = sg.popup_yes_no(
-                f"Are you sure you want to add the '{exercise}' exercise "
-                f"to week {week} in the database?",
-                title='Confirmation'
-            )
-
-            if confirmation == 'Yes':
-                sg.popup(
-                    add_weekly_exercise(db_path, week, exercise),
-                    title='Message'
-                )
-
-                window['-EXERCISE-'].update('')
-                window['-EXERCISE_WEEK-'].update('')
-                window['-EXERCISE_WEEK-'].update(
-                    values=get_sorted_tuple(db_path, 'week', 'week_exercise')
-                )
-
-        else:
-            sg.popup_error('You must provide an exercise!', title='Error')
 
 
 def handle_get_equipment(values, db_path=None):
@@ -128,6 +94,33 @@ def handle_get_resistance(values, db_path=None):
     else:
         sg.popup_error(
             'You must provide an exercise and number of reps!',
+            title='Error'
+        )
+
+
+def handle_update_exercise(window, values, db_path=None):
+    '''Handles the event to update the equipment for the specified exercise.'''
+    exercise = values['-EXERCISE-'].strip()
+    equipment = values['-EQUIPMENT-'].strip()
+
+    if exercise and equipment:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the equipment for "
+            f"the '{exercise}' exercise to '{equipment}'?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_exercise(db_path, exercise, equipment),
+                title='Message'
+            )
+            window['-EXERCISE-'].update('')
+            window['-EQUIPMENT-'].update('')
+
+    else:
+        sg.popup_error(
+            'You must provide an exercise and its equipment!',
             title='Error'
         )
 

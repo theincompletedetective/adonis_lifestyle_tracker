@@ -3,22 +3,7 @@ Contains the handler functions needed for both the exercise and nutrition GUIs.
 '''
 import os
 import sqlite3
-from datetime import datetime
 import PySimpleGUI as sg
-
-
-def get_date():
-    '''Selects the day for the GUI, using a PySimpleGUI popup_get_date window.'''
-    now = datetime.now()
-
-    month, day, year = sg.popup_get_date(
-        start_mon = now.month,
-        start_day = now.day,
-        start_year = now.year,
-        close_when_chosen = True,
-    )
-
-    return f'{month}-{day}-{year}'
 
 
 def get_sorted_tuple(db_path, column, table):
@@ -44,7 +29,7 @@ def handle_load_database(window, values):
 
     if os.path.isfile(db_path) and db_path.endswith('.db'):
         # To update the GUI with the nutrition data
-        window['-NUTRITION_WEEK-'].update(
+        window['-WEEK-'].update(
             values=get_sorted_tuple(db_path, 'id', 'week')
         )
         window['-FOOD-'].update(
@@ -57,9 +42,6 @@ def handle_load_database(window, values):
         )
         window['-EXERCISE-'].update(
             values=get_sorted_tuple(db_path, 'id', 'exercise')
-        )
-        window['-EXERCISE_WEEK-'].update(
-            values=get_sorted_tuple(db_path, 'week', 'week_exercise')
         )
 
         sg.popup('The database has been successfully loaded!', title='Success')

@@ -12,20 +12,11 @@ BUTTON_SIZE = (24, 1)
 
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
-DELETE_BUTTON_COLOR = ('black', '#ff4040')
 
 nutrition_layout = [
     [
         sg.T('Week', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-NUTRITION_WEEK-', size=NUM_INPUT_SIZE),
-        sg.T('Day'),
-        sg.I(
-            key='-DAY-',
-            size=(10, 1),
-            tooltip="You must click the 'Choose Date' button to select the day.",
-            disabled=True
-        ),
-        sg.B( 'Get Day', button_color=('black', '#ffa500') )
+        sg.InputCombo(tuple(), key='-WEEK-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
@@ -40,46 +31,45 @@ nutrition_layout = [
         sg.I(key='-PROTEIN-', size=NUM_INPUT_SIZE)
     ],
     [
-        sg.B('Add Food', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
         sg.B(
-            'Add Weekly Totals',
+            'Add Food',
             size=BUTTON_SIZE,
             button_color=ADD_BUTTON_COLOR,
-            tooltip='Adds the total calories and total protein for the specified week.'
+            tooltip='Adds a new food to the database, with its calories and protein.'
         ),
-        sg.B('Add Weekly Food', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR)
+        sg.B(
+            'Add Week',
+            size=BUTTON_SIZE,
+            button_color=ADD_BUTTON_COLOR,
+            tooltip='Adds a new week to the database, with its total calories and protein.'
+        ),
+        sg.B(
+            'Add Food to Week',
+            size=BUTTON_SIZE,
+            button_color=ADD_BUTTON_COLOR,
+            tooltip='Adds a food to a week in the database.'
+        )
     ],
     [
         sg.B(
             'Get Food',
             size=BUTTON_SIZE,
-            tooltip='Displays the calories and protein for the specified food.'
+            tooltip='Displays the calories and protein for a food in the database.'
         ),
         sg.B(
             'Get Calories Left',
             size=BUTTON_SIZE,
-            tooltip='Displays the number of calories left to consume for the specified week.'
+            tooltip='Displays the number of calories left to consume for a week in the database.'
         ),
         sg.B(
             'Get Protein Left',
             size=BUTTON_SIZE,
-            tooltip='Displays the grams of protein left to consume for the specified week.'
+            tooltip='Displays the grams of protein left to consume for a week in the database.'
         )
-    ],
-    [
-        sg.B(
-            'Get Weekly Totals',
-            size=BUTTON_SIZE,
-            tooltip='Displays the total calories and protein for the specified week.'
-        ),
     ]
 ]
 
 exercise_layout = [
-    [
-        sg.T('Week', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-EXERCISE_WEEK-', size=NUM_INPUT_SIZE)
-    ],
     [
         sg.T('Exercise', size=EXERCISE_LABEL_SIZE),
         sg.InputCombo(tuple(), key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE),
@@ -95,19 +85,23 @@ exercise_layout = [
         sg.I(key='-RESISTANCE-', size=NUM_INPUT_SIZE)
     ],
     [
-        sg.B('Add Equipment', size=BUTTON_SIZE, button_color=ADD_BUTTON_COLOR),
+        sg.B(
+            'Add Equipment',
+            size=BUTTON_SIZE,
+            button_color=ADD_BUTTON_COLOR,
+            tooltip='Adds a new piece of workout equipment to the database.'
+        ),
         sg.B(
             'Add Exercise',
             size=BUTTON_SIZE,
             button_color=ADD_BUTTON_COLOR,
-            tooltip='Adds the specified exercise and its equipment to the database.'
+            tooltip='Adds a new exercise to the database, and chooses its equipment.'
         ),
         sg.B(
-            'Add Weekly Exercise',
+            'Update Exercise',
             size=BUTTON_SIZE,
-            button_color=ADD_BUTTON_COLOR,
-            tooltip='Adds the specified exercise to the provided week, '
-            'with its number of reps and resistance.'
+            button_color=CHANGE_BUTTON_COLOR,
+            tooltip='Updates the equipment for the specified exercise.'
         )
     ],
     [
@@ -115,15 +109,13 @@ exercise_layout = [
         sg.B(
             'Get Resistance',
             size=BUTTON_SIZE,
-            tooltip='Displays the resistance used for the specified exercise, '
-            'in the provided week, with the given rep range.'
+            tooltip='Displays the resistance for the specified exercise and rep range.'
         ),
         sg.B(
             'Update Resistance',
             size=BUTTON_SIZE,
             button_color=CHANGE_BUTTON_COLOR,
-            tooltip='Updates the resistance used for the specified exercise '
-            'in the provided week, with the given rep range.'
+            tooltip='Updates the resistance for the specified exercise and rep range.'
         )
     ]
 ]

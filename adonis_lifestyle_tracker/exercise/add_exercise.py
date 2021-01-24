@@ -52,44 +52,7 @@ def add_exercise(db_path, exercise, equipment):
                 "equipment has been successfully added to the database."
             )
     else:
-        msg = f"'{equipment}' equipment is not in the database."
-
-    conn.close()
-    return msg
-
-
-def add_weekly_exercise(db_path, week, exercise):
-    '''
-    Adds the specified exercise to the provided week in the database.
-    '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-
-    # To make sure the exercise is already in the exercise table
-    exercise_in_db = cursor.execute(
-        'SELECT id from exercise WHERE id = ?', (exercise,)
-    ).fetchone()
-
-    if exercise_in_db:
-        try:
-            cursor.execute(
-                '''
-                INSERT INTO week_exercise (week, exercise_id)
-                    VALUES(?, ?)
-                ''',
-                (week, exercise)
-            )
-        except IntegrityError:
-            msg = (
-                f"The '{exercise}' exercise has already been added to week {week}."
-            )
-        else:
-            conn.commit()
-            msg = (
-                f"The '{exercise}' exercise has been successfully added to week {week}."
-            )
-    else:
-        msg = f"The '{exercise}' exercise isn't in the database."
+        msg = f"The '{equipment}' equipment is not in the database."
 
     conn.close()
     return msg
