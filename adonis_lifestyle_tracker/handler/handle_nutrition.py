@@ -28,7 +28,7 @@ def handle_add_food(window, values, db_path=None):
         )
         return
 
-    if food and calories and protein:
+    if food and calories and protein >= 0:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to add the food '{food}' to the database, "
             f"with {calories} calories and {protein} grams of protein?",
