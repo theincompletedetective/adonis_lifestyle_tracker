@@ -7,8 +7,8 @@ def add_food(db_path, food, calories, protein):
     '''
     Adds the food with the specified calories and protein to the database.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     try:
         cursor.execute(
@@ -21,13 +21,13 @@ def add_food(db_path, food, calories, protein):
     except IntegrityError:
         return f"The food '{food}' is already in the database."
     else:
-        conn.commit()
+        db.commit()
         return (
             f"The food '{food}' has been successfully added to the database, "
             f"with {calories} calories and {protein} grams of protein."
         )
     finally:
-        conn.close()
+        db.close()
 
 
 def add_weekly_totals(db_path, week, total_calories, total_protein):
@@ -35,8 +35,8 @@ def add_weekly_totals(db_path, week, total_calories, total_protein):
     Adds a week, total calories, and total protein to the week table
     in the database.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     try:
         cursor.execute(
@@ -49,20 +49,20 @@ def add_weekly_totals(db_path, week, total_calories, total_protein):
     except IntegrityError:
         return f'Week {week} is already in the database.'
     else:
-        conn.commit()
+        db.commit()
         return (
             f'Week {week} has been successfully added to the database, '
             f'with {total_calories} total calories, and {total_protein} '
             'total grams of protein.'
         )
     finally:
-        conn.close()
+        db.close()
 
 
 def add_weekly_food(db_path, week, food):
     '''Adds a week and food to the week_food table in the database.'''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     # To make sure food and week are already in the database
     found_food = cursor.execute(
@@ -85,8 +85,8 @@ def add_weekly_food(db_path, week, food):
             ''',
             (week, food)
         )
-        conn.commit()
+        db.commit()
         msg = f"The food '{food}' has been sucessfully added to week {week}."
 
-    conn.close()
+    db.close()
     return msg

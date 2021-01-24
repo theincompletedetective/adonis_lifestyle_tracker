@@ -22,19 +22,6 @@ def add_exercise_script(exercise, equipment):
 
 
 @click.command()
-@click.argument('week', type=int)
-@click.argument('exercise')
-@click.argument('reps', type=int)
-@click.argument('resistance')
-def add_weekly_exercise_script(week, exercise, reps, resistance):
-    '''
-    Adds the specified EXERCISE, REPS, and RESISTANCE to the provided WEEK
-    in the database.
-    '''
-    print( add_weekly_exercise(DB_PATH, week, exercise, reps, resistance) )
-
-
-@click.command()
 @click.argument('exercise')
 def get_equipment_script(exercise):
     '''Prints the equipment for EXERCISE in the database.'''

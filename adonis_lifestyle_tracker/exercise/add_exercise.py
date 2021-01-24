@@ -7,8 +7,8 @@ def add_equipment(db_path, equipment):
     '''
     Adds new equipment to the equipment table in the database.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     try:
         cursor.execute(
@@ -17,20 +17,20 @@ def add_equipment(db_path, equipment):
     except IntegrityError:
         return f"The '{equipment}' equipment is already in the database."
     else:
-        conn.commit()
+        db.commit()
         return (
             f"The '{equipment}' equipment has been successfully added to the database."
         )
     finally:
-        conn.close()
+        db.close()
 
 
 def add_exercise(db_path, exercise, equipment):
     '''
     Adds a new exercise and its equipment to the exercise table in the database.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     # To make sure equipment is already in the equipment table
     equipment_in_db = cursor.execute(
@@ -46,7 +46,7 @@ def add_exercise(db_path, exercise, equipment):
         except IntegrityError:
             msg = f"The '{exercise}' exercise is already in the database."
         else:
-            conn.commit()
+            db.commit()
             msg = (
                 f"The '{exercise}' exercise with the '{equipment}' "
                 "equipment has been successfully added to the database."
@@ -54,5 +54,5 @@ def add_exercise(db_path, exercise, equipment):
     else:
         msg = f"The '{equipment}' equipment is not in the database."
 
-    conn.close()
+    db.close()
     return msg

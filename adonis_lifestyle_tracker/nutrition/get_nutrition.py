@@ -8,8 +8,8 @@ def get_food(db_path, food):
     '''
     Gets a food's calories and protein from the food table in the database.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     cursor.execute(
         'SELECT calories, protein FROM food WHERE id == ?;', (food,)
@@ -24,15 +24,15 @@ def get_food(db_path, food):
             f"The food '{food}' has {calories} calories and {protein} grams of protein."
         )
     finally:
-        conn.close()
+        db.close()
 
 
 def get_calories_left(db_path, week):
     '''
     Gets the total number of calories left to consume for the specified week.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     try:
         total_calories = cursor.execute(
@@ -57,8 +57,8 @@ def get_calories_left(db_path, week):
             # in the week
             total_calories -= cursor.fetchone()[0]
 
-        conn.commit()
-        conn.close()
+        db.commit()
+        db.close()
 
         if total_calories >= 0:
             return (
@@ -72,8 +72,8 @@ def get_protein_left(db_path, week):
     '''
     Gets the total grams of protein left to consume for the specified week.
     '''
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
 
     try:
         total_protein = cursor.execute(
@@ -97,8 +97,8 @@ def get_protein_left(db_path, week):
             # in the week
             total_protein -= cursor.fetchone()[0]
 
-        conn.commit()
-        conn.close()
+        db.commit()
+        db.close()
 
         if total_protein >= 0:
             return (
