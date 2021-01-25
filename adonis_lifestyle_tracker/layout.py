@@ -6,9 +6,9 @@ sg.theme('Reddit')
 
 NUTRITION_LABEL_SIZE = (7, 1)
 EXERCISE_LABEL_SIZE = (10, 1)
-TEXT_INPUT_SIZE = (25, 1)
+TEXT_INPUT_SIZE = (28, 1)
 NUM_INPUT_SIZE = (6, 1)
-BUTTON_SIZE = (25, 1)
+BUTTON_SIZE = (16, 1)
 
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
@@ -72,9 +72,11 @@ nutrition_layout = [
 exercise_layout = [
     [
         sg.T('Exercise', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE),
-        sg.T('Equipment'),
-        sg.InputCombo( tuple(), key='-EQUIPMENT-', font=('Any', 9), size=(28, 1) )
+        sg.InputCombo(tuple(), key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE)
+    ],
+    [
+        sg.T('Equipment', size=EXERCISE_LABEL_SIZE),
+        sg.InputCombo(tuple(), key='-EQUIPMENT-', font=('Any', 9), size=TEXT_INPUT_SIZE)
     ],
     [
         sg.T('Reps', size=EXERCISE_LABEL_SIZE),
@@ -133,7 +135,7 @@ layout = [
     ],
     [sg.Frame('Database Path', layout=[
         [
-            sg.I( key='-PATH-', enable_events=True, size=(59, 1) ),
+            sg.I( key='-PATH-', enable_events=True, size=(32, 1) ),
             sg.FileBrowse(),
             sg.Button( 'Load Database', button_color=('white', '#8a2be2') )
         ]
