@@ -71,12 +71,12 @@ nutrition_layout = [
 
 exercise_layout = [
     [
-        sg.T('Exercise', size=EXERCISE_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE)
-    ],
-    [
         sg.T('Equipment', size=EXERCISE_LABEL_SIZE),
         sg.InputCombo(tuple(), key='-EQUIPMENT-', font=('Any', 9), size=TEXT_INPUT_SIZE)
+    ],
+    [
+        sg.T('Exercise', size=EXERCISE_LABEL_SIZE),
+        sg.InputCombo(tuple(), key='-EXERCISE-', font=('Any', 9), size=TEXT_INPUT_SIZE)
     ],
     [
         sg.T('Reps', size=EXERCISE_LABEL_SIZE),
