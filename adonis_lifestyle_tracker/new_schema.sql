@@ -21,6 +21,7 @@ create table week (
 
 create table week_food (
     week_id integer,
+    day_id text,
     food_id text
 );
 

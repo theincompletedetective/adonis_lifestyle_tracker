@@ -11,12 +11,14 @@ def get_date():
     '''Selects the date for the weekday.'''
     now = datetime.now()
 
-    return sg.popup_get_date(
+    month, day, year = sg.popup_get_date(
         start_mon = now.month,
         start_day = now.day,
         start_year = now.year,
         close_when_chosen = True,
     )
+
+    return f"{month}-{day}-{year}"
 
 
 def get_sorted_tuple(db_path, column, table):

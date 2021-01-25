@@ -16,7 +16,10 @@ CHANGE_BUTTON_COLOR = ('black', '#ffd700')
 nutrition_layout = [
     [
         sg.T('Week', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-WEEK-', size=NUM_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-WEEK-', size=NUM_INPUT_SIZE),
+        sg.T('Day'),
+        sg.I( key='-DAY-', disabled=True, size=(10, 1) ),
+        sg.B( 'Get Day', button_color=('black', '#ffa500') )
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
@@ -66,6 +69,44 @@ nutrition_layout = [
             size=BUTTON_SIZE,
             tooltip='Displays the grams of protein left to consume for a week in the database.'
         )
+    ],
+    [
+        sg.B(
+            'Get Daily Food',
+            size=BUTTON_SIZE,
+            tooltip='Displays all the foods eaten on the specified day.'
+        ),
+        sg.B(
+            'Get Weekly Food',
+            size=BUTTON_SIZE,
+            tooltip='Displays all the foods eaten in the specified week.'
+        ),
+        sg.B(
+            'Delete Week',
+            size=BUTTON_SIZE,
+            button_color=('black', '#ff4040'),
+            tooltip='Deletes the specified week from the database.'
+        ),
+    ],
+    [
+        sg.B(
+            'Delete Food',
+            size=BUTTON_SIZE,
+            button_color=('black', '#ff4040'),
+            tooltip='Deletes the specified food from the database.'
+        ),
+        sg.B(
+            'Delete Food from Day',
+            size=BUTTON_SIZE,
+            button_color=('black', '#ff4040'),
+            tooltip='Deletes the specified food from the selected day.'
+        ),
+        sg.B(
+            'Delete Food from Week',
+            size=BUTTON_SIZE,
+            button_color=('black', '#ff4040'),
+            tooltip='Deletes the specified food from the selected week.'
+        ),
     ]
 ]
 
