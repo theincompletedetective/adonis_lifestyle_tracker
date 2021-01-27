@@ -1,41 +1,6 @@
 '''Contains the functions needed to add nutrition information to the database.'''
 import sqlite3
 from sqlite3 import IntegrityError
-import PySimpleGUI as sg
-
-
-def check_weekly_calories(db_path, week):
-    '''
-    Provides a popup message if the total calories for the given week
-    has been exceeded.
-    '''
-    db = sqlite3.connect(db_path)
-    cursor = db.cursor()
-
-    total_calories = cursor.execute(
-        "SELECT total_calories FROM week WHERE id == ?;", (week,)
-    ).fetchone()[0]
-
-    # To get the calories for all food consumed in a given week
-    cursor.execute(
-        "SELECT food_id FROM week_food WHERE week_id == ?;", (week,)
-    )
-
-    for food_name_tuple in cursor.fetchall():
-        cursor.execute(
-            "SELECT calories FROM food WHERE id == ?;",
-            (food_name_tuple[0],)
-        )
-
-        # To substract the calories for all foods consumed in the week
-        total_calories -= cursor.fetchone()[0]
-
-    db.close()
-    
-    if total_calories <= 0:
-        return True
-    
-    return False
 
 
 def add_food(db_path, food, calories, protein):
@@ -113,21 +78,37 @@ def add_weekly_food(db_path, week, food):
     elif found_week and not found_food:
         msg = f"The food '{food}' isn't in the database."
     else:
-        cursor.execute(
-            '''
-            INSERT INTO week_food (week_id, food_id)
-                VALUES (?, ?);
-            ''',
-            (week, food)
-        )
-        db.commit()
-        msg = f"The food '{food}' has been sucessfully added to week {week}."
+        total_calories = cursor.execute(
+            f"SELECT total_calories FROM week WHERE id == ?;", (week,)
+        ).fetchone()[0]
 
-    if check_weekly_calories(db_path):
-        sg.popup(
-            f"You have zero calories left to eat for week {week}!",
-            title='Warning'
+        # To get the calories or protein for all food consumed in a given week
+        cursor.execute(
+            "SELECT food_id FROM week_food WHERE week_id == ?;", (week,)
         )
+
+        for food_name_tuple in cursor.fetchall():
+            cursor.execute(
+                f"SELECT calories FROM food WHERE id == ?;",
+                (food_name_tuple[0],)
+            )
+
+            # To subtract the calories for all foods consumed in the week
+            total_calories -= cursor.fetchone()[0]
+
+        if total_calories > 0:
+            cursor.execute(
+                '''
+                INSERT INTO week_food (week_id, food_id)
+                    VALUES (?, ?);
+                ''',
+                (week, food)
+            )
+            db.commit()
+            msg = f"The food '{food}' has been sucessfully added to week {week}."
+        else:
+            msg = f"You have zero calories left to eat for week {week}!"
+
 
     db.close()
     return msg

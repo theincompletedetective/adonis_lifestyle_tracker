@@ -52,12 +52,12 @@ def get_calories_left(db_path, week):
                 (food_name_tuple[0],)
             )
 
-            # To substract the calories for each food consumed in the week
+            # To subtract the calories for each food consumed in the week
             total_calories -= cursor.fetchone()[0]
 
         db.close()
 
-        if total_calories >= 0:
+        if total_calories > 0:
             return (
                 f'You have {total_calories} calories left to eat for week {week}.'
             )
@@ -89,12 +89,12 @@ def get_protein_left(db_path, week):
                 "SELECT protein FROM food WHERE id = ?;", (food_name_tuple[0],)
             )
 
-            # To substract the grams of protein for each food consumed in the week
+            # To subtract the grams of protein for each food consumed in the week
             total_protein -= cursor.fetchone()[0]
 
         db.close()
 
-        if total_protein >= 0:
+        if total_protein > 0:
             return (
                 f'You have {total_protein} grams of protein left to eat for week {week}.'
             )
