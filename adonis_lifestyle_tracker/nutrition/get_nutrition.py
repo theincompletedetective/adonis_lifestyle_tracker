@@ -46,18 +46,15 @@ def get_calories_left(db_path, week):
             "SELECT food_id FROM week_food WHERE week_id == ?;", (week,)
         )
 
-        # To get the number of calories for each food consumed in a given week
         for food_name_tuple in cursor.fetchall():
             cursor.execute(
                 "SELECT calories FROM food WHERE id == ?;",
                 (food_name_tuple[0],)
             )
 
-            # To substract the grams of protein for each food consumed
-            # in the week
+            # To substract the calories for each food consumed in the week
             total_calories -= cursor.fetchone()[0]
 
-        db.commit()
         db.close()
 
         if total_calories >= 0:
@@ -87,17 +84,14 @@ def get_protein_left(db_path, week):
             "SELECT food_id FROM week_food WHERE week_id = ?;", (week,)
         )
 
-        # To get the grams of protein for each food consumed in a given week
         for food_name_tuple in cursor.fetchall():
             cursor.execute(
                 "SELECT protein FROM food WHERE id = ?;", (food_name_tuple[0],)
             )
 
-            # To substract the grams of protein for each food consumed
-            # in the week
+            # To substract the grams of protein for each food consumed in the week
             total_protein -= cursor.fetchone()[0]
 
-        db.commit()
         db.close()
 
         if total_protein >= 0:
