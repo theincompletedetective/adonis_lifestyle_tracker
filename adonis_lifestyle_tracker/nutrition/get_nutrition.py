@@ -57,12 +57,9 @@ def get_calories_left(db_path, week):
 
         db.close()
 
-        if total_calories > 0:
-            return (
-                f'You have {total_calories} calories left to eat for week {week}.'
-            )
-        else:
-            return f'You have zero calories left to eat for week {week}.'
+        return (
+            f'You have {total_calories} calories left to eat for week {week}.'
+        )
 
 
 def get_protein_left(db_path, week):
@@ -96,9 +93,9 @@ def get_protein_left(db_path, week):
 
         if total_protein > 0:
             return (
-                f'You have {total_protein} grams of protein left to eat for week {week}.'
+                f'You need to eat {total_protein} more grams of protein for week {week}.'
             )
         else:
             return (
-                f'You have zero grams of protein left to eat for week {week}.'
+                f'You need to eat zero more grams of protein for week {week}.'
             )

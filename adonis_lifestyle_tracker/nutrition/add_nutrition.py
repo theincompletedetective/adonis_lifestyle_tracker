@@ -78,37 +78,15 @@ def add_weekly_food(db_path, week, food):
     elif found_week and not found_food:
         msg = f"The food '{food}' isn't in the database."
     else:
-        total_calories = cursor.execute(
-            f"SELECT total_calories FROM week WHERE id == ?;", (week,)
-        ).fetchone()[0]
-
-        # To get the calories or protein for all food consumed in a given week
         cursor.execute(
-            "SELECT food_id FROM week_food WHERE week_id == ?;", (week,)
+            '''
+            INSERT INTO week_food (week_id, food_id)
+                VALUES (?, ?);
+            ''',
+            (week, food)
         )
-
-        for food_name_tuple in cursor.fetchall():
-            cursor.execute(
-                f"SELECT calories FROM food WHERE id == ?;",
-                (food_name_tuple[0],)
-            )
-
-            # To subtract the calories for all foods consumed in the week
-            total_calories -= cursor.fetchone()[0]
-
-        if total_calories > 0:
-            cursor.execute(
-                '''
-                INSERT INTO week_food (week_id, food_id)
-                    VALUES (?, ?);
-                ''',
-                (week, food)
-            )
-            db.commit()
-            msg = f"The food '{food}' has been sucessfully added to week {week}."
-        else:
-            msg = f"You have zero calories left to eat for week {week}!"
-
+        db.commit()
+        msg = f"The food '{food}' has been sucessfully added to week {week}."
 
     db.close()
     return msg
