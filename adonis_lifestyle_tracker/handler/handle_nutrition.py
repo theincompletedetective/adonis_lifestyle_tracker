@@ -7,6 +7,7 @@ from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.nutrition.add_nutrition import *
 from adonis_lifestyle_tracker.nutrition.get_nutrition import *
 from adonis_lifestyle_tracker.nutrition.update_nutrition import *
+from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
 def handle_add_food(window, values, db_path=None):
@@ -29,7 +30,7 @@ def handle_add_food(window, values, db_path=None):
         )
         return
 
-    if food and calories and protein >= 0:
+    if food and calories and protein and protein >= 0:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to add the food '{food}' to the database, "
             f"with {calories} calories and {protein} grams of protein?",
@@ -203,7 +204,7 @@ def handle_update_food(window, values, db_path=None):
             window['-FOOD-'].update('')
             window['-KCAL-'].update('')
 
-    elif food and not calories and protein >= 0:
+    elif food and not calories and protein and protein >= 0:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the grams of protein for food '{food}' to {protein}?",
             title='Confirmation'
@@ -217,7 +218,7 @@ def handle_update_food(window, values, db_path=None):
             window['-FOOD-'].update('')
             window['-PROTEIN-'].update('')
 
-    elif food and calories and protein >= 0:
+    elif food and calories and protein and protein >= 0:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the calories for food '{food}' "
             f"to {calories}, and its grams of protein to {protein}?",
@@ -234,5 +235,54 @@ def handle_update_food(window, values, db_path=None):
             window['-KCAL-'].update('')
             window['-PROTEIN-'].update('')
 
+    elif food and not calories and not protein:
+        sg.popup_error(
+            'You must enter the calories and/or protein for the food!',
+            title='Error'
+        )
     else:
         sg.popup_error('You must enter a food!', title='Error')
+
+
+def handle_delete_food(window, values, db_path=None):
+    '''Handles the event to delete the specified food from the database.'''
+    food = values['-FOOD-'].strip()
+
+    if food:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to delete the food '{food}' from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(delete_food(db_path, food), title='Message')
+
+            window['-FOOD-'].update('')
+
+            window['-FOOD-'].update(
+                values=get_sorted_tuple(db_path, 'id', 'food')
+            )
+
+
+def handle_delete_week(window, values, db_path=None):
+    '''Handles the event to delete a week from the database.'''
+    try:
+        week = int(values['-WEEK-'])
+    except ValueError:
+        sg.popup_error(
+            'You must provide a number for the week!', title='Error'
+        )
+    else:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to delete week {week} from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(delete_week(db_path, week), title='Message')
+
+            window['-WEEK-'].update('')
+
+            window['-WEEK-'].update(
+                values=get_sorted_tuple(db_path, 'id', 'week')
+            )

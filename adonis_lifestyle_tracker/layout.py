@@ -12,6 +12,7 @@ BUTTON_SIZE = (16, 1)
 
 ADD_BUTTON_COLOR = ('white', '#008000')
 CHANGE_BUTTON_COLOR = ('black', '#ffd700')
+DELETE_BUTTON_COLOR = ('black', '#ff4040')
 
 nutrition_layout = [
     [
@@ -73,6 +74,18 @@ nutrition_layout = [
             size=BUTTON_SIZE,
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the calories and/or protein for the specified food.'
+        ),
+        sg.B(
+            'Delete Food',
+            size=BUTTON_SIZE,
+            button_color=DELETE_BUTTON_COLOR,
+            tooltip='Deletes the specified food from the database.'
+        ),
+        sg.B(
+            'Delete Week',
+            size=BUTTON_SIZE,
+            button_color=DELETE_BUTTON_COLOR,
+            tooltip='Deletes the specified week and all its food from the database.'
         )
     ]
 ]

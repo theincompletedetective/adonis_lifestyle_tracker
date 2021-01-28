@@ -74,7 +74,7 @@ def get_protein_left(db_path, week):
             "SELECT total_protein FROM week WHERE id == ?", (week,)
         ).fetchone()[0]
     except TypeError:
-        return f"Week {week} is not in the database."
+        return f"Week {week} isn't in the database."
     else:
         # To get all the names for the food consumed in a given week
         cursor.execute(
