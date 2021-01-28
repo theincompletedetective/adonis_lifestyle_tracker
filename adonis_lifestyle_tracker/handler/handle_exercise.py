@@ -9,7 +9,7 @@ from adonis_lifestyle_tracker.exercise.update_exercise import *
 from adonis_lifestyle_tracker.exercise.delete_exercise import *
 
 
-def handle_add_equipment(window, values, db_path=None):
+def handle_add_equipment(window, values, db_path):
     '''Handles the event to add the specified equipment to the database.'''
     equipment = values['-EQUIPMENT-'].strip()
 
@@ -31,7 +31,7 @@ def handle_add_equipment(window, values, db_path=None):
         sg.popup_error('You must provide some equipment!', title='Error')
 
 
-def handle_add_exercise(window, values, db_path=None):
+def handle_add_exercise(window, values, db_path):
     '''Handles the event to add the specified exercise to the database.'''
     exercise = values['-EXERCISE-'].strip()
     equipment = values['-EQUIPMENT-'].strip()
@@ -62,7 +62,7 @@ def handle_add_exercise(window, values, db_path=None):
         )
 
 
-def handle_get_equipment(values, db_path=None):
+def handle_get_equipment(values, db_path):
     '''
     Handles the event to display the equipment used for the given exercise.
     '''
@@ -74,7 +74,7 @@ def handle_get_equipment(values, db_path=None):
         sg.popup_error('You must provide an exercise!', title='Error')
 
 
-def handle_get_resistance(values, db_path=None):
+def handle_get_resistance(values, db_path):
     '''
     Handles the event to display the resistance used for
     a given exercise/rep range.
@@ -99,7 +99,7 @@ def handle_get_resistance(values, db_path=None):
         )
 
 
-def handle_update_equipment(window, values, db_path=None):
+def handle_update_equipment(window, values, db_path):
     '''Handles the event to update the equipment for the specified exercise.'''
     exercise = values['-EXERCISE-'].strip()
     equipment = values['-EQUIPMENT-'].strip()
@@ -126,7 +126,7 @@ def handle_update_equipment(window, values, db_path=None):
         )
 
 
-def handle_update_resistance(window, values, db_path=None):
+def handle_update_resistance(window, values, db_path):
     '''
     Handles the event to update the resistance for a given exercise,
     in the specified week.
@@ -163,7 +163,7 @@ def handle_update_resistance(window, values, db_path=None):
             )
 
 
-def handle_delete_equipment(window, values, db_path=None):
+def handle_delete_equipment(window, values, db_path):
     '''Handles the event to delete some equipment from the database.'''
     equipment = values['-EQUIPMENT-'].strip()
 
@@ -185,7 +185,7 @@ def handle_delete_equipment(window, values, db_path=None):
         sg.popup_error('You must provide some equipment!', title='Error')
 
 
-def handle_delete_exercise(window, values, db_path=None):
+def handle_delete_exercise(window, values, db_path):
     '''Handles the event to delete the specified exercise from the database.'''
     exercise = values['-EXERCISE-'].strip()
 

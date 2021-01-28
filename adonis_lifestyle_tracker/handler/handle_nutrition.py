@@ -10,7 +10,7 @@ from adonis_lifestyle_tracker.nutrition.update_nutrition import *
 from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
-def handle_add_food(window, values, db_path=None):
+def handle_add_food(window, values, db_path):
     '''Handles the event for adding a new food to the database.'''
     food = values['-FOOD-'].strip()
 
@@ -51,7 +51,7 @@ def handle_add_food(window, values, db_path=None):
             )
 
 
-def handle_add_weekly_totals(window, values, db_path=None):
+def handle_add_weekly_totals(window, values, db_path):
     '''
     Handles the event for adding a new week with its total calories
     and protein to the database.
@@ -101,7 +101,7 @@ def handle_add_weekly_totals(window, values, db_path=None):
         )
 
 
-def handle_add_weekly_food(window, values, db_path=None):
+def handle_add_weekly_food(window, values, db_path):
     '''Handles the event to add a food to a given week.'''
     try:
         week = int(values['-WEEK-'])
@@ -132,7 +132,7 @@ def handle_add_weekly_food(window, values, db_path=None):
         sg.popup_error('You must enter a food and choose a day!', title='Error')
 
 
-def handle_get_food(values, db_path=None):
+def handle_get_food(values, db_path):
     '''
     Handles the event to display the calories and protein for the
     specified food.
@@ -145,7 +145,7 @@ def handle_get_food(values, db_path=None):
         sg.popup_error('You must enter a food!', title='Error')
 
 
-def handle_get_calories_left(values, db_path=None):
+def handle_get_calories_left(values, db_path):
     '''
     Handles the event to get the number of calories left to consume
     for a given week.
@@ -160,7 +160,7 @@ def handle_get_calories_left(values, db_path=None):
         sg.popup(get_calories_left(db_path, week), title='Message')
 
 
-def handle_get_protein_left(values, db_path=None):
+def handle_get_protein_left(values, db_path):
     '''
     Handles the event to get the number of grams of protein left to consume
     for a given week.
@@ -176,7 +176,7 @@ def handle_get_protein_left(values, db_path=None):
         sg.popup(get_protein_left(db_path, week), title='Message')
 
 
-def handle_update_food(window, values, db_path=None):
+def handle_update_food(window, values, db_path):
     '''Handles the event to update the calories and/or protein for the specified food.'''
     food = values['-FOOD-'].strip()
 
@@ -244,7 +244,7 @@ def handle_update_food(window, values, db_path=None):
         sg.popup_error('You must enter a food!', title='Error')
 
 
-def handle_delete_food(window, values, db_path=None):
+def handle_delete_food(window, values, db_path):
     '''Handles the event to delete the specified food from the database.'''
     food = values['-FOOD-'].strip()
 
@@ -266,7 +266,7 @@ def handle_delete_food(window, values, db_path=None):
         sg.popup_error('You must enter a food!', title='Error')
 
 
-def handle_delete_week(window, values, db_path=None):
+def handle_delete_week(window, values, db_path):
     '''Handles the event to delete a week from the database.'''
     try:
         week = int(values['-WEEK-'])
