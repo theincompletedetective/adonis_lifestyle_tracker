@@ -46,7 +46,7 @@ def update_equipment(db_path, exercise, equipment):
         db.commit()
         msg = (
                 f"The equipment for the '{exercise}' exercise has been "
-                f"successfully updated to {equipment}."
+                f"successfully updated to '{equipment}'."
             )
     else:
         msg = f"The '{equipment}' equipment is not in the database."

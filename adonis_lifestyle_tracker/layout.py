@@ -144,6 +144,22 @@ exercise_layout = [
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the resistance for the specified exercise and rep range.'
         )
+    ],
+    [
+        sg.B(
+            'Delete Equipment',
+            size=(27, 1),
+            button_color=DELETE_BUTTON_COLOR,
+            tooltip='Deletes the specified equipment from the database.',
+            pad=(5, 0)
+        ),
+        sg.B(
+            'Delete Exercise',
+            size=(27, 1),
+            button_color=DELETE_BUTTON_COLOR,
+            tooltip='Deletes the specified exercise and its equipment from the database.',
+            pad=(1, 0)
+        ),
     ]
 ]
 

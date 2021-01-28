@@ -6,6 +6,7 @@ from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.exercise.add_exercise import *
 from adonis_lifestyle_tracker.exercise.get_exercise import *
 from adonis_lifestyle_tracker.exercise.update_exercise import *
+from adonis_lifestyle_tracker.exercise.delete_exercise import *
 
 
 def handle_add_equipment(window, values, db_path=None):
@@ -160,3 +161,49 @@ def handle_update_resistance(window, values, db_path=None):
             sg.popup_error(
                 'You must provide an exercise and resistance!', title='Error'
             )
+
+
+def handle_delete_equipment(window, values, db_path=None):
+    '''Handles the event to delete some equipment from the database.'''
+    equipment = values['-EQUIPMENT-'].strip()
+
+    if equipment:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to delete the '{equipment}' equipment from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(delete_equipment(db_path, equipment), title='Message')
+
+            window['-EQUIPMENT-'].update('')
+            window['-EQUIPMENT-'].update(
+                values=get_sorted_tuple(db_path, 'id', 'equipment')
+            )
+
+    else:
+        sg.popup_error('You must provide some equipment!', title='Error')
+
+
+def handle_delete_exercise(window, values, db_path=None):
+    '''Handles the event to delete the specified exercise from the database.'''
+    exercise = values['-EXERCISE-'].strip()
+
+    if exercise:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to delete the '{exercise}' exercise from the database?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                delete_exercise(db_path, exercise), title='Message'
+            )
+
+            window['-EXERCISE-'].update('')
+            window['-EXERCISE-'].update(
+                values=get_sorted_tuple(db_path, 'id', 'exercise')
+            )
+
+    else:
+        sg.popup_error('You must enter an exercise!', title='Error')

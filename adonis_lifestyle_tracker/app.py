@@ -52,6 +52,10 @@ while True:
         handle_get_resistance(values, db_path)
     elif event == 'Update Resistance':
         handle_update_resistance(window, values, db_path)
+    elif event == 'Delete Equipment':
+        handle_delete_equipment(window, values, db_path)
+    elif event == 'Delete Exercise':
+        handle_delete_exercise(window, values, db_path)
     else:
         continue
 
