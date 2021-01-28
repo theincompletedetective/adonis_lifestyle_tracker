@@ -6,6 +6,7 @@ import PySimpleGUI as sg
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.nutrition.add_nutrition import *
 from adonis_lifestyle_tracker.nutrition.get_nutrition import *
+from adonis_lifestyle_tracker.nutrition.update_nutrition import *
 
 
 def handle_add_food(window, values, db_path=None):
@@ -172,3 +173,66 @@ def handle_get_protein_left(values, db_path=None):
         )
     else:
         sg.popup(get_protein_left(db_path, week), title='Message')
+
+
+def handle_update_food(window, values, db_path=None):
+    '''Handles the event to update the calories and/or protein for the specified food.'''
+    food = values['-FOOD-'].strip()
+
+    try:
+        calories = int(values['-KCAL-'])
+    except ValueError:
+        calories = None
+
+    try:
+        protein = int(values['-PROTEIN-'])
+    except ValueError:
+        protein = None
+
+    if food and calories and not protein:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the calories for food '{food}' to {calories}?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_food(db_path, food, calories=calories), title='Message'
+            )
+
+            window['-FOOD-'].update('')
+            window['-KCAL-'].update('')
+
+    elif food and not calories and protein >= 0:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the grams of protein for food '{food}' to {protein}?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_food(db_path, food, protein=protein), title='Message'
+            )
+
+            window['-FOOD-'].update('')
+            window['-PROTEIN-'].update('')
+
+    elif food and calories and protein >= 0:
+        confirmation = sg.popup_yes_no(
+            f"Are you sure you want to update the calories for food '{food}' "
+            f"to {calories}, and its grams of protein to {protein}?",
+            title='Confirmation'
+        )
+
+        if confirmation == 'Yes':
+            sg.popup(
+                update_food(db_path, food, calories=calories, protein=protein),
+                title='Message'
+            )
+
+            window['-FOOD-'].update('')
+            window['-KCAL-'].update('')
+            window['-PROTEIN-'].update('')
+
+    else:
+        sg.popup_error('You must enter a food!', title='Error')

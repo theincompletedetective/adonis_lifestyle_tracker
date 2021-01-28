@@ -34,6 +34,8 @@ while True:
             handle_get_calories_left(values, db_path)
         elif event == 'Get Protein Left':
             handle_get_protein_left(values, db_path)
+        elif event == 'Update Food':
+            handle_update_food(window, values, db_path)
         # Exercise
         elif event == 'Add Equipment':
             handle_add_equipment(window, values, db_path)

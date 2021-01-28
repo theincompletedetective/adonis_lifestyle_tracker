@@ -66,6 +66,14 @@ nutrition_layout = [
             size=BUTTON_SIZE,
             tooltip='Displays the grams of protein left to consume for a week in the database.'
         )
+    ],
+    [
+        sg.B(
+            'Update Food',
+            size=BUTTON_SIZE,
+            button_color=CHANGE_BUTTON_COLOR,
+            tooltip='Updates the calories and/or protein for the specified food.'
+        )
     ]
 ]
 
