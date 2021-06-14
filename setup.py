@@ -17,6 +17,7 @@ setup(
     include_package_data=True,
     entry_points='''
         [console_scripts]
+        create_executable=adonis_lifestyle_tracker.create_executable:create_executable
         add_food=adonis_lifestyle_tracker.script.nutrition_script:add_food_script
         add_weekly_totals=adonis_lifestyle_tracker.script.nutrition_script:add_weekly_totals_script
         add_weekly_food=adonis_lifestyle_tracker.script.nutrition_script:add_weekly_food_script
@@ -31,10 +32,10 @@ setup(
         update_resistance=adonis_lifestyle_tracker.script.exercise_script:update_resistance_script
     ''',
     classifiers=[
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.9",
         'Development Status :: 5 - Production/Stable',
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: POSIX :: Linux"
     ],
-    python_requires='~=3.7.3'
+    python_requires='~=3.9.2'
 )

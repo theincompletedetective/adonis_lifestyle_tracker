@@ -169,12 +169,5 @@ layout = [
             sg.Tab('Nutrition', nutrition_layout),
             sg.Tab('Exercise', exercise_layout)
         ]])
-    ],
-    [sg.Frame('Database Path', layout=[
-        [
-            sg.I( key='-PATH-', enable_events=True, size=(32, 1) ),
-            sg.FileBrowse(),
-            sg.Button( 'Load Database', button_color=('white', '#8a2be2') )
-        ]
-    ])]
+    ]
 ]
