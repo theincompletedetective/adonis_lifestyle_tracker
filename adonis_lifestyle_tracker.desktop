@@ -1,7 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Version=1.0.0
+Version=1.0
 Type=Application
 Terminal=false
-Exec=/home/elijah/Adonis Lifestyle System/adonis_lifestyle_tracker/dist/adonis_lifestyle_tracker
-Name=Adonis Lifestyle Tracker
+Exec="/home/elijahs/Adonis Lifestyle System/adonis_lifestyle_tracker/adonis_lifestyle_tracker"
+Name="Adonis Lifestyle Tracker"
+Icon="/home/elijahs/Adonis Lifestyle System/adonis_lifestyle_system_logo.png"
