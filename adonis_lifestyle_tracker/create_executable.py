@@ -36,10 +36,8 @@ DB_PATH = os_path_join(os_path_abspath('.'), 'adonis_lifestyle_tracker', f'app.d
 
 @click_command()
 def create_executable():
-    package_name = f'adonis_lifestyle_tracker_{VERSION}'
-
     run_pyinstaller([
-        '--name=%s' % package_name,
+        '--name=%s' % 'adonis_lifestyle_tracker',
         '--noconsole',
         '--workpath=%s' % WORK_PATH,
         '--distpath=%s' % DIST_PATH,
