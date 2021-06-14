@@ -30,6 +30,7 @@ WORK_PATH = os_path_join(os_path_abspath('.'), 'build')
 DIST_PATH = os_path_join(os_path_abspath('.'), 'dist')
 SPEC_PATH = os_path_join(os_path_abspath('.'), 'spec')
 LICENSE_PATH = os_path_join(os_path_abspath('.'), f'LICENSE.txt{SEPARATOR}.')
+ICON_PATH = os_path_join(os_path_abspath('.'), f'adonis_lifestyle_tracker_logo.ico')
 DB_PATH = os_path_join(os_path_abspath('.'), 'adonis_lifestyle_tracker', f'app.db{SEPARATOR}.')
 
 
@@ -44,6 +45,7 @@ def create_executable():
         '--distpath=%s' % DIST_PATH,
         '--specpath=%s' % SPEC_PATH,
         '--add-data=%s' % LICENSE_PATH,
+        '--icon=%s' % ICON_PATH,
         '--add-binary=%s' % DB_PATH,
         os_path_join(GUI_PATH, 'app.py'),
     ])
