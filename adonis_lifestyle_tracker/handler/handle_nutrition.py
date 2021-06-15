@@ -30,7 +30,7 @@ def handle_add_food(window, values, db_path):
         )
         return
 
-    if food and calories and protein and protein >= 0:
+    if food and calories > 0 and protein >= 0:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to add the food '{food}' to the database, "
             f"with {calories} calories and {protein} grams of protein?",
@@ -86,7 +86,7 @@ def handle_add_weekly_totals(window, values, db_path):
         title='Confirmation'
     )
 
-    if confirmation == 'Yes':
+    if calories > 0 and protein > 0 and confirmation == 'Yes':
         sg.popup(
             add_weekly_totals(db_path, week, calories, protein),
             title='Message'
@@ -190,7 +190,7 @@ def handle_update_food(window, values, db_path):
     except ValueError:
         protein = None
 
-    if food and calories and not protein:
+    if food and calories > 0 and not protein:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the calories for food '{food}' to {calories}?",
             title='Confirmation'
@@ -204,7 +204,7 @@ def handle_update_food(window, values, db_path):
             window['-FOOD-'].update('')
             window['-KCAL-'].update('')
 
-    elif food and not calories and protein and protein >= 0:
+    elif food and not calories and protein >= 0:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the grams of protein for food '{food}' to {protein}?",
             title='Confirmation'
@@ -218,7 +218,7 @@ def handle_update_food(window, values, db_path):
             window['-FOOD-'].update('')
             window['-PROTEIN-'].update('')
 
-    elif food and calories and protein and protein >= 0:
+    elif food and calories > 0 and protein >= 0:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the calories for food '{food}' "
             f"to {calories}, and its grams of protein to {protein}?",
