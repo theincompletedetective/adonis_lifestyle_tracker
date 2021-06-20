@@ -1,55 +1,37 @@
-'''Contains the functions needed to add exercise information to the database.'''
 import sqlite3
 from sqlite3 import IntegrityError
 
 
 def add_equipment(db_path, equipment):
-    '''
-    Adds new equipment to the equipment table in the database.
-    '''
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
 
     try:
-        cursor.execute(
-            'INSERT INTO equipment (id) VALUES (?)', (equipment,)
-        )
+        cursor.execute('INSERT INTO equipment (id) VALUES (?)', (equipment,))
     except IntegrityError:
         return f"The '{equipment}' equipment is already in the database."
     else:
         db.commit()
-        return (
-            f"The '{equipment}' equipment has been successfully added to the database."
-        )
+        return f"The '{equipment}' equipment has been successfully added to the database."
     finally:
         db.close()
 
 
 def add_exercise(db_path, exercise, equipment):
-    '''
-    Adds a new exercise and its equipment to the exercise table in the database.
-    '''
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
 
-    # To make sure equipment is already in the equipment table
-    equipment_in_db = cursor.execute(
-        'SELECT id FROM equipment WHERE id = ?', (equipment,)
-    ).fetchone()
+    equipment_in_db = cursor.execute('SELECT id FROM equipment WHERE id = ?', (equipment,)).fetchone()
 
     if equipment_in_db:
         try:
-            cursor.execute(
-                'INSERT INTO exercise (id, equipment_id) VALUES (?, ?)',
-                (exercise, equipment)
-            )
+            cursor.execute('INSERT INTO exercise (id, equipment_id) VALUES (?, ?)', (exercise, equipment))
         except IntegrityError:
             msg = f"The '{exercise}' exercise is already in the database."
         else:
             db.commit()
             msg = (
-                f"The '{exercise}' exercise with the '{equipment}' "
-                "equipment has been successfully added to the database."
+                f"The '{exercise}' exercise with the '{equipment}' equipment has been successfully added to the database."
             )
     else:
         msg = f"The '{equipment}' equipment is not in the database."

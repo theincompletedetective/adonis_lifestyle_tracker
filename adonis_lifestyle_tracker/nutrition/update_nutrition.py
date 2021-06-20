@@ -1,42 +1,25 @@
-'''Contains the functions needed to update the nutrition information in the database.'''
 import sqlite3
 
 
 def update_food(db_path, food, calories=None, protein=None):
-    '''Updates the calories and/or protein in the specified food.'''
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
 
-    # To make sure the food is in the database
-    food_in_db = cursor.execute(
-        'SELECT id FROM food WHERE id = ?', (food,)
-    ).fetchone()
+    food_in_db = cursor.execute('SELECT id FROM food WHERE id = ?', (food,)).fetchone()
 
     if not food_in_db:
         msg = f"The food '{food}' isn't in the database."
     elif calories and not protein:
-        cursor.execute(
-            'UPDATE food SET calories = ? WHERE id = ?',
-            (calories, food)
-        )
+        cursor.execute('UPDATE food SET calories = ? WHERE id = ?', (calories, food))
         db.commit()
         msg = f"The calories for food '{food}' have been updated to {calories}."
     elif protein and not calories:
-        cursor.execute(
-            'UPDATE food SET protein = ? WHERE id = ?',
-            (protein, food)
-        )
+        cursor.execute('UPDATE food SET protein = ? WHERE id = ?', (protein, food))
         db.commit()
         msg = f"The grams of protein for food '{food}' have been updated to {protein}."
     else:
-        cursor.execute(
-            'UPDATE food SET calories = ? WHERE id = ?',
-            (calories, food)
-        )
-        cursor.execute(
-            'UPDATE food SET protein = ? WHERE id = ?',
-            (protein, food)
-        )
+        cursor.execute('UPDATE food SET calories = ? WHERE id = ?', (calories, food))
+        cursor.execute('UPDATE food SET protein = ? WHERE id = ?', (protein, food))
         db.commit()
         msg = (
             f"The calories for food '{food}' have been updated to {calories}, "

@@ -18,18 +18,6 @@ setup(
     entry_points='''
         [console_scripts]
         create_executable=adonis_lifestyle_tracker.create_executable:create_executable
-        add_food=adonis_lifestyle_tracker.script.nutrition_script:add_food_script
-        add_weekly_totals=adonis_lifestyle_tracker.script.nutrition_script:add_weekly_totals_script
-        add_weekly_food=adonis_lifestyle_tracker.script.nutrition_script:add_weekly_food_script
-        get_food=adonis_lifestyle_tracker.script.nutrition_script:get_food_script
-        get_calories_left=adonis_lifestyle_tracker.script.nutrition_script:get_calories_left_script
-        get_protein_left=adonis_lifestyle_tracker.script.nutrition_script:get_protein_left_script
-        add_equipment=adonis_lifestyle_tracker.script.exercise_script:add_equipment_script
-        add_exercise=adonis_lifestyle_tracker.script.exercise_script:add_exercise_script
-        get_equipment=adonis_lifestyle_tracker.script.exercise_script:get_equipment_script
-        get_resistance=adonis_lifestyle_tracker.script.exercise_script:get_resistance_script
-        update_equipment=adonis_lifestyle_tracker.script.exercise_script:update_equipment_script
-        update_resistance=adonis_lifestyle_tracker.script.exercise_script:update_resistance_script
     ''',
     classifiers=[
         "Programming Language :: Python :: 3.9",
