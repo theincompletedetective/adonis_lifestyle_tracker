@@ -1,15 +1,11 @@
-import os
-import sys
-
 import PySimpleGUI as sg
+from adonis_lifestyle_tracker.handler.common import handle_load_database
 from adonis_lifestyle_tracker.handler.handle_nutrition import *
 from adonis_lifestyle_tracker.handler.handle_exercise import *
 from adonis_lifestyle_tracker.layout import layout
 
-try:
-    db_path = os.path.join(sys._MEIPASS, "app.db")
-except AttributeError:
-    db_path = 'app.db'
+
+db_path = None
 
 window = sg.Window('Adonis Lifestyle Tracker', layout)
 
@@ -18,6 +14,9 @@ while True:
 
     if event is None:
         break
+
+    if event == 'Load Database':
+        db_path = handle_load_database(window, values)
 
     try:
 
