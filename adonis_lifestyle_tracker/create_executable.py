@@ -45,6 +45,6 @@ def create_executable():
         '--specpath=%s' % SPEC_PATH,
         '--add-data=%s' % LICENSE_PATH,
         '--icon=%s' % ICON_PATH,
-        '--add-binary=%s' % DB_PATH,
+        #'--add-binary=%s' % DB_PATH,
         os_path_join(GUI_PATH, 'app.py'),
     ])
