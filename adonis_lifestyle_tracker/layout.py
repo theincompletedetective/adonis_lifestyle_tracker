@@ -6,7 +6,7 @@ sg.theme('Reddit')
 
 NUTRITION_LABEL_SIZE = (7, 1)
 EXERCISE_LABEL_SIZE = (10, 1)
-TEXT_INPUT_SIZE = (28, 1)
+TEXT_INPUT_SIZE = (42, 1)
 NUM_INPUT_SIZE = (6, 1)
 BUTTON_SIZE = (16, 1)
 
@@ -21,7 +21,7 @@ nutrition_layout = [
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-FOOD-', font=('Any', 9), size=TEXT_INPUT_SIZE)
+        sg.InputCombo(tuple(), key='-FOOD-', font=('Any', 9), size=(45, 1))
     ],
     [
         sg.T('Calories', size=NUTRITION_LABEL_SIZE),
