@@ -38,6 +38,7 @@ DB_PATH = os_path_join(os_path_abspath('.'), 'adonis_lifestyle_tracker', f'app.d
 def create_executable():
     run_pyinstaller([
         '--name=%s' % 'adonis_lifestyle_tracker',
+        '--onefile',
         '--noconsole',
         '--workpath=%s' % WORK_PATH,
         '--distpath=%s' % DIST_PATH,
