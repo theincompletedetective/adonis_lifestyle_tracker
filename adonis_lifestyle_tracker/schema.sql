@@ -3,7 +3,6 @@ drop table if exists week;
 drop table if exists week_food;
 drop table if exists equipment;
 drop table if exists exercise;
-drop table if exists week_exercise;
 
 
 -- Nutrition Tables

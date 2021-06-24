@@ -8,7 +8,7 @@ def update_resistance(db_path, exercise, reps, new_resistance):
     exercise_in_db = cursor.execute('SELECT id from exercise WHERE id = ?', (exercise,)).fetchone()
 
     if exercise_in_db:
-        cursor.execute(f'UPDATE exercise SET reps{reps} = ?', (new_resistance,))
+        cursor.execute(f'UPDATE exercise SET reps{reps} = ? WHERE id = ?', (new_resistance, exercise))
         db.commit()
         msg = (
             f"The resistance for the '{exercise}' exercise and {reps} reps has been successfully updated to '{new_resistance}'."
