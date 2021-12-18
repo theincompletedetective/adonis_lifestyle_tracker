@@ -126,7 +126,10 @@ def handle_update_calories_and_protein_for_food(window, values, db_path):
     except ValueError:
         protein = None
 
-    if food and calories > 0 and not protein:
+    has_calories = calories is not None and calories > 0
+    has_protein = protein is not None and protein >= 0
+
+    if food and has_calories and not has_protein:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the calories for food '{food}' to {calories}?", title='Confirmation'
         )
@@ -136,7 +139,7 @@ def handle_update_calories_and_protein_for_food(window, values, db_path):
             window['-FOOD-'].update('')
             window['-KCAL-'].update('')
 
-    elif food and not calories and protein >= 0:
+    elif food and not has_calories and has_protein:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the grams of protein for food '{food}' to {protein}?", title='Confirmation'
         )
@@ -146,7 +149,7 @@ def handle_update_calories_and_protein_for_food(window, values, db_path):
             window['-FOOD-'].update('')
             window['-PROTEIN-'].update('')
 
-    elif food and calories > 0 and protein >= 0:
+    elif food and has_calories and has_protein:
         confirmation = sg.popup_yes_no(
             f"Are you sure you want to update the calories for food '{food}' "
             f"to {calories}, and its grams of protein to {protein}?",
@@ -159,7 +162,7 @@ def handle_update_calories_and_protein_for_food(window, values, db_path):
             window['-KCAL-'].update('')
             window['-PROTEIN-'].update('')
 
-    elif food and not calories and not protein:
+    elif food and not has_calories and not has_protein:
         sg.popup_error('You must enter the calories and/or protein for the food!', title='Error')
     else:
         sg.popup_error('You must enter a food!', title='Error')
