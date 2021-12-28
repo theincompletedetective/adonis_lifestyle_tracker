@@ -41,7 +41,7 @@ def add_total_calories_and_protein_for_week(db_path, week, total_calories, total
         db.close()
 
 
-def add_food_to_week(db_path, week, food):
+def add_food_to_week(db_path, week, food, quantity=1):
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
 
@@ -53,9 +53,11 @@ def add_food_to_week(db_path, week, food):
     elif found_week and not found_food:
         msg = f"The food '{food}' isn't in the database."
     else:
-        cursor.execute('INSERT INTO week_food (week_id, food_id) VALUES (?, ?);', (week, food))
+        for i in range(quantity):
+            cursor.execute('INSERT INTO week_food (week_id, food_id) VALUES (?, ?);', (week, food))
+
         db.commit()
-        msg = f"The food '{food}' has been successfully added to week {week}."
+        msg = f"{quantity} of food '{food}' has been successfully added to week {week}."
 
     db.close()
     return msg
