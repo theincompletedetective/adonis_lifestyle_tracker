@@ -1,9 +1,25 @@
+import os
+
 import PySimpleGUI as sg
+
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.exercise.add_exercise import *
 from adonis_lifestyle_tracker.exercise.get_exercise import *
 from adonis_lifestyle_tracker.exercise.update_exercise import *
 from adonis_lifestyle_tracker.exercise.delete_exercise import *
+
+
+def handle_load_database(window, values):
+    db_path = values['-PATH-'].strip()
+
+    if os.path.isfile(db_path) and db_path.endswith('.db'):
+        window['-EQUIPMENT-'].update(values=get_sorted_tuple(db_path, 'id', 'equipment'))
+        window['-EXERCISE-'].update(values=get_sorted_tuple(db_path, 'id', 'exercise'))
+        sg.popup('The database has been successfully loaded!', title='Success')
+        return db_path
+    else:
+        sg.popup_error('You must provide the absolute path to the database!', title='Error')
+        window['-PATH-'].update('')
 
 
 def handle_add_equipment(window, values, db_path):

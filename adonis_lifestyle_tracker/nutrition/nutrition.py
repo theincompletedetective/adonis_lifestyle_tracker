@@ -1,4 +1,3 @@
-from adonis_lifestyle_tracker.handler.common import handle_load_database
 from adonis_lifestyle_tracker.handler.handle_nutrition import *
 from adonis_lifestyle_tracker.nutrition.nutrition_layout import layout
 

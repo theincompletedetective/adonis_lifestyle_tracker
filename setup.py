@@ -20,10 +20,10 @@ setup(
         create_executable=adonis_lifestyle_tracker.create_executable:create_executable
     ''',
     classifiers=[
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.8",
         'Development Status :: 5 - Production/Stable',
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: POSIX :: Linux"
     ],
-    python_requires='~=3.8.10'
+    python_requires='~=3.9.2'
 )
