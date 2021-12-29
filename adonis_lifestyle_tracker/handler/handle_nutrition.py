@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
 from adonis_lifestyle_tracker.nutrition.add_nutrition import *
 from adonis_lifestyle_tracker.nutrition.get_nutrition import *
@@ -64,7 +65,7 @@ def handle_add_total_calories_and_protein_for_week(window, values, db_path):
                     window['-WEEK-'].update(values=get_sorted_tuple(db_path, 'id', 'week'))
 
 
-def handle_add_food_to_week(values, db_path):
+def handle_add_food_to_week(window, values, db_path):
     try:
         week = int(values['-WEEK-'])
     except ValueError:
@@ -81,6 +82,7 @@ def handle_add_food_to_week(values, db_path):
 
             if confirmation == 'Yes':
                 sg.popup(add_food_to_week(db_path, week, food, quantity), title='Message')
+                window['-FOOD-'].update('')
 
         else:
             sg.popup_error('You must enter a food and choose a day!', title='Error')
