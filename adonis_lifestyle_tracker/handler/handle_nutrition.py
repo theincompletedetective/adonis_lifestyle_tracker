@@ -112,6 +112,24 @@ def handle_get_calories_and_protein_for_food(values, db_path):
         sg.popup_error('You must enter a food!', title='Error')
 
 
+def handle_get_total_calories(values, db_path):
+    try:
+        week = int(values['-WEEK-'])
+    except ValueError:
+        sg.popup_error('You must provide a number for the week!', title='Error')
+    else:
+        sg.popup(get_total_calories_for_week(db_path, week), title='Message')
+
+
+def handle_get_total_protein(values, db_path):
+    try:
+        week = int(values['-WEEK-'])
+    except ValueError:
+        sg.popup_error('You must provide a number for the week!', title='Error')
+    else:
+        sg.popup(get_total_protein_for_week(db_path, week), title='Message')
+
+
 def handle_get_calories_left_for_week(values, db_path):
     try:
         week = int(values['-WEEK-'])

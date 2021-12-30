@@ -60,6 +60,18 @@ layout = [
             tooltip='Displays the calories and protein for a food in the database.'
         ),
         sg.B(
+            'Get Total Calories',
+            size=BUTTON_SIZE,
+            tooltip='Displays the total number of calories to consume for a week in the database.'
+        ),
+        sg.B(
+            'Get Total Protein',
+            size=BUTTON_SIZE,
+            tooltip='Displays the total grams of protein to consume for a week in the database.'
+        )
+    ],
+    [
+        sg.B(
             'Get Calories Left',
             size=BUTTON_SIZE,
             tooltip='Displays the number of calories left to consume for a week in the database.'
@@ -68,14 +80,20 @@ layout = [
             'Get Protein Left',
             size=BUTTON_SIZE,
             tooltip='Displays the grams of protein left to consume for a week in the database.'
+        ),
+        sg.B(
+            'Update Calories',
+            size=BUTTON_SIZE,
+            button_color=CHANGE_BUTTON_COLOR,
+            tooltip='Updates the calories for the specified food.'
         )
     ],
     [
         sg.B(
-            'Update Food',
+            'Update Protein',
             size=BUTTON_SIZE,
             button_color=CHANGE_BUTTON_COLOR,
-            tooltip='Updates the calories and/or protein for the specified food.'
+            tooltip='Updates the protein for the specified food.'
         ),
         sg.B(
             'Delete Food',

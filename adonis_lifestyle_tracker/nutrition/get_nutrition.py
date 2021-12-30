@@ -17,6 +17,32 @@ def get_calories_and_protein_for_food(db_path, food):
         db.close()
 
 
+def get_total_calories_for_week(db_path, week):
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+
+    try:
+        total_calories = cursor.execute("SELECT total_calories FROM week WHERE id == ?;", (week,)).fetchone()[0]
+    except TypeError:
+        return f"Week {week} isn't in the database."
+    else:
+        db.close()
+        return f'Week {week} has {total_calories} total calories.'
+
+
+def get_total_protein_for_week(db_path, week):
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+
+    try:
+        total_protein = cursor.execute("SELECT total_protein FROM week WHERE id == ?;", (week,)).fetchone()[0]
+    except TypeError:
+        return f"Week {week} isn't in the database."
+    else:
+        db.close()
+        return f'Week {week} has {total_protein} total grams of protein.'
+
+
 def get_calories_left_for_week(db_path, week):
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
