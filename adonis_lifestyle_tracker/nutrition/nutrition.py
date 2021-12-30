@@ -30,13 +30,14 @@ while True:
             handle_get_total_calories(values, db_path)
         elif event == 'Get Total Protein':
             handle_get_total_protein(values, db_path)
-
         elif event == 'Get Calories Left':
             handle_get_calories_left_for_week(values, db_path)
         elif event == 'Get Protein Left':
             handle_get_protein_left_for_week(values, db_path)
-        elif event == 'Update Food':
-            handle_update_calories_and_protein_for_food(window, values, db_path)
+        elif event == 'Update Calories':
+            handle_update_calories_for_food(window, values, db_path)
+        elif event == 'Update Protein':
+            handle_update_protein_for_food(window, values, db_path)
         elif event == 'Delete Food':
             handle_delete_food(window, values, db_path)
         elif event == 'Delete Week':
