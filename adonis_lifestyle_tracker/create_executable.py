@@ -37,7 +37,7 @@ ICON_PATH = os_path_join(os_path_abspath('.'), f'adonis_lifestyle_tracker_logo.i
 def create_executable(tracker):
     gui_path = os_path_join(os_path_abspath('.'), 'adonis_lifestyle_tracker', tracker, f'{tracker}.py')
     run_pyinstaller([
-        '--name=%s' % 'adonis_lifestyle_tracker',
+        '--name=%s' % f'adonis_lifestyle_{tracker}_tracker',
         '--onefile',
         '--noconsole',
         '--workpath=%s' % WORK_PATH,
