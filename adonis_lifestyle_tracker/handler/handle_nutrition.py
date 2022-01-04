@@ -26,12 +26,12 @@ def handle_add_food(window, values, db_path):
     food = values['-FOOD-'].strip()
 
     try:
-        calories = int(values['-KCAL-'])
+        calories = float(values['-KCAL-'])
     except ValueError:
         sg.popup_error('You must provide a number for the calories!', title='Error')
     else:
         try:
-            protein = int(values['-PROTEIN-'])
+            protein = float(values['-PROTEIN-'])
         except ValueError:
             sg.popup_error('You must provide a number for the grams of protein!', title='Error')
         else:
@@ -57,12 +57,12 @@ def handle_add_total_calories_and_protein_for_week(window, values, db_path):
         sg.popup_error('You must provide a number for the week!', title='Error')
     else:
         try:
-            calories = int(values['-KCAL-'])
+            calories = float(values['-KCAL-'])
         except ValueError:
             sg.popup_error('You must provide a number for the calories!', title='Error')
         else:
             try:
-                protein = int(values['-PROTEIN-'])
+                protein = float(values['-PROTEIN-'])
             except ValueError:
                 sg.popup_error('You must provide a number for the grams of protein!', title='Error')
             else:
@@ -152,7 +152,7 @@ def handle_update_calories_for_food(window, values, db_path):
     food = values['-FOOD-'].strip()
 
     try:
-        calories = int(values['-KCAL-'])
+        calories = float(values['-KCAL-'])
     except ValueError:
         calories = None
 
@@ -178,7 +178,7 @@ def handle_update_protein_for_food(window, values, db_path):
     food = values['-FOOD-'].strip()
 
     try:
-        protein = int(values['-PROTEIN-'])
+        protein = float(values['-PROTEIN-'])
     except ValueError:
         protein = None
 

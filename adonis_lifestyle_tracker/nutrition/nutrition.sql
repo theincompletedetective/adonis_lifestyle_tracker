@@ -4,14 +4,14 @@ drop table if exists week_food;
 
 create table food (
     id text primary key,
-    calories integer,
-    protein integer
+    calories real,
+    protein real
 );
 
 create table week (
     id integer primary key,
-    total_calories integer,
-    total_protein integer
+    total_calories real,
+    total_protein real
 );
 
 create table week_food (
