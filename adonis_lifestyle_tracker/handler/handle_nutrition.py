@@ -1,5 +1,7 @@
 import os
 
+from datetime import datetime
+
 import PySimpleGUI as sg
 
 from adonis_lifestyle_tracker.handler.common import get_sorted_tuple
@@ -48,6 +50,13 @@ def handle_add_food(window, values, db_path):
                     window['-KCAL-'].update('')
                     window['-PROTEIN-'].update('')
                     window['-FOOD-'].update(values=get_sorted_tuple(db_path, 'id', 'food'))
+
+
+def handle_add_food_to_day_of_week(window, values, db_path):
+    date_string = values['-DAY-']
+    day = datetime.strptime(date_string, '%Y-%m-%d')
+    day_of_week = day.strftime('%A')
+    print(day, day_of_week)
 
 
 def handle_add_total_calories_and_protein_for_week(window, values, db_path):

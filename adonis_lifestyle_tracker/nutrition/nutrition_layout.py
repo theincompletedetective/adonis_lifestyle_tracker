@@ -20,6 +20,11 @@ layout = [
         sg.InputCombo(tuple(), key='-WEEK-', size=NUM_INPUT_SIZE)
     ],
     [
+        sg.T('Day', size=NUTRITION_LABEL_SIZE),
+        sg.I(key='-DAY-'),
+        sg.CalendarButton('Choose Day', close_when_date_chosen=True,  target='-DAY-', no_titlebar=False, format="%Y-%m-%d")
+    ],
+    [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
         sg.InputCombo(tuple(), key='-FOOD-', font=('Any', 9), size=(55, 1)),
         sg.T('Quantity'),
@@ -45,6 +50,12 @@ layout = [
             size=BUTTON_SIZE,
             button_color=ADD_BUTTON_COLOR,
             tooltip='Adds a new week to the database, with its total calories and protein.'
+        ),
+        sg.B(
+            'Add Food to Day',
+            size=BUTTON_SIZE,
+            button_color=ADD_BUTTON_COLOR,
+            tooltip='Adds a food to a day of the week in the database.'
         ),
         sg.B(
             'Add Food to Week',

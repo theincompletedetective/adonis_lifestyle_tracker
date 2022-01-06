@@ -23,6 +23,10 @@ while True:
             handle_add_total_calories_and_protein_for_week(window, values, db_path)
         elif event == 'Add Food to Week':
             handle_add_food_to_week(window, values, db_path)
+
+        elif event == 'Add Food to Day':
+            handle_add_food_to_day_of_week(window, values, db_path)
+
         elif event == 'Get Food':
             handle_get_calories_and_protein_for_food(values, db_path)
 
