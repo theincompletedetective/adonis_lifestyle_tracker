@@ -41,7 +41,7 @@ def add_total_calories_and_protein_for_week(db_path, week, total_calories, total
         db.close()
 
 
-def add_food_to_day_of_week(db_path, day, week_day, week, food):
+def add_food_to_day_of_week(db_path, day, weekday, week, food):
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
 
@@ -53,31 +53,10 @@ def add_food_to_day_of_week(db_path, day, week_day, week, food):
     elif found_week and not found_food:
         msg = f"The food '{food}' isn't in the database."
     else:
-        cursor.execute('INSERT INTO week_day (week_id, ?) VALUES (?, ?);', (week_day, week, day))
+        cursor.execute(f'INSERT INTO weekday (week_id, {weekday}) VALUES (?, ?);', (week, day))
+        cursor.execute('INSERT INTO week_food (week_id, weekday, food_id) VALUES (?, ?, ?);', (week, weekday, food))
         db.commit()
-        msg = f"Food '{food}' has been successfully added to {week_day} of week {week}."
-
-    db.close()
-    return msg
-
-
-def add_food_to_week(db_path, week_day, week, food, quantity=1):
-    db = sqlite3.connect(db_path)
-    cursor = db.cursor()
-
-    found_food = cursor.execute('SELECT * FROM food WHERE id == ?;', (food,)).fetchone()
-    found_week = cursor.execute('SELECT * FROM week WHERE id == ?;', (week,)).fetchone()
-
-    if found_food and not found_week:
-        msg = f"Week {week} isn't in the database."
-    elif found_week and not found_food:
-        msg = f"The food '{food}' isn't in the database."
-    else:
-        for i in range(quantity):
-            cursor.execute('INSERT INTO week_food (week_id, week_day, food_id) VALUES (?, ?);', (week, week_day, food))
-
-        db.commit()
-        msg = f"{quantity} of food '{food}' has been successfully added to {week_day} of week {week}."
+        msg = f"Food '{food}' has been successfully added to {weekday} of week {week}."
 
     db.close()
     return msg

@@ -83,3 +83,27 @@ def get_protein_left_for_week(db_path, week):
             return f'You need to eat {total_protein} more grams of protein for week {week}.'
         else:
             return f'You have reached your protein goal for week {week}!'
+
+
+def get_calories_eaten_for_weekday(db_path, weekday, week):
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+    cursor.execute("SELECT food_id FROM week_food WHERE week_id == ? AND weekday == ?;", (week, weekday))
+
+    calories_eaten = 0
+
+    for food_name_tuple in cursor.fetchall():
+        cursor.execute("SELECT calories FROM food WHERE id = ?;", (food_name_tuple[0],))
+        calories_eaten += cursor.fetchone()[0]
+
+    db.close()
+    return f'You have eaten {calories_eaten} calories on {weekday}, for week {week}.'
+
+
+def get_date_for_weekday(db_path, weekday, week):
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+    cursor.execute(f"SELECT {weekday} FROM weekday WHERE week_id == ?;", (week,))
+    date = cursor.fetchone()[0]
+    db.close()
+    return f'The date for {weekday} of week {week} is {date}.'

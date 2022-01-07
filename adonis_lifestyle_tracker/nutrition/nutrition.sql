@@ -1,5 +1,5 @@
 drop table if exists food;
-drop table if exists week_day;
+drop table if exists weekday;
 drop table if exists week;
 drop table if exists week_food;
 
@@ -9,7 +9,7 @@ create table food (
     protein real
 );
 
-create table week_day (
+create table weekday (
     week_id integer,
     sunday text,
     monday text,
@@ -28,6 +28,6 @@ create table week (
 
 create table week_food (
     week_id integer,
-    week_day text,
+    weekday text,
     food_id text
 );
