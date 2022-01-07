@@ -98,12 +98,3 @@ def get_calories_eaten_for_weekday(db_path, weekday, week):
 
     db.close()
     return f'You have eaten {calories_eaten} calories on {weekday}, for week {week}.'
-
-
-def get_date_for_weekday(db_path, weekday, week):
-    db = sqlite3.connect(db_path)
-    cursor = db.cursor()
-    cursor.execute(f"SELECT {weekday} FROM weekday WHERE week_id == ?;", (week,))
-    date = cursor.fetchone()[0]
-    db.close()
-    return f'The date for {weekday} of week {week} is {date}.'

@@ -28,7 +28,7 @@ while True:
         elif event == 'Get Food':
             handle_get_calories_and_protein_for_food(values, db_path)
         elif event == 'Get Calories Eaten for Day':
-            handle_get_calories_eaten_for_weekday(values, db_path)
+            handle_get_calories_eaten_for_weekday(window, values, db_path)
 
         elif event == 'Get Total Calories':
             handle_get_total_calories(values, db_path)
@@ -38,8 +38,6 @@ while True:
             handle_get_calories_left_for_week(values, db_path)
         elif event == 'Get Protein Left':
             handle_get_protein_left_for_week(values, db_path)
-        elif event == 'Get Date for Weekday':
-            handle_get_date_for_weekday(values, db_path)
 
         elif event == 'Update Calories':
             handle_update_calories_for_food(window, values, db_path)

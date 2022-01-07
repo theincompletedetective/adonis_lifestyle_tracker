@@ -21,17 +21,9 @@ layout = [
     ],
     [
         sg.T('Weekday', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(
-            ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
-            key='-WEEKDAY-',
-            size=(12, 1)
-        )
-    ],
-    [
-        sg.T('Date', size=NUTRITION_LABEL_SIZE),
-        sg.I(key='-DAY-', size=(10, 1), disabled=True),
+        sg.I(key='-DATE-', size=(10, 1), disabled=True),
         sg.CalendarButton(
-            'Choose Date', close_when_date_chosen=True,  target='-DAY-', no_titlebar=False, format="%Y-%m-%d"
+            'Choose Date', close_when_date_chosen=True,  target='-DATE-', no_titlebar=False, format="%m-%d-%Y"
         )
     ],
     [
@@ -104,33 +96,26 @@ layout = [
     ],
     [
         sg.B(
-            'Get Date for Weekday',
-            size=BUTTON_SIZE,
-            tooltip='Displays the date for the provided weekday of the given week.'
-        ),
-        sg.B(
             'Update Calories',
-            size=BUTTON_SIZE,
+            size=(18, 1),
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the calories for the specified food.'
         ),
         sg.B(
             'Update Protein',
-            size=BUTTON_SIZE,
+            size=(17, 1),
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the protein for the specified food.'
-        )
-    ],
-    [
+        ),
         sg.B(
             'Delete Food',
-            size=BUTTON_SIZE,
+            size=(17, 1),
             button_color=DELETE_BUTTON_COLOR,
             tooltip='Deletes the specified food from the database.'
         ),
         sg.B(
             'Delete Week',
-            size=BUTTON_SIZE,
+            size=(17, 1),
             button_color=DELETE_BUTTON_COLOR,
             tooltip='Deletes the specified week and all its food from the database.'
         )

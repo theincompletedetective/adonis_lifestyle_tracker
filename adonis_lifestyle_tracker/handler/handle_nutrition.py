@@ -11,6 +11,10 @@ from adonis_lifestyle_tracker.nutrition.update_nutrition import *
 from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
+def get_weekday(date):
+    return datetime.strptime(date, "%m-%d-%Y").strftime('%A')
+
+
 def handle_load_database(window, values):
     db_path = values['-PATH-'].strip()
 
@@ -58,23 +62,22 @@ def handle_add_food_to_day_of_week(window, values, db_path):
     except ValueError:
         sg.popup_error('You must provide a number for the week!', title='Error')
     else:
-        date = values['-DAY-']
+        date = values['-DATE-']
 
         if not date:
             sg.popup_error('You must choose a date for the weekday!', title='Error')
         else:
-            day = datetime.strptime(date, '%Y-%m-%d')
-            weekday = day.strftime('%A')
+            weekday = get_weekday(date)
             food = values['-FOOD-'].strip()
 
             if food:
                 confirmation = sg.popup_yes_no(
-                    f"Are you sure you want to add food '{food}' to {weekday}, {day}, of week {week}?",
+                    f"Are you sure you want to add food '{food}' to {weekday}, {date}, of week {week}?",
                     title='Confirmation'
                 )
 
                 if confirmation == 'Yes':
-                    sg.popup(add_food_to_day_of_week(db_path, day, weekday, week, food), title='Message')
+                    sg.popup(add_food_to_day_of_week(db_path, date, weekday, week, food), title='Message')
                     window['-FOOD-'].update('')
 
             else:
@@ -156,32 +159,19 @@ def handle_get_protein_left_for_week(values, db_path):
         sg.popup(get_protein_left_for_week(db_path, week), title='Message')
 
 
-def handle_get_calories_eaten_for_weekday(values, db_path):
+def handle_get_calories_eaten_for_weekday(window, values, db_path):
     try:
         week = int(values['-WEEK-'])
     except ValueError:
         sg.popup_error('You must provide a number for the week!', title='Error')
     else:
-        weekday = values['-WEEKDAY-'].strip()
+        weekday = get_weekday(values['-DATE-'])
 
         if not weekday:
             sg.popup_error('You must choose a weekday!', title='Error')
         else:
             sg.popup(get_calories_eaten_for_weekday(db_path, weekday, week), title='Message')
-
-
-def handle_get_date_for_weekday(values, db_path):
-    try:
-        week = int(values['-WEEK-'])
-    except ValueError:
-        sg.popup_error('You must provide a number for the week!', title='Error')
-    else:
-        weekday = values['-WEEKDAY-'].strip()
-
-        if not weekday:
-            sg.popup_error('You must select a weekday!', title='Error')
-        else:
-            sg.popup(get_date_for_weekday(db_path, weekday, week), title='Message')
+            window['-DATE-'].update('')
 
 
 def handle_update_calories_for_food(window, values, db_path):
