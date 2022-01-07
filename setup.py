@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='adonis_lifestyle_tracker',
-    version='1.0.0',
+    version='2.0.0',
     description='Tracks my Adonis Lifestyle System food and exercise data for each week',
     long_description=long_description,
     long_description_content_type='text/markdown',

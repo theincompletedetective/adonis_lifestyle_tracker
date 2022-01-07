@@ -62,17 +62,17 @@ layout = [
     ],
     [
         sg.B(
-            'Get Food',
+            "Get Food's Calories and Protein",
             size=BUTTON_SIZE,
             tooltip='Displays the calories and protein for a food in the database.'
         ),
         sg.B(
-            'Get Total Calories',
+            'Get Total Calories for Week',
             size=BUTTON_SIZE,
             tooltip='Displays the total number of calories to consume for a week in the database.'
         ),
         sg.B(
-            'Get Total Protein',
+            'Get Total Protein for Week',
             size=BUTTON_SIZE,
             tooltip='Displays the total grams of protein to consume for a week in the database.'
         )
@@ -84,12 +84,12 @@ layout = [
             tooltip='Displays the number of calories eaten on the given day of the given week.'
         ),
         sg.B(
-            'Get Calories Left',
+            'Get Calories Left for Week',
             size=BUTTON_SIZE,
             tooltip='Displays the number of calories left to consume for a week in the database.'
         ),
         sg.B(
-            'Get Protein Left',
+            'Get Protein Left for Week',
             size=BUTTON_SIZE,
             tooltip='Displays the grams of protein left to consume for a week in the database.'
         )
