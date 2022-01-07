@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 
 sg.theme('Reddit')
 
-NUTRITION_LABEL_SIZE = (7, 1)
+NUTRITION_LABEL_SIZE = (8, 1)
 EXERCISE_LABEL_SIZE = (10, 1)
 TEXT_INPUT_SIZE = (42, 1)
 NUM_INPUT_SIZE = (6, 1)
@@ -20,9 +20,19 @@ layout = [
         sg.InputCombo(tuple(), key='-WEEK-', size=NUM_INPUT_SIZE)
     ],
     [
-        sg.T('Day', size=NUTRITION_LABEL_SIZE),
+        sg.T('Weekday', size=NUTRITION_LABEL_SIZE),
+        sg.InputCombo(
+            ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
+            key='-WEEKDAY-',
+            size=(12, 1)
+        )
+    ],
+    [
+        sg.T('Date', size=NUTRITION_LABEL_SIZE),
         sg.I(key='-DAY-', size=(10, 1), disabled=True),
-        sg.CalendarButton('Choose Day', close_when_date_chosen=True,  target='-DAY-', no_titlebar=False, format="%Y-%m-%d")
+        sg.CalendarButton(
+            'Choose Date', close_when_date_chosen=True,  target='-DAY-', no_titlebar=False, format="%Y-%m-%d"
+        )
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
@@ -94,26 +104,33 @@ layout = [
     ],
     [
         sg.B(
+            'Get Date for Weekday',
+            size=BUTTON_SIZE,
+            tooltip='Displays the date for the provided weekday of the given week.'
+        ),
+        sg.B(
             'Update Calories',
-            size=(18, 1),
+            size=BUTTON_SIZE,
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the calories for the specified food.'
         ),
         sg.B(
             'Update Protein',
-            size=(17, 1),
+            size=BUTTON_SIZE,
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the protein for the specified food.'
-        ),
+        )
+    ],
+    [
         sg.B(
             'Delete Food',
-            size=(17, 1),
+            size=BUTTON_SIZE,
             button_color=DELETE_BUTTON_COLOR,
             tooltip='Deletes the specified food from the database.'
         ),
         sg.B(
             'Delete Week',
-            size=(17, 1),
+            size=BUTTON_SIZE,
             button_color=DELETE_BUTTON_COLOR,
             tooltip='Deletes the specified week and all its food from the database.'
         )
