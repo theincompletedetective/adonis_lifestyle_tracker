@@ -89,7 +89,6 @@ def get_calories_eaten_for_weekday(db_path, weekday, week):
     db = sqlite3.connect(db_path)
     cursor = db.cursor()
     cursor.execute("SELECT food_id FROM week_food WHERE week_id == ? AND weekday == ?;", (week, weekday))
-
     calories_eaten = 0
 
     for food_name_tuple in cursor.fetchall():

@@ -69,15 +69,16 @@ def handle_add_food_to_day_of_week(window, values, db_path):
         else:
             weekday = get_weekday(date)
             food = values['-FOOD-'].strip()
+            quantity = int(values['-QUANTITY-'])
 
             if food:
                 confirmation = sg.popup_yes_no(
-                    f"Are you sure you want to add food '{food}' to {weekday}, {date}, of week {week}?",
+                    f"Are you sure you want to add {quantity} of food '{food}' to {weekday}, {date}, of week {week}?",
                     title='Confirmation'
                 )
 
                 if confirmation == 'Yes':
-                    sg.popup(add_food_to_day_of_week(db_path, date, weekday, week, food), title='Message')
+                    sg.popup(add_food_to_day_of_week(db_path, date, weekday, week, food, quantity), title='Message')
                     window['-FOOD-'].update('')
 
             else:

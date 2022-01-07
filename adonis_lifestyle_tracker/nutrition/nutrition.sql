@@ -10,7 +10,7 @@ create table food (
 );
 
 create table weekday (
-    week_id integer,
+    week_id integer primary key,
     sunday text,
     monday text,
     tuesday text,
