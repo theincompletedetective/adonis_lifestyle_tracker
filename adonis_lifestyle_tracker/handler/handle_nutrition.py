@@ -80,6 +80,7 @@ def handle_add_food_to_day_of_week(window, values, db_path):
                 if confirmation == 'Yes':
                     sg.popup(add_food_to_day_of_week(db_path, date, weekday, week, food, quantity), title='Message')
                     window['-FOOD-'].update('')
+                    window['-QUANTITY-'].update('1')
 
             else:
                 sg.popup_error('You must enter a food!', title='Error')
