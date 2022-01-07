@@ -176,6 +176,21 @@ def handle_get_calories_eaten_for_weekday(window, values, db_path):
             window['-DATE-'].update('')
 
 
+def handle_get_protein_eaten_for_weekday(window, values, db_path):
+    try:
+        week = int(values['-WEEK-'])
+    except ValueError:
+        sg.popup_error('You must provide a number for the week!', title='Error')
+    else:
+        weekday = get_weekday(values['-DATE-'])
+
+        if not weekday:
+            sg.popup_error('You must choose a weekday!', title='Error')
+        else:
+            sg.popup(get_protein_eaten_for_weekday(db_path, weekday, week), title='Message')
+            window['-DATE-'].update('')
+
+
 def handle_update_calories_for_food(window, values, db_path):
     food = values['-FOOD-'].strip()
 

@@ -97,3 +97,17 @@ def get_calories_eaten_for_weekday(db_path, weekday, week):
 
     db.close()
     return f'You have eaten {calories_eaten} calories on {weekday}, for week {week}.'
+
+
+def get_protein_eaten_for_weekday(db_path, weekday, week):
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+    cursor.execute("SELECT food_id FROM week_food WHERE week_id == ? AND weekday == ?;", (week, weekday))
+    grams_of_protein_eaten = 0
+
+    for food_name_tuple in cursor.fetchall():
+        cursor.execute("SELECT protein FROM food WHERE id = ?;", (food_name_tuple[0],))
+        grams_of_protein_eaten += cursor.fetchone()[0]
+
+    db.close()
+    return f'You have eaten {grams_of_protein_eaten} grams of protein on {weekday}, for week {week}.'

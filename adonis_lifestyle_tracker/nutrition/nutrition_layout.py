@@ -84,6 +84,11 @@ layout = [
             tooltip='Displays the number of calories eaten on the given day of the given week.'
         ),
         sg.B(
+            'Get Protein Eaten for Day',
+            size=BUTTON_SIZE,
+            tooltip='Displays the number of grams of protein eaten on the given day of the given week.'
+        ),
+        sg.B(
             'Get Calories Left for Week',
             size=BUTTON_SIZE,
             tooltip='Displays the number of calories left to consume for a week in the database.'
