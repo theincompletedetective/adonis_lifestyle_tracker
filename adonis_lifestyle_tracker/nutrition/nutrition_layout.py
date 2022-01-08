@@ -92,35 +92,35 @@ layout = [
             'Get Calories Left for Week',
             size=BUTTON_SIZE,
             tooltip='Displays the number of calories left to consume for a week in the database.'
-        ),
-        sg.B(
-            'Get Protein Left for Week',
-            size=BUTTON_SIZE,
-            tooltip='Displays the grams of protein left to consume for a week in the database.'
         )
     ],
     [
         sg.B(
+            'Get Protein Left for Week',
+            size=(20, 1),
+            tooltip='Displays the grams of protein left to consume for a week in the database.'
+        ),
+        sg.B(
             'Update Calories',
-            size=(18, 1),
+            size=(11, 1),
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the calories for the specified food.'
         ),
         sg.B(
             'Update Protein',
-            size=(17, 1),
+            size=(11, 1),
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the protein for the specified food.'
         ),
         sg.B(
             'Delete Food',
-            size=(17, 1),
+            size=(11, 1),
             button_color=DELETE_BUTTON_COLOR,
             tooltip='Deletes the specified food from the database.'
         ),
         sg.B(
             'Delete Week',
-            size=(17, 1),
+            size=(11, 1),
             button_color=DELETE_BUTTON_COLOR,
             tooltip='Deletes the specified week and all its food from the database.'
         )

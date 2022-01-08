@@ -26,9 +26,9 @@ while True:
         elif event == "Get Food's Calories and Protein":
             handle_get_calories_and_protein_for_food(values, db_path)
         elif event == 'Get Calories Eaten for Day':
-            handle_get_calories_eaten_for_weekday(window, values, db_path)
+            handle_get_calories_eaten_for_weekday(values, db_path)
         elif event == 'Get Protein Eaten for Day':
-            handle_get_protein_eaten_for_weekday(window, values, db_path)
+            handle_get_protein_eaten_for_weekday(values, db_path)
         elif event == 'Get Total Calories for Week':
             handle_get_total_calories(values, db_path)
         elif event == 'Get Total Protein for Week':

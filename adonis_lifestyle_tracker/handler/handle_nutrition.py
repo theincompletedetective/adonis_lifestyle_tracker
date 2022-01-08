@@ -12,7 +12,10 @@ from adonis_lifestyle_tracker.nutrition.delete_nutrition import *
 
 
 def get_weekday(date):
-    return datetime.strptime(date, "%m-%d-%Y").strftime('%A')
+    try:
+        return datetime.strptime(date, "%m-%d-%Y").strftime('%A')
+    except ValueError:
+        return None
 
 
 def handle_load_database(window, values):
@@ -161,7 +164,7 @@ def handle_get_protein_left_for_week(values, db_path):
         sg.popup(get_protein_left_for_week(db_path, week), title='Message')
 
 
-def handle_get_calories_eaten_for_weekday(window, values, db_path):
+def handle_get_calories_eaten_for_weekday(values, db_path):
     try:
         week = int(values['-WEEK-'])
     except ValueError:
@@ -173,10 +176,9 @@ def handle_get_calories_eaten_for_weekday(window, values, db_path):
             sg.popup_error('You must choose a weekday!', title='Error')
         else:
             sg.popup(get_calories_eaten_for_weekday(db_path, weekday, week), title='Message')
-            window['-DATE-'].update('')
 
 
-def handle_get_protein_eaten_for_weekday(window, values, db_path):
+def handle_get_protein_eaten_for_weekday(values, db_path):
     try:
         week = int(values['-WEEK-'])
     except ValueError:
@@ -188,7 +190,6 @@ def handle_get_protein_eaten_for_weekday(window, values, db_path):
             sg.popup_error('You must choose a weekday!', title='Error')
         else:
             sg.popup(get_protein_eaten_for_weekday(db_path, weekday, week), title='Message')
-            window['-DATE-'].update('')
 
 
 def handle_update_calories_for_food(window, values, db_path):
