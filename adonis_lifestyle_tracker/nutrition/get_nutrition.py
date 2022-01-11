@@ -96,7 +96,7 @@ def get_calories_eaten_for_weekday(db_path, weekday, week):
         calories_eaten += cursor.fetchone()[0]
 
     db.close()
-    return f'You have eaten {calories_eaten} calories on {weekday}, for week {week}.'
+    return f'You ate {calories_eaten} calories on {weekday}, for week {week}.'
 
 
 def get_protein_eaten_for_weekday(db_path, weekday, week):
@@ -110,4 +110,4 @@ def get_protein_eaten_for_weekday(db_path, weekday, week):
         grams_of_protein_eaten += cursor.fetchone()[0]
 
     db.close()
-    return f'You have eaten {grams_of_protein_eaten} grams of protein on {weekday}, for week {week}.'
+    return f'You ate {grams_of_protein_eaten} grams of protein on {weekday}, for week {week}.'
