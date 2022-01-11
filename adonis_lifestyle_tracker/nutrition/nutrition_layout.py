@@ -28,7 +28,7 @@ layout = [
     ],
     [
         sg.T('Food', size=NUTRITION_LABEL_SIZE),
-        sg.InputCombo(tuple(), key='-FOOD-', font=('Any', 9), size=(55, 1)),
+        sg.InputCombo(tuple(), key='-FOOD-', font=('Any', 9), size=(53, 1)),
         sg.T('Quantity'),
         sg.InputCombo([x + 1 for x in range(20)], key='-QUANTITY-', font=('Any', 9), size=(3, 1), default_value=1),
     ],
