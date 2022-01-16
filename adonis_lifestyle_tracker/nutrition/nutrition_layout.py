@@ -72,9 +72,9 @@ layout = [
             tooltip='Displays the total number of calories to consume for a week in the database.'
         ),
         sg.B(
-            'Get Total Protein for Week',
+            'Get Calories Left for Week',
             size=BUTTON_SIZE,
-            tooltip='Displays the total grams of protein to consume for a week in the database.'
+            tooltip='Displays the number of calories left to consume for a week in the database.'
         )
     ],
     [
@@ -84,45 +84,16 @@ layout = [
             tooltip='Displays the number of calories eaten on the given day of the given week.'
         ),
         sg.B(
-            'Get Protein Eaten for Day',
+            "Update Food's Calories",
             size=BUTTON_SIZE,
-            tooltip='Displays the number of grams of protein eaten on the given day of the given week.'
-        ),
-        sg.B(
-            'Get Calories Left for Week',
-            size=BUTTON_SIZE,
-            tooltip='Displays the number of calories left to consume for a week in the database.'
-        )
-    ],
-    [
-        sg.B(
-            'Get Protein Left for Week',
-            size=(20, 1),
-            tooltip='Displays the grams of protein left to consume for a week in the database.'
-        ),
-        sg.B(
-            'Update Calories',
-            size=(11, 1),
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the calories for the specified food.'
         ),
         sg.B(
-            'Update Protein',
-            size=(11, 1),
+            "Update Food's Protein",
+            size=BUTTON_SIZE,
             button_color=CHANGE_BUTTON_COLOR,
             tooltip='Updates the protein for the specified food.'
-        ),
-        sg.B(
-            'Delete Food',
-            size=(11, 1),
-            button_color=DELETE_BUTTON_COLOR,
-            tooltip='Deletes the specified food from the database.'
-        ),
-        sg.B(
-            'Delete Week',
-            size=(11, 1),
-            button_color=DELETE_BUTTON_COLOR,
-            tooltip='Deletes the specified week and all its food from the database.'
         )
     ],
     [sg.Frame('Database Path', layout=[

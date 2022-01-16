@@ -37,9 +37,9 @@ while True:
             handle_get_calories_left_for_week(values, db_path)
         elif event == 'Get Protein Left for Week':
             handle_get_protein_left_for_week(values, db_path)
-        elif event == 'Update Calories':
+        elif event == "Update Food's Calories":
             handle_update_calories_for_food(window, values, db_path)
-        elif event == 'Update Protein':
+        elif event == "Update Food's Protein":
             handle_update_protein_for_food(window, values, db_path)
         elif event == 'Delete Food':
             handle_delete_food(window, values, db_path)
