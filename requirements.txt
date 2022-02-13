@@ -1,4 +1,4 @@
--e git+https://github.com/esmith1412/adonis_lifestyle_tracker.git@7f10ef862a97584d90470100bf789a79fef8dcda#egg=adonis_lifestyle_tracker
+-e git+https://github.com/esmith1412/adonis_lifestyle_tracker.git@f3b62ca327fb78533949b53605e6c95ecd57d903#egg=adonis_lifestyle_tracker
 altgraph==0.17
 atomicwrites==1.4.0
 attrs==20.3.0
