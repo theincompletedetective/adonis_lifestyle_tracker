@@ -25,7 +25,7 @@ layout = [
     ],
     [
         sg.T('Reps', size=EXERCISE_LABEL_SIZE),
-        sg.I(key='-REPS-', size=NUM_INPUT_SIZE)
+        sg.InputCombo((3, 5, 6, 7, 8, 10, 12, 13, 15, 21), key='-REPS-', size=NUM_INPUT_SIZE)
     ],
     [
         sg.T('Resistance', size=EXERCISE_LABEL_SIZE),

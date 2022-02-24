@@ -16,7 +16,7 @@ create table exercise (
   reps8 text,
   reps10 text,
   reps12 text,
-  reps15 text,
   reps13 text,
+  reps15 text,
   reps21 text
 );
