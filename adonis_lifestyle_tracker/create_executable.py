@@ -38,6 +38,7 @@ def create_executable(tracker):
     gui_path = os_path_join(os_path_abspath('.'), 'adonis_lifestyle_tracker', tracker, f'{tracker}.py')
     run_pyinstaller([
         '--name=%s' % f'adonis_lifestyle_{tracker}_tracker',
+        '--clean',
         '--onefile',
         '--noconsole',
         '--workpath=%s' % WORK_PATH,

@@ -1,7 +1,8 @@
 [Desktop Entry]
+Name=Adonis Lifestyle Nutrition Tracker
 Version=1.0
 Type=Application
 Terminal=false
+StartupWMClass=adonis-lifestyle-nutrition-tracker
 Exec=/home/elijah/PycharmProjects/adonis_lifestyle_tracker/dist/adonis_lifestyle_nutrition_tracker
 Icon=/home/elijah/PycharmProjects/adonis_lifestyle_tracker/adonis_lifestyle_system_logo.png
-Name[en_US]=Adonis Lifestyle Nutrition Tracker
