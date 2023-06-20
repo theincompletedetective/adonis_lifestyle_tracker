@@ -1,22 +1,6 @@
--e git+https://github.com/esmith1412/adonis_lifestyle_tracker.git@f3b62ca327fb78533949b53605e6c95ecd57d903#egg=adonis_lifestyle_tracker
-altgraph==0.17
-atomicwrites==1.4.0
-attrs==20.3.0
-click==7.1.2
-colorama==0.4.4
-future==0.18.2
-importlib-metadata==3.4.0
-iniconfig==1.1.1
-packaging==20.8
-pefile==2019.4.18
-pluggy==0.13.1
-py==1.10.0
-pyinstaller==4.9
-pyinstaller-hooks-contrib==2020.11
-pyparsing==2.4.7
-PySimpleGUI==4.34.0
-pytest==6.2.2
-pywin32-ctypes==0.2.0
-toml==0.10.2
-typing-extensions==3.7.4.3
-zipp==3.4.0
+-e git+ssh://git@github.com/esmith1412/adonis_lifestyle_tracker.git@bb69f86c8633569e45ec6fb3fb02860559b8843d#egg=adonis_lifestyle_tracker
+altgraph==0.17.3
+click==8.1.3
+pyinstaller==5.12.0
+pyinstaller-hooks-contrib==2023.3
+PySimpleGUI==4.60.5
