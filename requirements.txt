@@ -1,6 +1,6 @@
 -e git+ssh://git@github.com/esmith1412/adonis_lifestyle_tracker.git@bb69f86c8633569e45ec6fb3fb02860559b8843d#egg=adonis_lifestyle_tracker
 altgraph==0.17.3
 click==8.1.3
-pyinstaller==5.12.0
+pyinstaller==5.13.1
 pyinstaller-hooks-contrib==2023.3
 PySimpleGUI==4.60.5
